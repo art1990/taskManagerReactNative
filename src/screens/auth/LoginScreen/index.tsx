@@ -1,18 +1,23 @@
 // react
 import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Alert } from "react-native";
 // screens
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 // firebase
 import * as firebase from "firebase";
-// styles
-import { StyleSheet, Text, View, Alert } from "react-native";
 
 export default ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onLoginPress = () => {};
+  const onLoginPress = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then()
+      .catch(error => Alert.alert(error.message));
+  };
 
   const toSignUp = () => navigation.navigate("SignUp");
 
@@ -22,6 +27,7 @@ export default ({ navigation }) => {
       <Input
         label="Email"
         placeholder="enter email..."
+        keyboardType="email-address"
         onChangeText={email => setEmail(email)}
         value={email}
       />
