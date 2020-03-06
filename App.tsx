@@ -6,8 +6,18 @@ import { AppLoading } from "expo";
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // firebase
 import * as firebase from "firebase";
+import "firebase/firestore";
 // styles
 import { StyleSheet, Text, View, Alert, ActivityIndicator } from "react-native";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAG1lI3IFb1rBbyrXQxua8mna7eFNqfdHQ",
+  authDomain: "task-manager-react-native.firebaseapp.com",
+  projectId: "task-manager-react-native"
+};
+
+!firebase.apps.length && firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();
 
 export default function App() {
   const [isLoadingComplate, setIsLoadingComplate] = useState(false);
@@ -15,12 +25,6 @@ export default function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
 
   useEffect(() => {
-    const firebaseConfig = {
-      apiKey: "AIzaSyAG1lI3IFb1rBbyrXQxua8mna7eFNqfdHQ",
-      authDomain: "task-manager-react-native.web.app"
-    };
-
-    !firebase.apps.length && firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
   }, []);
 

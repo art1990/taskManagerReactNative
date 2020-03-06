@@ -5,6 +5,7 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 // firebase
 import * as firebase from "firebase";
+import { db } from "../../../../App";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 
@@ -14,13 +15,18 @@ export default () => {
   const [passwordConfirm, setPasswordConfirm] = useState("111111");
 
   const onSignUpPress = () => {
-    if (password !== passwordConfirm)
-      return Alert.alert("password donot mutch");
+    if (password !== passwordConfirm) return Alert.alert("password dont mutch");
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(resolve => Alert.alert("User create"))
+      .then(res => {
+        db.collection("users").add({
+          email: "exaple@exaple"
+        });
+
+        Alert.alert("User create");
+      })
       .catch(error => Alert.alert(error.message));
   };
 
