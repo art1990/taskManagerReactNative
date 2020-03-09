@@ -27,7 +27,6 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
-      {console.log(user)}
       <Input
         label="Email"
         placeholder="enter email..."

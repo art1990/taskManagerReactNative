@@ -21,9 +21,12 @@ export default () => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async res => {
-        await db.collection("users").add({
-          email
-        });
+        await db
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            email
+          });
 
         Alert.alert("User create");
       })
