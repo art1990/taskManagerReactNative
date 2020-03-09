@@ -1,8 +1,23 @@
 // react
 import React from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  KeyboardTypeOptions
+} from "react-native";
 
-const Input = ({
+interface InputProps {
+  value: string;
+  onChangeText: (text: string) => void;
+  secureTextEntry?: boolean;
+  label?: string;
+  placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+}
+
+const Input: React.FC<InputProps> = ({
   label,
   value,
   onChangeText,

@@ -1,13 +1,11 @@
 // react
 import React from "react";
-// expo
-import { AppLoading } from "expo";
 // navigation
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
 // styles
-import { StyleSheet, Text, View, Alert, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 
 export default function App() {
   const { initializing, user } = useAuth();
