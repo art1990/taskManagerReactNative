@@ -5,7 +5,7 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 // firebase
 import * as firebase from "firebase";
-import { db } from "../../../../App";
+import { db } from "../../../db";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 
@@ -20,9 +20,9 @@ export default () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        db.collection("users").add({
-          email: "exaple@exaple"
+      .then(async res => {
+        await db.collection("users").add({
+          email
         });
 
         Alert.alert("User create");

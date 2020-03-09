@@ -4,12 +4,15 @@ import { StyleSheet, Text, View, Alert } from "react-native";
 // screens
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+// hooks
+import { useAuth } from "../../../hooks/useAuth";
 // firebase
 import * as firebase from "firebase";
 
 export default ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { user } = useAuth();
 
   const onLoginPress = () => {
     firebase
@@ -24,6 +27,7 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
+      {console.log(user)}
       <Input
         label="Email"
         placeholder="enter email..."

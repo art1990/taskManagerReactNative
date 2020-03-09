@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 8511,
+  "expoServerNgrokUrl": "https://sd-rcx.anonymous.taskmanagerreactnative.exp.direct",
+  "packagerNgrokUrl": "https://packager.sd-rcx.anonymous.taskmanagerreactnative.exp.direct",
+  "ngrokPid": 8538
 }
