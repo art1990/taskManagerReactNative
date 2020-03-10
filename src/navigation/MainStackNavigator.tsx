@@ -3,8 +3,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 // screens
-import LoginScreen from "../screens/auth/LoginScreen";
-import SignUpScreen from "../screens/auth/SignUpScreen";
+import Login from "../screens/auth/Login";
+import SignUp from "../screens/auth/SignUp";
 import Main from "../screens/Main";
 // hooks
 import { useAuth } from "../hooks/useAuth";
@@ -24,8 +24,8 @@ const MainStackNavigator = () => {
       >
         {!user ? (
           <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
           </>
         ) : (
           <Stack.Screen name="Main" component={Main} />

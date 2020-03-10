@@ -1,5 +1,8 @@
 // react
 import React, { useEffect, useState } from "react";
+// redux
+import { connect } from "react-redux";
+import { register } from "../../../domains/user/index";
 // components
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
@@ -9,28 +12,14 @@ import { db } from "../../../db";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 
-export default () => {
+const SignUp = ({ register }) => {
   const [email, setEmail] = useState("test@test.com");
   const [password, setPassword] = useState("111111");
   const [passwordConfirm, setPasswordConfirm] = useState("111111");
 
   const onSignUpPress = () => {
     if (password !== passwordConfirm) return Alert.alert("password dont mutch");
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(async res => {
-        await db
-          .collection("users")
-          .doc(res.user.uid)
-          .set({
-            email
-          });
-
-        Alert.alert("User create");
-      })
-      .catch(error => Alert.alert(error.message));
+    register({ email, password });
   };
 
   return (
@@ -69,3 +58,5 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+export default connect(state => ({}), { register: register.request })(SignUp);
