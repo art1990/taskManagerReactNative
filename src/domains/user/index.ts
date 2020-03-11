@@ -3,9 +3,6 @@ import { createAction } from "redux-saga-actions";
 import actionCreator from "../utils/actionCreator";
 // immer
 import produce from "immer";
-// firebase
-import firebase from "firebase";
-import { db } from "../../db";
 
 // types
 const REGISTER = "taskManager/user/register";
@@ -28,7 +25,7 @@ const initialState = {
   error: null
 };
 
-export default (state = initialState, { type, paload }) =>
+export default (state = initialState, { type, payload }) =>
   produce(state, draft => {
     switch (type) {
       case register.REQUEST:
@@ -39,7 +36,7 @@ export default (state = initialState, { type, paload }) =>
         break;
       case register.FAILURE:
         draft.registering = false;
-        draft.error = paload;
+        draft.error = payload;
         break;
 
       case login.REQUEST:
@@ -51,7 +48,7 @@ export default (state = initialState, { type, paload }) =>
         break;
       case login.FAILURE:
         draft.loginning = false;
-        draft.error = paload;
+        draft.error = payload;
         break;
 
       case logout.type:

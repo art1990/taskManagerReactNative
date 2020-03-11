@@ -4,7 +4,7 @@ import React from "react";
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // redux
 import configureStore from "./src/domains/configureStore";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
@@ -12,18 +12,11 @@ import { useAuth } from "./src/hooks/useAuth";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 // components
 import Button from "./src/components/Button";
-// firebase
-import firebase from "firebase";
 
 const store = configureStore();
 
 export default function App() {
-  const { initializing, user } = useAuth();
-  const dispatch = useDispatch();
-
-  const onLogOut = () => {
-    dispatch(logout.run());
-  };
+  const { initializing } = useAuth();
 
   return (
     <Provider store={store}>
@@ -33,7 +26,6 @@ export default function App() {
         ) : (
           <MainStackNavigator />
         )}
-        {user && <Button onPress={onLogOut}>LogOut</Button>}
       </View>
     </Provider>
   );

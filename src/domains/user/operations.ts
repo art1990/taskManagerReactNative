@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 // redux
 import { register, login, logout, updateUserPassword } from "./index";
 // saga
-import { takeEvery, put, select, call } from "redux-saga/effects";
+import { takeEvery, put } from "redux-saga/effects";
 // utils
 import { db, firebaseApp } from "../../db";
 
@@ -19,7 +19,7 @@ function* registerUser({ payload: { email, password } }) {
     yield put(register.success());
   } catch (err) {
     Alert.alert(err.message);
-    yield put(register.failed({ err }));
+    yield put(register.failure({ err }));
   }
 }
 
@@ -28,11 +28,13 @@ function* loginUser({ payload: { email, password } }) {
     yield auth.signInWithEmailAndPassword(email, password);
     yield put(login.success({ user: "user" }));
   } catch (err) {
-    yield put(login.failed({ err }));
+    yield put(login.failure({ err }));
   }
 }
 
-function* logoutUser() {}
+function* logoutUser() {
+  yield auth.signOut();
+}
 
 function* updatePasswordUser() {}
 
