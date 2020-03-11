@@ -6,9 +6,6 @@ import { register } from "../../../domains/user/index";
 // components
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
-// firebase
-import * as firebase from "firebase";
-import { db } from "../../../db";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 

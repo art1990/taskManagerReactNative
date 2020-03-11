@@ -1,6 +1,6 @@
 // react
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 // redux
 import { useDispatch } from "react-redux";
 import { login } from "../../../domains/user";
@@ -18,7 +18,9 @@ export default ({ navigation }) => {
     dispatch(login.request({ email, password }));
   };
 
-  const toSignUp = () => navigation.navigate("SignUp");
+  const toSignUp: () => void = () => {
+    navigation.navigate("SignUp");
+  };
 
   return (
     <View style={styles.container}>

@@ -2,31 +2,43 @@
 import { createAction } from "redux-saga-actions";
 import actionCreator from "../utils/actionCreator";
 // immer
-import produce from "immer";
+import produce, { Draft } from "immer";
 
 // types
-const REGISTER = "taskManager/user/register";
-const LOGIN = "taskManager/user/login";
-const LOGOUT = "taskManager/user/logout";
-const UPDATE_PASSWORD = "taskManager/user/update-password";
+enum Types {
+  REGISTER = "taskManager/user/register",
+  LOGIN = "taskManager/user/login",
+  LOGOUT = "taskManager/user/logout",
+  UPDATE_PASSWORD = "taskManager/user/update-password"
+}
 
 // actions
-export const register = createAction(REGISTER);
-export const login = createAction(LOGIN);
-export const logout = actionCreator(LOGOUT);
-export const updateUserPassword = createAction(UPDATE_PASSWORD);
+export const register = createAction(Types.REGISTER);
+export const login = createAction(Types.LOGIN);
+export const logout = actionCreator(Types.LOGOUT);
+export const updateUserPassword = createAction(Types.UPDATE_PASSWORD);
 
-//reducer
+//initial state
+interface UserState {
+  user: null | {};
+  loginning: boolean;
+  registering: boolean;
+  error: string;
+}
 
-const initialState = {
+const initialState: UserState = {
   user: null,
   loginning: false,
   registering: false,
   error: null
 };
 
-export default (state = initialState, { type, payload }) =>
-  produce(state, draft => {
+//reducer
+export default produce(
+  (
+    draft: Draft<UserState> = initialState,
+    { type, payload }: { type: string; payload?: any }
+  ) => {
     switch (type) {
       case register.REQUEST:
         draft.registering = true;
@@ -58,4 +70,5 @@ export default (state = initialState, { type, payload }) =>
       default:
         return draft;
     }
-  });
+  }
+);
