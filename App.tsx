@@ -4,7 +4,8 @@ import React from "react";
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // redux
 import configureStore from "./src/domains/configureStore";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
+import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
 // styles
@@ -18,9 +19,10 @@ const store = configureStore();
 
 export default function App() {
   const { initializing, user } = useAuth();
+  const dispatch = useDispatch();
 
   const onLogOut = () => {
-    firebase.auth().signOut();
+    dispatch(logout.run());
   };
 
   return (

@@ -7,11 +7,11 @@ import { takeEvery, put, select, call } from "redux-saga/effects";
 // utils
 import { db, firebaseApp } from "../../db";
 
+const auth = firebaseApp.auth();
+
 function* registerUser({ payload: { email, password } }) {
   try {
-    const { user } = yield firebaseApp
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
     yield db
       .collection("users")
       .doc(user.uid)
@@ -23,7 +23,14 @@ function* registerUser({ payload: { email, password } }) {
   }
 }
 
-function* loginUser() {}
+function* loginUser({ payload: { email, password } }) {
+  try {
+    yield auth.signInWithEmailAndPassword(email, password);
+    yield put(login.success({ user: "user" }));
+  } catch (err) {
+    yield put(login.failed({ err }));
+  }
+}
 
 function* logoutUser() {}
 

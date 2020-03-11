@@ -1,7 +1,7 @@
 // react
 import React, { useEffect, useState } from "react";
 // redux
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { register } from "../../../domains/user/index";
 // components
 import Input from "../../../components/Input";
@@ -12,14 +12,16 @@ import { db } from "../../../db";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 
-const SignUp = ({ register }) => {
+export default () => {
   const [email, setEmail] = useState("test@test.com");
   const [password, setPassword] = useState("111111");
   const [passwordConfirm, setPasswordConfirm] = useState("111111");
 
+  const dispatch = useDispatch();
+
   const onSignUpPress = () => {
     if (password !== passwordConfirm) return Alert.alert("password dont mutch");
-    register({ email, password });
+    dispatch(register.request({ email, password }));
   };
 
   return (
@@ -58,5 +60,3 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
-export default connect(state => ({}), { register: register.request })(SignUp);

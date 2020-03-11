@@ -1,25 +1,21 @@
 // react
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
+// redux
+import { useDispatch } from "react-redux";
+import { login } from "../../../domains/user";
 // screens
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
-// hooks
-import { useAuth } from "../../../hooks/useAuth";
-// firebase
-import * as firebase from "firebase";
 
 export default ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user } = useAuth();
+
+  const dispatch = useDispatch();
 
   const onLoginPress = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then()
-      .catch(error => Alert.alert(error.message));
+    dispatch(login.request({ email, password }));
   };
 
   const toSignUp = () => navigation.navigate("SignUp");
