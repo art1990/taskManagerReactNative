@@ -10,9 +10,9 @@ import Button from "../../../components/Button";
 import { StyleSheet, Text, View, Alert } from "react-native";
 
 export default () => {
-  const [email, setEmail] = useState("test@test.com");
-  const [password, setPassword] = useState("111111");
-  const [passwordConfirm, setPasswordConfirm] = useState("111111");
+  const [email, setEmail] = useState<string>("test@test.com");
+  const [password, setPassword] = useState<string>("111111");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("111111");
 
   const dispatch = useDispatch();
 
@@ -27,21 +27,21 @@ export default () => {
       <Input
         label="Email"
         placeholder="enter email..."
-        onChangeText={email => setEmail(email)}
+        onChangeText={text => setEmail(text)}
         value={email}
       />
       <Input
         label="Password"
         placeholder="enter password..."
         secureTextEntry
-        onChangeText={password => setPassword(password)}
+        onChangeText={text => setPassword(text)}
         value={password}
       />
       <Input
         label="Repeat password"
         placeholder="repeat password..."
         secureTextEntry
-        onChangeText={passwordConfirm => setPasswordConfirm(passwordConfirm)}
+        onChangeText={text => setPasswordConfirm(text)}
         value={passwordConfirm}
       />
       <Button onPress={onSignUpPress}>Sign up</Button>

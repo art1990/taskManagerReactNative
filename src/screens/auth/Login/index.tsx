@@ -9,8 +9,8 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 
 export default ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const dispatch = useDispatch();
 
@@ -29,14 +29,14 @@ export default ({ navigation }) => {
         label="Email"
         placeholder="enter email..."
         keyboardType="email-address"
-        onChangeText={email => setEmail(email)}
+        onChangeText={text => setEmail(text)}
         value={email}
       />
       <Input
         label="Password"
         placeholder="enter password..."
         secureTextEntry
-        onChangeText={password => setPassword(password)}
+        onChangeText={text => setPassword(text)}
         value={password}
       />
       <Button onPress={onLoginPress}>Login</Button>

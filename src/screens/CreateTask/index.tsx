@@ -4,11 +4,9 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import Input from "../../components/Input";
 
-interface CreateTaskProps {}
-
-const CreateTask: React.FC<CreateTaskProps> = () => {
-  const [title, setTitle] = useState("");
-  const [project, setProject] = useState("");
+const CreateTask: React.FC = () => {
+  const [title, setTitle] = useState<string>("");
+  const [project, setProject] = useState<string>("");
 
   return (
     <View>
