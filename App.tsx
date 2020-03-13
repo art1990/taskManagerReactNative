@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 // navigation
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // redux
@@ -9,7 +10,7 @@ import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
 // styles
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+
 // components
 import Button from "./src/components/Button";
 
