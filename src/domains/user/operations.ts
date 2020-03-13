@@ -38,7 +38,7 @@ function* logoutUser() {
 
 function* updatePasswordUser() {}
 
-export default function* watchIncrement() {
+export default function* watchUser() {
   yield takeEvery(register.REQUEST, registerUser);
   yield takeEvery(login.REQUEST, loginUser);
   yield takeEvery(logout.type, logoutUser);

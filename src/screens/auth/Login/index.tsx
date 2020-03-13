@@ -4,11 +4,13 @@ import { StyleSheet, Text, View } from "react-native";
 // redux
 import { useDispatch } from "react-redux";
 import { login } from "../../../domains/user";
+// components
+import KeyboardView from "../../../components/KeyboardView";
 // screens
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 
-export default ({ navigation }) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -24,21 +26,25 @@ export default ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
-      <Input
-        label="Email"
-        placeholder="enter email..."
-        keyboardType="email-address"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <Input
-        label="Password"
-        placeholder="enter password..."
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
+      <KeyboardView>
+        <Text>Login</Text>
+        <View style={{ justifyContent: "center", flex: 1 }}>
+          <Input
+            label="Email"
+            placeholder="enter email..."
+            keyboardType="email-address"
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
+          <Input
+            label="Password"
+            placeholder="enter password..."
+            secureTextEntry
+            onChangeText={text => setPassword(text)}
+            value={password}
+          />
+        </View>
+      </KeyboardView>
       <Button onPress={onLoginPress}>Login</Button>
       <Button onPress={toSignUp}>Sign Up</Button>
     </View>
@@ -48,8 +54,11 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: "column",
+    backgroundColor: "pink",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
+
+export default Login;

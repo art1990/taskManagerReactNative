@@ -11,13 +11,17 @@ import { useAuth } from "../../hooks/useAuth";
 // db
 import { db } from "../../db";
 
-export default () => {
+export default ({ navigation }) => {
   const { user } = useAuth();
 
   const dispatch = useDispatch();
 
   const onLogOut = () => {
     dispatch(logout.run());
+  };
+
+  const toAddTask = () => {
+    navigation.navigate("Create new task");
   };
 
   useEffect(() => {
@@ -32,6 +36,7 @@ export default () => {
     <View>
       <Text>Task List</Text>
       {user && <Button onPress={onLogOut}>LogOut</Button>}
+      <Button onPress={toAddTask}>Add task</Button>
     </View>
   );
 };
