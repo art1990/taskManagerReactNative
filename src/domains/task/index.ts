@@ -18,7 +18,7 @@ enum Types {
 export const start = actionCreator(Types.START);
 export const stop = actionCreator(Types.STOP);
 export const pause = actionCreator(Types.PAUSE);
-export const create = createAction(Types.CREATE);
+export const add = createAction(Types.CREATE);
 export const remove = createAction(Types.REMOVE);
 export const update = createAction(Types.UPDATE);
 
@@ -62,7 +62,7 @@ export default produce(
       case start.type:
         draft.taskData.title = payload.title;
         draft.taskData.project = payload.project;
-        draft.taskData.startTime = payload.starTime;
+        draft.taskData.startTime = payload.startTime;
 
       default:
         return draft;

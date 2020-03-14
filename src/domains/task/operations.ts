@@ -1,5 +1,5 @@
 // redux
-import { start, create, remove, update } from "./index";
+import { start, add, remove, update } from "./index";
 // saga
 import { takeEvery, put } from "redux-saga/effects";
 // utils
@@ -9,7 +9,7 @@ const auth = firebaseApp.auth();
 
 function* startTask() {}
 
-function* createTask({ payload: { title, project } }) {
+function* addTask({ payload: { title, project } }) {
   try {
   } catch (err) {}
 }
@@ -20,7 +20,7 @@ function* updateTask() {}
 
 export default function* watchTask() {
   yield takeEvery(start.type, startTask);
-  yield takeEvery(create.REQUEST, createTask);
+  yield takeEvery(add.REQUEST, addTask);
   yield takeEvery(remove.REQUEST, removeTask);
   yield takeEvery(update.REQUEST, updateTask);
 }

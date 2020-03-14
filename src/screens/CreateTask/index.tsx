@@ -7,15 +7,20 @@ import { useDispatch } from "react-redux";
 // components
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+// date-fns
+import { getUnixTime } from "date-fns";
+// constants
+import { TASKS_LIST } from "../../navigation/routesConstants";
 
-const CreateTask: React.FC = () => {
+const CreateTask: React.FC = ({ navigation }) => {
   const [title, setTitle] = useState<string>("");
   const [project, setProject] = useState<string>("");
 
   const dispatch = useDispatch();
 
   const onStartTask = () => {
-    dispatch(start.run({ title, project, statTime: new Date() }));
+    dispatch(start.run({ title, project, startTime: getUnixTime(new Date()) }));
+    navigation.navigate(TASKS_LIST);
   };
 
   return (
