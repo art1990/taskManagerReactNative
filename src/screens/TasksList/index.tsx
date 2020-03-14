@@ -33,7 +33,7 @@ export default ({ navigation }) => {
     db.collection("users")
       .doc(user.uid)
       .get()
-      .then(res => console.log(res.data()))
+      .then(res => res.data())
       .catch(err => console.log(err));
   }, []);
 

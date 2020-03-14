@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { View, Text } from "react-native";
 // date
-import { fromUnixTime, lightFormat } from "date-fns";
+import { fromUnixTime, lightFormat, getUnixTime } from "date-fns";
 // utils
 import { getUTCDate } from "../../utils/date";
 
@@ -11,17 +11,23 @@ interface Timer {
 }
 
 const Timer: React.FC<Timer> = ({ startTime }) => {
-  const [currentTime, setCurrentTime] = useState<number>(startTime);
+  const [currentTime, setCurrentTime] = useState<number>(
+    getUnixTime(new Date())
+  );
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(currentTime + 1);
-    }, 1000);
-    if (!startTime) return clearInterval(timer);
+    let timer;
+    if (startTime) {
+      timer = setInterval(() => {
+        setCurrentTime(currentTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
     return () => {
       clearInterval(timer);
     };
-  }, [currentTime]);
+  }, [startTime, currentTime]);
 
   const time = useMemo(
     () =>
