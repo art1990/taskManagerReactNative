@@ -9,6 +9,8 @@ import KeyboardView from "../../../components/KeyboardView";
 // screens
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+// constants
+import { SIGNUP } from "../../../navigation/routesConstants";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState<string>("");
@@ -21,7 +23,7 @@ const Login = ({ navigation }) => {
   };
 
   const toSignUp: () => void = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate(SIGNUP);
   };
 
   return (

@@ -8,6 +8,8 @@ import { logout } from "../../domains/user";
 import Button from "../../components/Button";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
+// constants
+import { CREATE_TASK } from "../../navigation/routesConstants";
 // db
 import { db } from "../../db";
 
@@ -21,7 +23,7 @@ export default ({ navigation }) => {
   };
 
   const toAddTask = () => {
-    navigation.navigate("Create new task");
+    navigation.navigate(CREATE_TASK);
   };
 
   useEffect(() => {

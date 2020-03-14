@@ -15,14 +15,28 @@ import Statistic from "../screens/Statistic";
 import Calendar from "../screens/Calendar";
 // hooks
 import { useAuth } from "../hooks/useAuth";
+// constants
+import {
+  LOGIN,
+  SIGNUP,
+  ADD_TAGS,
+  CALENDAR,
+  CREATE_TASK,
+  FILTERS,
+  STATISTIC,
+  TASKS_LIST,
+  CALENDAR_TAB,
+  STATISTIC_TAB,
+  TASK_TAB
+} from "./routesConstants";
 
 // auth stack
 const AuthStack = createStackNavigator();
 
 const AuthStackScreen = () => (
-  <AuthStack.Navigator initialRouteName="Login">
-    <AuthStack.Screen name="Login" component={Login} />
-    <AuthStack.Screen name="SignUp" component={SignUp} />
+  <AuthStack.Navigator initialRouteName={LOGIN}>
+    <AuthStack.Screen name={LOGIN} component={Login} />
+    <AuthStack.Screen name={SIGNUP} component={SignUp} />
   </AuthStack.Navigator>
 );
 
@@ -31,15 +45,15 @@ const TaskStack = createStackNavigator();
 
 const TaskStackScreen = () => (
   <TaskStack.Navigator
-    initialRouteName="TasksList"
+    initialRouteName={TASKS_LIST}
     screenOptions={{
       gestureEnabled: true
     }}
   >
-    <TaskStack.Screen name="Tasks list" component={TasksList} />
-    <TaskStack.Screen name="Create new task" component={CreateTask} />
-    <TaskStack.Screen name="Add tags to task" component={AddTags} />
-    <TaskStack.Screen name="Filters" component={Filters} />
+    <TaskStack.Screen name={TASKS_LIST} component={TasksList} />
+    <TaskStack.Screen name={CREATE_TASK} component={CreateTask} />
+    <TaskStack.Screen name={ADD_TAGS} component={AddTags} />
+    <TaskStack.Screen name={FILTERS} component={Filters} />
   </TaskStack.Navigator>
 );
 
@@ -48,7 +62,7 @@ const StatisticStack = createStackNavigator();
 
 const StatisticStackScreen = () => (
   <StatisticStack.Navigator>
-    <StatisticStack.Screen name="Statistic" component={Statistic} />
+    <StatisticStack.Screen name={STATISTIC} component={Statistic} />
   </StatisticStack.Navigator>
 );
 
@@ -57,7 +71,7 @@ const CalendarStack = createStackNavigator();
 
 const CalendarStackScreen = () => (
   <CalendarStack.Navigator>
-    <CalendarStack.Screen name="Calendar" component={Calendar} />
+    <CalendarStack.Screen name={CALENDAR} component={Calendar} />
   </CalendarStack.Navigator>
 );
 
@@ -66,9 +80,9 @@ const Tabs = createBottomTabNavigator();
 
 const TabsScreen = () => (
   <Tabs.Navigator>
-    <Tabs.Screen name="task" component={TaskStackScreen} />
-    <Tabs.Screen name="statistic" component={StatisticStackScreen} />
-    <Tabs.Screen name="calendar" component={CalendarStackScreen} />
+    <Tabs.Screen name={TASK_TAB} component={TaskStackScreen} />
+    <Tabs.Screen name={STATISTIC_TAB} component={StatisticStackScreen} />
+    <Tabs.Screen name={CALENDAR_TAB} component={CalendarStackScreen} />
   </Tabs.Navigator>
 );
 
