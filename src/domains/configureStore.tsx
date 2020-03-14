@@ -7,21 +7,12 @@ import task from "./task";
 // redux-saga
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./rootSaga";
-// persistor
-import { persistStore, persistReducer } from "redux-persist";
-
-// persisit configuration
-const persistConfig = {
-  key: "taskData",
-  storage: AsyncStorage,
-  whitelist: ["taskData"]
-};
 
 // store
 const configureStore = () => {
   const rootReducer = combineReducers({
     user,
-    task: persistReducer(persistConfig, task)
+    task
   });
 
   const sagaMiddleware = createSagaMiddleware();
@@ -36,7 +27,6 @@ const configureStore = () => {
   );
   return {
     store,
-    persistor: persistStore(store),
     runSaga: sagaMiddleware.run(rootSaga)
   };
 };

@@ -19,7 +19,9 @@ const CreateTask: React.FC = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const onStartTask = () => {
-    dispatch(start.run({ title, project, startTime: getUnixTime(new Date()) }));
+    dispatch(
+      start.request({ title, project, startTime: getUnixTime(new Date()) })
+    );
     navigation.navigate(TASKS_LIST);
   };
 

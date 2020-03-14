@@ -1,5 +1,9 @@
 // react
-import React from "react";
+import React, { useEffect } from "react";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../domains/user/selectors";
+import { initialize } from "../domains/user";
 // navigation
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -89,6 +93,12 @@ const TabsScreen = () => (
 // root stack
 const MainStackNavigator = () => {
   const { user } = useAuth();
+  const userReduxData = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    !userReduxData.user && user && dispatch(initialize.run(user));
+  }, []);
 
   return (
     <NavigationContainer>

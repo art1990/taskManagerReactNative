@@ -16,7 +16,7 @@ function* registerUser({ payload: { email, password } }) {
       .collection("users")
       .doc(user.uid)
       .set({ email });
-    yield put(register.success());
+    yield put(register.success(user));
   } catch (err) {
     Alert.alert(err.message);
     yield put(register.failure({ err }));
@@ -25,8 +25,8 @@ function* registerUser({ payload: { email, password } }) {
 
 function* loginUser({ payload: { email, password } }) {
   try {
-    yield auth.signInWithEmailAndPassword(email, password);
-    yield put(login.success({ user: "user" }));
+    const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    yield put(login.success(user));
   } catch (err) {
     yield put(login.failure({ err }));
   }

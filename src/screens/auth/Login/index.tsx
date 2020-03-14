@@ -12,7 +12,11 @@ import Button from "../../../components/Button";
 // constants
 import { SIGNUP } from "../../../navigation/routesConstants";
 
-const Login = ({ navigation }) => {
+interface ILogin {
+  navigation: any;
+}
+
+const Login: React.FC<ILogin> = ({ navigation }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 

@@ -9,7 +9,7 @@ import Button from "../../../components/Button";
 // styles
 import { StyleSheet, Text, View, Alert } from "react-native";
 
-export default () => {
+const SignUp: React.FC = () => {
   const [email, setEmail] = useState<string>("test@test.com");
   const [password, setPassword] = useState<string>("111111");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("111111");
@@ -57,3 +57,5 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+export default SignUp;

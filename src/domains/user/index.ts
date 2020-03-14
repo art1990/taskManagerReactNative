@@ -6,6 +6,7 @@ import produce, { Draft } from "immer";
 
 // types
 enum Types {
+  INITIALIZE = "taskManager/user/initialize",
   REGISTER = "taskManager/user/register",
   LOGIN = "taskManager/user/login",
   LOGOUT = "taskManager/user/logout",
@@ -13,6 +14,7 @@ enum Types {
 }
 
 // actions
+export const initialize = actionCreator(Types.INITIALIZE);
 export const register = createAction(Types.REGISTER);
 export const login = createAction(Types.LOGIN);
 export const logout = actionCreator(Types.LOGOUT);
@@ -40,10 +42,15 @@ export default produce(
     { type, payload }: { type: string; payload?: any }
   ) => {
     switch (type) {
+      case initialize.type:
+        draft.user = payload;
+        break;
+
       case register.REQUEST:
         draft.registering = true;
         break;
       case register.SUCCESS:
+        draft.user = payload;
         draft.registering = false;
         break;
       case register.FAILURE:
