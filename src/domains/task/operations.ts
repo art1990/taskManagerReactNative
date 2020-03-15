@@ -5,18 +5,17 @@ import { initialize } from "../user";
 // saga
 import { takeEvery, put, take, select } from "redux-saga/effects";
 // utils
-import { db, firebaseApp } from "../../db";
+import { db, firebaseApp } from "../../fireBase";
 // date
 import { getUnixTime } from "date-fns";
 
 const auth = firebaseApp.auth();
 
 // user initialize in getIncomplete saga
-let user, userDoc;
+let user: any, userDoc: any;
 
 function* startTask({ payload }) {
   try {
-    // const { user } = yield select(selectUser);
     yield userDoc.update({ taskData: payload });
 
     yield put(start.success(payload));
@@ -27,8 +26,6 @@ function* startTask({ payload }) {
 
 function* addTask({ payload }) {
   try {
-    // const { user } = yield select(selectUser);
-
     const endTime = getUnixTime(new Date());
     const duration = endTime - payload.startTime;
     const task = {
@@ -53,7 +50,7 @@ function* updateTask() {}
 
 function* getIncompleteTask() {
   try {
-    yield take(initialize.type);
+    // yield take(initialize.type);
     const userData = yield select(selectUser);
     user = userData.user;
     userDoc = user && db.collection("users").doc(user.uid);
@@ -67,7 +64,7 @@ function* getIncompleteTask() {
 
 function* getTasksList() {
   try {
-    yield take(initialize.type);
+    // yield take(initialize.type);
     const tasksListCol = yield userDoc.collection("tasksList").get();
     const tasksList = yield tasksListCol.docs.map(doc => doc.data());
     yield put(getList.success(tasksList));
@@ -77,6 +74,7 @@ function* getTasksList() {
 }
 
 export default function* watchTask() {
+  yield take(initialize.type);
   yield takeEvery(start.REQUEST, startTask);
   yield takeEvery(add.REQUEST, addTask);
   yield takeEvery(remove.REQUEST, removeTask);

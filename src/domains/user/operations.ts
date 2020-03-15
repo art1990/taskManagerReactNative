@@ -5,7 +5,7 @@ import { register, login, logout, updateUserPassword } from "./index";
 // saga
 import { takeEvery, put } from "redux-saga/effects";
 // utils
-import { db, firebaseApp } from "../../db";
+import { db, firebaseApp } from "../../fireBase";
 
 const auth = firebaseApp.auth();
 

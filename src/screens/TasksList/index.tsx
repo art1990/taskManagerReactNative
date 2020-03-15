@@ -1,13 +1,12 @@
 // react
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../domains/user";
+import { logout, initialize } from "../../domains/user";
 import { add, getIncomplete, getList } from "../../domains/task";
 import { selectTaskData, selectTasksList } from "../../domains/task/selectors";
-
 // components
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";
@@ -22,6 +21,17 @@ export default ({ navigation }) => {
   const { user } = useAuth();
   const taskData = useSelector(selectTaskData) || {};
   const tasksList = useSelector(selectTasksList);
+
+  useEffect(() => {
+    user && dispatch(initialize.run(user));
+  }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getIncomplete.request());
+      dispatch(getList.request());
+    }, [user])
+  );
 
   const dispatch = useDispatch();
 
