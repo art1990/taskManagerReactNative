@@ -50,7 +50,6 @@ function* updateTask() {}
 
 function* getIncompleteTask() {
   try {
-    // yield take(initialize.type);
     const userData = yield select(selectUser);
     user = userData.user;
     userDoc = user && db.collection("users").doc(user.uid);
@@ -64,7 +63,6 @@ function* getIncompleteTask() {
 
 function* getTasksList() {
   try {
-    // yield take(initialize.type);
     const tasksListCol = yield userDoc.collection("tasksList").get();
     const tasksList = yield tasksListCol.docs.map(doc => doc.data());
     yield put(getList.success(tasksList));

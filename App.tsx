@@ -9,7 +9,8 @@ import { Provider } from "react-redux";
 import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
-// styles
+// utils
+import "./src/utils/timeout";
 
 // components
 import Button from "./src/components/Button";

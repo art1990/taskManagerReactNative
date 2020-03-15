@@ -11,6 +11,7 @@ import { selectTaskData, selectTasksList } from "../../domains/task/selectors";
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";
 import TaskInfo from "../../components/TaskInfo";
+import FileUploaderInput from "../../components/FileUploaderInput";
 
 // hooks
 import { useAuth } from "../../hooks/useAuth";
@@ -22,18 +23,19 @@ export default ({ navigation }) => {
   const taskData = useSelector(selectTaskData) || {};
   const tasksList = useSelector(selectTasksList);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     user && dispatch(initialize.run(user));
   }, [user]);
 
   useFocusEffect(
     useCallback(() => {
+      if (!user) return;
       dispatch(getIncomplete.request());
       dispatch(getList.request());
     }, [user])
   );
-
-  const dispatch = useDispatch();
 
   const onLogOut = () => {
     dispatch(logout.run());
@@ -46,13 +48,6 @@ export default ({ navigation }) => {
   const toAddTask = () => {
     navigation.navigate(CREATE_TASK);
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(getIncomplete.request());
-      dispatch(getList.request());
-    }, [user])
-  );
 
   const { startTime, title } = taskData;
   return (
@@ -70,6 +65,7 @@ export default ({ navigation }) => {
       {tasksList?.map(({ title, duration }, i) => (
         <TaskInfo key={i} title={title} duration={duration} />
       ))}
+      <FileUploaderInput />
     </View>
   );
 };
