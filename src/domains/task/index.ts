@@ -85,7 +85,6 @@ export default produce(
         draft.taskData = initialState.taskData;
         break;
       case add.FAILURE:
-        console.log(payload);
         draft.meta.error = payload;
         draft.meta.isLoading = false;
         break;
@@ -110,7 +109,6 @@ export default produce(
         draft.meta.isLoading = false;
         break;
       case getList.FAILURE:
-        console.log(payload);
         draft.meta.error = payload;
         draft.meta.isLoading = false;
         break;

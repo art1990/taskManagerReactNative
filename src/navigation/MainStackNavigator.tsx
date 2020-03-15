@@ -97,7 +97,7 @@ const MainStackNavigator = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !userReduxData.user && user && dispatch(initialize.run(user));
+    user && dispatch(initialize.run(user));
   }, [user]);
 
   return (

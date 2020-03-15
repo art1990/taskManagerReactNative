@@ -1,6 +1,7 @@
 // react
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback } from "react";
 import { View, Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../domains/user";
@@ -36,10 +37,12 @@ export default ({ navigation }) => {
     navigation.navigate(CREATE_TASK);
   };
 
-  useEffect(() => {
-    dispatch(getIncomplete.request());
-    dispatch(getList.request());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getIncomplete.request());
+      dispatch(getList.request());
+    }, [user])
+  );
 
   const { startTime, title } = taskData;
   return (
