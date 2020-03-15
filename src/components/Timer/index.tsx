@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 // date
 import { fromUnixTime, lightFormat, getUnixTime } from "date-fns";
 // utils
-import { getUTCDate } from "../../utils/date";
+import { getUTCDate, formatToUTCTime } from "../../utils/date";
 
 interface Timer {
   startTime: number;
@@ -32,8 +32,7 @@ const Timer: React.FC<Timer> = ({ startTime }) => {
   const time = useMemo(
     () =>
       (() => {
-        const date = fromUnixTime(currentTime - startTime);
-        return lightFormat(getUTCDate(date), "HH:mm:ss");
+        return formatToUTCTime(currentTime - startTime);
       })(),
     [startTime, currentTime]
   );

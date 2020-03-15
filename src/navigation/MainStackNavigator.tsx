@@ -98,7 +98,7 @@ const MainStackNavigator = () => {
 
   useEffect(() => {
     !userReduxData.user && user && dispatch(initialize.run(user));
-  }, []);
+  }, [user]);
 
   return (
     <NavigationContainer>

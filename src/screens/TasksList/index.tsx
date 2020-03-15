@@ -4,9 +4,9 @@ import { View, Text } from "react-native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../domains/user";
-import { add, getIncomplete } from "../../domains/task";
+import { add, getIncomplete, getList } from "../../domains/task";
 import { selectTaskData, selectTasksList } from "../../domains/task/selectors";
-import { selectUser } from "../../domains/user/selectors";
+
 // components
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";
@@ -16,12 +16,10 @@ import TaskInfo from "../../components/TaskInfo";
 import { useAuth } from "../../hooks/useAuth";
 // constants
 import { CREATE_TASK } from "../../navigation/routesConstants";
-// db
-import { db } from "../../db";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
-  const taskData = useSelector(selectTaskData);
+  const taskData = useSelector(selectTaskData) || {};
   const tasksList = useSelector(selectTasksList);
 
   const dispatch = useDispatch();
@@ -39,8 +37,9 @@ export default ({ navigation }) => {
   };
 
   useEffect(() => {
-    dispatch(getIncomplete.request({ user }));
-  }, [user]);
+    dispatch(getIncomplete.request());
+    dispatch(getList.request());
+  }, []);
 
   const { startTime, title } = taskData;
   return (
@@ -55,8 +54,8 @@ export default ({ navigation }) => {
       )}
       <Button onPress={toAddTask}>Add task</Button>
       <Button onPress={onCreateTask}>Create Task</Button>
-      {tasksList?.map(({ title, duration }) => (
-        <TaskInfo title={title} duration={duration} />
+      {tasksList?.map(({ title, duration }, i) => (
+        <TaskInfo key={i} title={title} duration={duration} />
       ))}
     </View>
   );

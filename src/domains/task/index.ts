@@ -12,7 +12,8 @@ enum Types {
   ADD = "taskManager/task/add",
   REMOVE = "taskManager/task/remove",
   UPDATE = "taskManager/task/update",
-  GET_INCOMPLETE = "taskManager/task/getIncomplate"
+  GET_INCOMPLETE = "taskManager/task/getIncomplate",
+  GET_LIST = "taskManager/task/getList"
 }
 
 // actions
@@ -23,11 +24,13 @@ export const add = createAction(Types.ADD);
 export const remove = createAction(Types.REMOVE);
 export const update = createAction(Types.UPDATE);
 export const getIncomplete = createAction(Types.GET_INCOMPLETE);
+export const getList = createAction(Types.GET_LIST);
 
 // initial state
 interface ITaskState {
   tasksList: null | object[];
   taskData: {
+    id: null | string;
     title: string;
     project: string;
     startTime?: object;
@@ -41,6 +44,7 @@ interface ITaskState {
 const initialState: ITaskState = {
   tasksList: null,
   taskData: {
+    id: null,
     title: "",
     project: "",
     startTime: null,
@@ -65,7 +69,6 @@ export default produce(
         draft.meta.isLoading = true;
         break;
       case start.SUCCESS:
-        console;
         draft.taskData = payload;
         draft.meta.isLoading = false;
         break;
@@ -75,14 +78,14 @@ export default produce(
       case add.REQUEST:
         draft.meta.isLoading = true;
         break;
+
       case add.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tasksList = draft.tasksList
-          ? [...draft.tasksList, payload]
-          : [payload];
+        draft.tasksList = [...(draft.tasksList || []), payload];
         draft.taskData = initialState.taskData;
         break;
       case add.FAILURE:
+        console.log(payload);
         draft.meta.error = payload;
         draft.meta.isLoading = false;
         break;
@@ -95,10 +98,22 @@ export default produce(
         draft.meta.isLoading = false;
         break;
       case getIncomplete.FAILURE:
+        draft.meta.error = payload;
+        draft.meta.isLoading = false;
+        break;
+
+      case getList.REQUEST:
+        draft.meta.isLoading = true;
+        break;
+      case getList.SUCCESS:
+        draft.tasksList = payload;
+        draft.meta.isLoading = false;
+        break;
+      case getList.FAILURE:
         console.log(payload);
         draft.meta.error = payload;
         draft.meta.isLoading = false;
-
+        break;
       default:
         return draft;
     }
