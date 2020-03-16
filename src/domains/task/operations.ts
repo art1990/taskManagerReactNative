@@ -5,7 +5,7 @@ import { initialize } from "../user";
 // saga
 import { takeEvery, put, take, select } from "redux-saga/effects";
 // utils
-import { db, firebaseApp } from "../../fireBase";
+import { db, storage, firebaseApp } from "../../fireBase";
 // date
 import { getUnixTime } from "date-fns";
 
@@ -16,9 +16,19 @@ let user: any, userDoc: any;
 
 function* startTask({ payload }) {
   try {
-    yield userDoc.update({ taskData: payload });
+    const { file } = payload;
+    const response = yield fetch(file.uri);
+    const blob = yield response.blob();
 
-    yield put(start.success(payload));
+    const ref = storage.ref().child("file/" + file.name);
+    const snapshot = yield ref.put(blob);
+
+    const url = yield snapshot.ref.getDownloadURL();
+    yield userDoc.update({
+      taskData: { ...payload, file: { name: file.name, url, size: file.size } }
+    });
+
+    yield put(start.success({ ...payload, url }));
   } catch (err) {
     yield put(start.failure(err));
   }

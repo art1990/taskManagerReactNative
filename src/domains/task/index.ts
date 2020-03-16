@@ -41,6 +41,7 @@ interface ITaskState {
     endTime?: object;
     duration?: number;
     isPaused: boolean;
+    file: null | object[];
   };
   meta: { isLoading: boolean; error: null | {} };
 }
@@ -54,7 +55,8 @@ const initialState: ITaskState = {
     startTime: null,
     endTime: null,
     duration: null,
-    isPaused: false
+    isPaused: false,
+    file: null
   },
   meta: {
     isLoading: false,

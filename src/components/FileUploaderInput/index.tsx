@@ -3,11 +3,10 @@ import React from "react";
 import { View, Button, Alert } from "react-native";
 // expo
 import * as DocumentPicker from "expo-document-picker";
-
 // firebase
 import { storage } from "../../fireBase";
 
-const FileUploaderInput = () => {
+const FileUploaderInput = ({ setFile }) => {
   const uploadFile = async (uri, fileName) => {
     const response = await fetch(uri);
     const blob = await response.blob();
@@ -17,17 +16,24 @@ const FileUploaderInput = () => {
   };
 
   const onChooseFilePress = async () => {
-    let { type, name, uri } = await DocumentPicker.getDocumentAsync();
+    const file = await DocumentPicker.getDocumentAsync();
 
-    if (type === "success") {
-      uploadFile(uri, name)
-        .then(() => {
-          Alert.alert("Success");
-        })
-        .catch(error => {
-          Alert.alert(error);
-        });
+    if (file.type === "success") {
+      setFile(file);
+      Alert.alert("Success");
+    } else {
+      Alert.alert("file donot upload");
     }
+
+    // if (type === "success") {
+    //   uploadFile(uri, name)
+    //     .then(() => {
+    //       Alert.alert("Success");
+    //     })
+    //     .catch(error => {
+    //       Alert.alert(error);
+    //     });
+    // }
   };
 
   return (

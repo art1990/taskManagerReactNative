@@ -11,7 +11,6 @@ import { selectTaskData, selectTasksList } from "../../domains/task/selectors";
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";
 import TaskInfo from "../../components/TaskInfo";
-import FileUploaderInput from "../../components/FileUploaderInput";
 
 // hooks
 import { useAuth } from "../../hooks/useAuth";
@@ -62,10 +61,9 @@ export default ({ navigation }) => {
       )}
       <Button onPress={toAddTask}>Add task</Button>
       <Button onPress={onCreateTask}>Create Task</Button>
-      {tasksList?.map(({ title, duration }, i) => (
-        <TaskInfo key={i} title={title} duration={duration} />
+      {tasksList?.map(({ title, duration, id }) => (
+        <TaskInfo key={id} title={title} duration={duration} />
       ))}
-      <FileUploaderInput />
     </View>
   );
 };
