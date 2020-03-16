@@ -11,7 +11,7 @@ import FileUploaderInput from "../../components/FileUploaderInput";
 // date-fns
 import { getUnixTime } from "date-fns";
 // constants
-import { TASKS_LIST } from "../../navigation/routesConstants";
+import { TASKS_LIST } from "../../navigation/routes";
 
 const CreateTask: React.FC = ({ navigation }) => {
   const [title, setTitle] = useState<string>("");

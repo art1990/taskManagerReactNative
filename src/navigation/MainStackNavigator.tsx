@@ -28,7 +28,7 @@ import {
   CALENDAR_TAB,
   STATISTIC_TAB,
   TASK_TAB
-} from "./routesConstants";
+} from "./routes";
 
 // auth stack
 const AuthStack = createStackNavigator();

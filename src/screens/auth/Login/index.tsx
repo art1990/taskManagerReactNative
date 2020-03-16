@@ -10,7 +10,7 @@ import KeyboardView from "../../../components/KeyboardView";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 // constants
-import { SIGNUP } from "../../../navigation/routesConstants";
+import { SIGNUP } from "../../../navigation/routes";
 
 interface ILogin {
   navigation: any;

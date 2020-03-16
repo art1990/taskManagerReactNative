@@ -5,20 +5,18 @@ import actionCreator from "../utils/actionCreator";
 import produce, { Draft } from "immer";
 
 // types
-enum Types {
-  INITIALIZE = "taskManager/user/initialize",
-  REGISTER = "taskManager/user/register",
-  LOGIN = "taskManager/user/login",
-  LOGOUT = "taskManager/user/logout",
-  UPDATE_PASSWORD = "taskManager/user/update-password"
-}
+const INITIALIZE = "taskManager/user/initialize";
+const REGISTER = "taskManager/user/register";
+const LOGIN = "taskManager/user/login";
+const LOGOUT = "taskManager/user/logout";
+const UPDATE_PASSWORD = "taskManager/user/update-password";
 
 // actions
-export const initialize = actionCreator(Types.INITIALIZE);
-export const register = createAction(Types.REGISTER);
-export const login = createAction(Types.LOGIN);
-export const logout = actionCreator(Types.LOGOUT);
-export const updateUserPassword = createAction(Types.UPDATE_PASSWORD);
+export const initialize = actionCreator(INITIALIZE);
+export const register = createAction(REGISTER);
+export const login = createAction(LOGIN);
+export const logout = actionCreator(LOGOUT);
+export const updateUserPassword = createAction(UPDATE_PASSWORD);
 
 //initial state
 interface UserState {

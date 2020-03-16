@@ -15,7 +15,7 @@ import TaskInfo from "../../components/TaskInfo";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 // constants
-import { CREATE_TASK } from "../../navigation/routesConstants";
+import { CREATE_TASK } from "../../navigation/routes";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
