@@ -1,32 +1,26 @@
 // react
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Button, Alert } from "react-native";
 // expo
-import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
 
 // firebase
 import { storage } from "../../fireBase";
 
 const FileUploaderInput = () => {
-  const uploadImage = async (uri, imageName) => {
+  const uploadFile = async (uri, fileName) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-    var ref = storage.ref().child("images/" + imageName);
+    var ref = storage.ref().child("file/" + fileName);
     return ref.put(blob);
   };
 
-  const onChooseImagePress = async () => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+  const onChooseFilePress = async () => {
+    let { type, name, uri } = await DocumentPicker.getDocumentAsync();
 
-    if (permissionResult.granted === false) {
-      Alert.alert("Permission to access camera roll is required!");
-      return;
-    }
-    let result = await ImagePicker.launchCameraAsync();
-
-    if (!result.cancelled) {
-      uploadImage(result.uri, "test-image")
+    if (type === "success") {
+      uploadFile(uri, name)
         .then(() => {
           Alert.alert("Success");
         })
@@ -38,7 +32,7 @@ const FileUploaderInput = () => {
 
   return (
     <View>
-      <Button title="Choose image..." onPress={onChooseImagePress} />
+      <Button title="Choose file" onPress={onChooseFilePress} />
     </View>
   );
 };

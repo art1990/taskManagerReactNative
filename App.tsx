@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
-// utils
+// utils for remove warning setTimeout
 import "./src/utils/timeout";
 
 // components

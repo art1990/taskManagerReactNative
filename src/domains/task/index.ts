@@ -13,7 +13,9 @@ enum Types {
   REMOVE = "taskManager/task/remove",
   UPDATE = "taskManager/task/update",
   GET_INCOMPLETE = "taskManager/task/getIncomplate",
-  GET_LIST = "taskManager/task/getList"
+  GET_LIST = "taskManager/task/getList",
+
+  UPLOAD_FILE = "taskManager/task/uploadFile"
 }
 
 // actions
@@ -25,6 +27,8 @@ export const remove = createAction(Types.REMOVE);
 export const update = createAction(Types.UPDATE);
 export const getIncomplete = createAction(Types.GET_INCOMPLETE);
 export const getList = createAction(Types.GET_LIST);
+
+export const uploadFile = createAction(Types.UPLOAD_FILE);
 
 // initial state
 interface ITaskState {
