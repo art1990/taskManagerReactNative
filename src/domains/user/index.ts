@@ -44,35 +44,35 @@ export default produce(
     switch (type) {
       case initialize.type:
         draft.user = payload;
-        break;
+        return;
 
       case register.REQUEST:
         draft.registering = true;
-        break;
+        return;
       case register.SUCCESS:
         draft.user = payload;
         draft.registering = false;
-        break;
+        return;
       case register.FAILURE:
         draft.registering = false;
         draft.error = payload;
-        break;
+        return;
 
       case login.REQUEST:
         draft.loginning = true;
-        break;
+        return;
       case login.SUCCESS:
         draft.loginning = false;
         draft.user = payload;
-        break;
+        return;
       case login.FAILURE:
         draft.loginning = false;
         draft.error = payload;
-        break;
+        return;
 
       case logout.type:
         draft.user = null;
-        break;
+        return;
 
       default:
         return draft;

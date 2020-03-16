@@ -73,51 +73,52 @@ export default produce(
     switch (type) {
       case start.REQUEST:
         draft.meta.isLoading = true;
-        break;
+        return;
       case start.SUCCESS:
         draft.taskData = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
       case start.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
       case add.REQUEST:
         draft.meta.isLoading = true;
-        break;
+        return;
 
       case add.SUCCESS:
         draft.meta.isLoading = false;
         draft.tasksList = [...(draft.tasksList || []), payload];
         draft.taskData = initialState.taskData;
-        break;
+        return;
       case add.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
 
       case getIncomplete.REQUEST:
         draft.meta.isLoading = true;
-        break;
+        return;
       case getIncomplete.SUCCESS:
         draft.taskData = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
       case getIncomplete.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
 
       case getList.REQUEST:
         draft.meta.isLoading = true;
-        break;
+        return;
       case getList.SUCCESS:
         draft.tasksList = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
       case getList.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
-        break;
+        return;
+
       default:
         return draft;
     }
