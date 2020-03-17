@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 // redux
 import { useDispatch } from "react-redux";
-import { login } from "../../../domains/user";
+import { login } from "../../../redux/user";
 // components
 import KeyboardView from "../../../components/KeyboardView";
 // screens

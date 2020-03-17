@@ -4,9 +4,9 @@ import { View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { logout, initialize } from "../../domains/user";
-import { add, getIncomplete, getList } from "../../domains/task";
-import { selectTaskData, selectTasksList } from "../../domains/task/selectors";
+import { logout, initialize } from "../../redux/user";
+import { add, getIncomplete, getList } from "../../redux/task";
+import { selectTaskData, selectTasksList } from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";

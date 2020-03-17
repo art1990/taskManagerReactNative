@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 // redux
 import { useDispatch } from "react-redux";
-import { register } from "../../../domains/user/index";
+import { register } from "../../../redux/user/index";
 // components
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";

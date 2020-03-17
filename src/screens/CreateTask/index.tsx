@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 // redux
-import { start } from "../../domains/task";
+import { start } from "../../redux/task";
 import { useDispatch } from "react-redux";
 // components
 import Input from "../../components/Input";

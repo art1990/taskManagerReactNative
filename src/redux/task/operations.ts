@@ -1,5 +1,5 @@
 // redux
-import { start, add, remove, update, getIncomplete, getList } from "./";
+import { start, add, remove, update, getIncomplete, getList } from ".";
 import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
