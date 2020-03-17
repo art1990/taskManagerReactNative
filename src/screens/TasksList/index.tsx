@@ -15,7 +15,7 @@ import TaskInfo from "../../components/TaskInfo";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 // constants
-import { CREATE_TASK } from "../../navigation/routes";
+import { Routes } from "../../navigation/routes";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -45,7 +45,7 @@ export default ({ navigation }) => {
   };
 
   const toAddTask = () => {
-    navigation.navigate(CREATE_TASK);
+    navigation.navigate(Routes.CREATE_TASK);
   };
 
   const { startTime, title } = taskData;

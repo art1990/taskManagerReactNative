@@ -10,7 +10,7 @@ import KeyboardView from "../../../components/KeyboardView";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 // constants
-import { SIGNUP } from "../../../navigation/routes";
+import { Routes } from "../../../navigation/routes";
 
 interface ILogin {
   navigation: any;
@@ -27,7 +27,7 @@ const Login: React.FC<ILogin> = ({ navigation }) => {
   };
 
   const toSignUp: () => void = () => {
-    navigation.navigate(SIGNUP);
+    navigation.navigate(Routes.SIGNUP);
   };
 
   return (

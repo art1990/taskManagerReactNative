@@ -1,5 +1,5 @@
 // react
-import React, { useEffect } from "react";
+import React from "react";
 // navigation
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,27 +16,15 @@ import Calendar from "../screens/Calendar";
 // hooks
 import { useAuth } from "../hooks/useAuth";
 // constants
-import {
-  LOGIN,
-  SIGNUP,
-  ADD_TAGS,
-  CALENDAR,
-  CREATE_TASK,
-  FILTERS,
-  STATISTIC,
-  TASKS_LIST,
-  CALENDAR_TAB,
-  STATISTIC_TAB,
-  TASK_TAB
-} from "./routes";
+import { Routes } from "./routes";
 
 // auth stack
 const AuthStack = createStackNavigator();
 
 const AuthStackScreen = () => (
-  <AuthStack.Navigator initialRouteName={LOGIN}>
-    <AuthStack.Screen name={LOGIN} component={Login} />
-    <AuthStack.Screen name={SIGNUP} component={SignUp} />
+  <AuthStack.Navigator initialRouteName={Routes.LOGIN}>
+    <AuthStack.Screen name={Routes.LOGIN} component={Login} />
+    <AuthStack.Screen name={Routes.SIGNUP} component={SignUp} />
   </AuthStack.Navigator>
 );
 
@@ -45,15 +33,15 @@ const TaskStack = createStackNavigator();
 
 const TaskStackScreen = () => (
   <TaskStack.Navigator
-    initialRouteName={TASKS_LIST}
+    initialRouteName={Routes.TASKS_LIST}
     screenOptions={{
       gestureEnabled: true
     }}
   >
-    <TaskStack.Screen name={TASKS_LIST} component={TasksList} />
-    <TaskStack.Screen name={CREATE_TASK} component={CreateTask} />
-    <TaskStack.Screen name={ADD_TAGS} component={AddTags} />
-    <TaskStack.Screen name={FILTERS} component={Filters} />
+    <TaskStack.Screen name={Routes.TASKS_LIST} component={TasksList} />
+    <TaskStack.Screen name={Routes.CREATE_TASK} component={CreateTask} />
+    <TaskStack.Screen name={Routes.ADD_TAGS} component={AddTags} />
+    <TaskStack.Screen name={Routes.FILTERS} component={Filters} />
   </TaskStack.Navigator>
 );
 
@@ -62,7 +50,7 @@ const StatisticStack = createStackNavigator();
 
 const StatisticStackScreen = () => (
   <StatisticStack.Navigator>
-    <StatisticStack.Screen name={STATISTIC} component={Statistic} />
+    <StatisticStack.Screen name={Routes.STATISTIC} component={Statistic} />
   </StatisticStack.Navigator>
 );
 
@@ -71,7 +59,7 @@ const CalendarStack = createStackNavigator();
 
 const CalendarStackScreen = () => (
   <CalendarStack.Navigator>
-    <CalendarStack.Screen name={CALENDAR} component={Calendar} />
+    <CalendarStack.Screen name={Routes.CALENDAR} component={Calendar} />
   </CalendarStack.Navigator>
 );
 
@@ -80,9 +68,9 @@ const Tabs = createBottomTabNavigator();
 
 const TabsScreen = () => (
   <Tabs.Navigator>
-    <Tabs.Screen name={TASK_TAB} component={TaskStackScreen} />
-    <Tabs.Screen name={STATISTIC_TAB} component={StatisticStackScreen} />
-    <Tabs.Screen name={CALENDAR_TAB} component={CalendarStackScreen} />
+    <Tabs.Screen name={Routes.TASK_TAB} component={TaskStackScreen} />
+    <Tabs.Screen name={Routes.STATISTIC_TAB} component={StatisticStackScreen} />
+    <Tabs.Screen name={Routes.CALENDAR_TAB} component={CalendarStackScreen} />
   </Tabs.Navigator>
 );
 
