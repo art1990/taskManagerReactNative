@@ -3,37 +3,22 @@ import { Alert } from "react-native";
 // redux
 import { register, login, logout, updateUserPassword } from "./index";
 // saga
-import { takeEvery, put } from "redux-saga/effects";
-// utils
-import { db, firebaseApp } from "../../fireBase";
+import { takeEvery } from "redux-saga/effects";
+// api
+import { signUpApi, loginApi, logoutApi } from "../../services/api";
+// handlers
+import { apiHandler } from "../utils/apiHandler";
 
-const auth = firebaseApp.auth();
-
-function* registerUser({ payload: { email, password } }) {
-  try {
-    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-    yield db
-      .collection("users")
-      .doc(user.uid)
-      .set({ email });
-    yield put(register.success(user));
-  } catch (err) {
-    Alert.alert(err.message);
-    yield put(register.failure({ err }));
-  }
+function* registerUser({ payload }) {
+  yield apiHandler({ api: signUpApi, argApi: payload }, register);
 }
 
-function* loginUser({ payload: { email, password } }) {
-  try {
-    const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    yield put(login.success(user));
-  } catch (err) {
-    yield put(login.failure({ err }));
-  }
+function* loginUser({ payload }) {
+  yield apiHandler({ api: loginApi, argApi: payload }, login);
 }
 
 function* logoutUser() {
-  yield auth.signOut();
+  yield logoutApi();
 }
 
 function* updatePasswordUser() {}

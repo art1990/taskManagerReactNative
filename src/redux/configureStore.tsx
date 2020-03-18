@@ -1,5 +1,3 @@
-// react
-import { AsyncStorage } from "react-native";
 // redux
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import user from "./user";

@@ -4,9 +4,8 @@ import { StyleSheet, View, ActivityIndicator } from "react-native";
 // navigation
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 // redux
-import configureStore from "./src/domains/configureStore";
+import configureStore from "./src/redux/configureStore";
 import { Provider } from "react-redux";
-import { logout } from "./src/domains/user";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
 // utils for remove warning setTimeout
