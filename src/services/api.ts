@@ -51,3 +51,17 @@ export const addTaskApi = async ({ userDoc, task }) => {
 
   return task;
 };
+
+export const getIncompleteTaskApi = async ({ userDoc }) => {
+  const res = await userDoc.get();
+  const { taskData } = await res.data();
+
+  return taskData;
+};
+
+export const getTaskListApi = async ({ tasksCollection }) => {
+  const tasksListCol = await tasksCollection.get();
+  const tasksList = await tasksListCol.docs.map(doc => doc.data());
+
+  return tasksList;
+};
