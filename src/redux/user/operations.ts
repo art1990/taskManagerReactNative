@@ -21,11 +21,8 @@ function* logoutUser() {
   yield logoutApi();
 }
 
-function* updatePasswordUser() {}
-
 export default function* watchUser() {
   yield takeEvery(register.REQUEST, registerUser);
   yield takeEvery(login.REQUEST, loginUser);
   yield takeEvery(logout.type, logoutUser);
-  yield takeEvery(updateUserPassword.REQUEST, updatePasswordUser);
 }

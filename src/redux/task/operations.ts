@@ -4,6 +4,14 @@ import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
 import { takeEvery, put, take, select } from "redux-saga/effects";
+// api
+import {
+  uploadFileApi,
+  updateIncompleteTaskApi,
+  addTaskApi
+} from "../../services/api";
+// handlers
+import { apiHandler } from "../utils/apiHandler";
 // utils
 import { db, storage, firebaseApp } from "../../fireBase";
 // date
@@ -15,43 +23,45 @@ const auth = firebaseApp.auth();
 let user: any, userDoc: any;
 
 function* startTask({ payload }) {
-  try {
-    const { file } = payload;
-    const response = yield fetch(file.uri);
-    const blob = yield response.blob();
+  // try {
+  //   const { file } = payload;
+  //   const response = yield fetch(file.uri);
+  //   const blob = yield response.blob();
+  //   const ref = storage.ref().child("file/" + file.name);
+  //   const snapshot = yield ref.put(blob);
+  //   const url = yield snapshot.ref.getDownloadURL();
+  //   yield userDoc.update({
+  //     taskData: { ...payload, file: { name: file.name, url, size: file.size } }
+  //   });
+  //   yield put(start.success({ ...payload, url }));
+  // } catch (err) {
+  //   yield put(start.failure(err));
+  // }
 
-    const ref = storage.ref().child("file/" + file.name);
-    const snapshot = yield ref.put(blob);
+  const uri = yield apiHandler({
+    api: uploadFileApi,
+    argApi: payload
+  });
 
-    const url = yield snapshot.ref.getDownloadURL();
-    yield userDoc.update({
-      taskData: { ...payload, file: { name: file.name, url, size: file.size } }
-    });
+  const {
+    file: { name, size }
+  } = payload;
 
-    yield put(start.success({ ...payload, url }));
-  } catch (err) {
-    yield put(start.failure(err));
-  }
+  const argApi = { ...payload, file: { name, size, uri } };
+  yield apiHandler({ api: updateIncompleteTaskApi, argApi }, startTask);
 }
 
 function* addTask({ payload }) {
-  try {
-    const endTime = getUnixTime(new Date());
-    const duration = endTime - payload.startTime;
-    const task = {
-      ...payload,
-      endTime,
-      duration
-    };
-    const tasksListCol = yield userDoc.collection("tasksList");
-    const { id } = yield tasksListCol.add(task);
-    task.id = id;
-    yield tasksListCol.doc(id).update({ id });
-    yield userDoc.update({ taskData: null });
-    yield put(add.success(task));
-  } catch (err) {
-    yield put(add.failure(err));
-  }
+  const endTime = getUnixTime(new Date());
+  const duration = endTime - payload.startTime;
+  const task = {
+    ...payload,
+    endTime,
+    duration
+  };
+
+  yield apiHandler({ api: addTaskApi, argApi: task });
+  yield apiHandler({ api: updateIncompleteTaskApi, argApi: null });
 }
 
 function* removeTask({ payload: { id } }) {}
