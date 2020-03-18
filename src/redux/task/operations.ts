@@ -9,6 +9,7 @@ import {
   uploadFileApi,
   updateIncompleteTaskApi,
   addTaskApi,
+  getIncompleteTaskApi,
   getTaskListApi
 } from "../../services/api";
 // handlers
@@ -68,7 +69,7 @@ function* getIncompleteTask() {
   userDoc = user && db.collection("users").doc(user.uid);
 
   yield apiHandler(
-    { api: getIncompleteTask, argApi: { userDoc } },
+    { api: getIncompleteTaskApi, argApi: { userDoc } },
     getIncomplete
   );
 }
