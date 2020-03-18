@@ -35,12 +35,12 @@ export const uploadFileApi = async ({ file }) => {
   return uri;
 };
 
-export const updateIncompleteTaskApi = async ({ userDoc, data }) => {
+export const updateIncompleteTaskApi = async ({ userDoc, taskData = null }) => {
   await userDoc.update({
-    taskData: { data }
+    taskData
   });
 
-  return data;
+  return taskData;
 };
 
 export const addTaskApi = async ({ userDoc, task }) => {

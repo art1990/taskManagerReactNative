@@ -11,6 +11,6 @@ export function* apiHandler({ api, argApi }, action = undefined) {
     return res;
   } catch (err) {
     yield action && put(action.failure(err));
-    Alert.alert(err);
+    Alert.alert(err.message);
   }
 }

@@ -23,32 +23,25 @@ const auth = firebaseApp.auth();
 let user: any, userDoc: any;
 
 function* startTask({ payload }) {
-  // try {
-  //   const { file } = payload;
-  //   const response = yield fetch(file.uri);
-  //   const blob = yield response.blob();
-  //   const ref = storage.ref().child("file/" + file.name);
-  //   const snapshot = yield ref.put(blob);
-  //   const url = yield snapshot.ref.getDownloadURL();
-  //   yield userDoc.update({
-  //     taskData: { ...payload, file: { name: file.name, url, size: file.size } }
-  //   });
-  //   yield put(start.success({ ...payload, url }));
-  // } catch (err) {
-  //   yield put(start.failure(err));
-  // }
+  let file = null;
 
-  const uri = yield apiHandler({
-    api: uploadFileApi,
-    argApi: payload
-  });
+  if (payload.file) {
+    const uri = yield apiHandler({
+      api: uploadFileApi,
+      argApi: payload
+    });
 
-  const {
-    file: { name, size }
-  } = payload;
+    file = {
+      name: payload.file.name,
+      size: payload.file.size,
+      uri
+    };
+  }
 
-  const argApi = { ...payload, file: { name, size, uri } };
-  yield apiHandler({ api: updateIncompleteTaskApi, argApi }, startTask);
+  const taskData = { ...payload, file };
+
+  const argApi = { userDoc, taskData };
+  yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
 }
 
 function* addTask({ payload }) {
@@ -60,8 +53,10 @@ function* addTask({ payload }) {
     duration
   };
 
-  yield apiHandler({ api: addTaskApi, argApi: task });
-  yield apiHandler({ api: updateIncompleteTaskApi, argApi: null });
+  const argApi = { userDoc, task };
+
+  yield apiHandler({ api: addTaskApi, argApi }, add);
+  yield apiHandler({ api: updateIncompleteTaskApi, argApi: { userDoc } });
 }
 
 function* removeTask({ payload: { id } }) {}
