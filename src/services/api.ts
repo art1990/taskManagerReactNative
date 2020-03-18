@@ -1,6 +1,14 @@
 // firebase
 import { db, firebaseApp, storage } from "../fireBase";
 
+/* START initialize user and userDoc variavle */
+let userDoc, user;
+export const initializeVariableToApiService = async userData => {
+  if (!user) return;
+  user = userData.user;
+  userDoc = db.collection("users").doc(user.uid);
+};
+/* END initialize user and userDoc variavle */
 const auth = firebaseApp.auth();
 
 // user
@@ -23,7 +31,7 @@ export const logoutApi = () => {
 };
 
 // task
-export const uploadFileApi = async ({ file }) => {
+export const uploadFileApi = async file => {
   const response = await fetch(file.uri);
   const blob = await response.blob();
 
@@ -35,7 +43,7 @@ export const uploadFileApi = async ({ file }) => {
   return uri;
 };
 
-export const updateIncompleteTaskApi = async ({ userDoc, taskData = null }) => {
+export const updateIncompleteTaskApi = async (taskData = null) => {
   await userDoc.update({
     taskData
   });
@@ -43,7 +51,7 @@ export const updateIncompleteTaskApi = async ({ userDoc, taskData = null }) => {
   return taskData;
 };
 
-export const addTaskApi = async ({ userDoc, task }) => {
+export const addTaskApi = async task => {
   const tasksListCol = await userDoc.collection("tasksList");
   const { id } = await tasksListCol.add(task);
   task.id = id;
@@ -52,16 +60,16 @@ export const addTaskApi = async ({ userDoc, task }) => {
   return task;
 };
 
-export const getIncompleteTaskApi = async ({ userDoc }) => {
+export const getIncompleteTaskApi = async () => {
   const res = await userDoc.get();
   const { taskData } = await res.data();
 
   return taskData;
 };
 
-export const getTaskListApi = async ({ tasksCollection }) => {
-  const tasksListCol = await tasksCollection.get();
-  const tasksList = await tasksListCol.docs.map(doc => doc.data());
+export const getTaskListApi = async () => {
+  const tasksListCollection = await userDoc.collection("tasksList").get();
+  const tasksList = await tasksListCollection.docs.map(doc => doc.data());
 
   return tasksList;
 };

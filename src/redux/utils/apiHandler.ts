@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 // redux
 import { put, call } from "redux-saga/effects";
 
-export function* apiHandler({ api, argApi }, action = undefined) {
+export function* apiHandler({ api, argApi = undefined }, action = undefined) {
   try {
     const res = yield call(api, argApi);
     yield action && put(action.success(res));

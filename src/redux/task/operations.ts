@@ -6,6 +6,7 @@ import { initialize } from "../user";
 import { takeEvery, take, select } from "redux-saga/effects";
 // api
 import {
+  initializeVariableToApiService,
   uploadFileApi,
   updateIncompleteTaskApi,
   addTaskApi,
@@ -14,13 +15,8 @@ import {
 } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
-// utils
-import { db } from "../../fireBase";
 // date
 import { getUnixTime } from "date-fns";
-
-// user initialize in getIncomplete saga
-let user: any, userDoc: any;
 
 function* startTask({ payload }) {
   let file = null;
@@ -38,25 +34,21 @@ function* startTask({ payload }) {
     };
   }
 
-  const taskData = { ...payload, file };
-
-  const argApi = { userDoc, taskData };
+  const argApi = { ...payload, file };
   yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
 }
 
 function* addTask({ payload }) {
   const endTime = getUnixTime(new Date());
   const duration = endTime - payload.startTime;
-  const task = {
+  const argApi = {
     ...payload,
     endTime,
     duration
   };
 
-  const argApi = { userDoc, task };
-
   yield apiHandler({ api: addTaskApi, argApi }, add);
-  yield apiHandler({ api: updateIncompleteTaskApi, argApi: { userDoc } });
+  yield apiHandler({ api: updateIncompleteTaskApi });
 }
 
 function* removeTask({ payload: { id } }) {}
@@ -65,22 +57,13 @@ function* updateTask() {}
 
 function* getIncompleteTask() {
   const userData = yield select(selectUser);
-  user = userData.user;
-  userDoc = user && db.collection("users").doc(user.uid);
+  initializeVariableToApiService(userData);
 
-  yield apiHandler(
-    { api: getIncompleteTaskApi, argApi: { userDoc } },
-    getIncomplete
-  );
+  yield apiHandler({ api: getIncompleteTaskApi }, getIncomplete);
 }
 
 function* getTasksList() {
-  const tasksCollection = yield userDoc.collection("tasksList");
-
-  yield apiHandler(
-    { api: getTaskListApi, argApi: { tasksCollection } },
-    getList
-  );
+  yield apiHandler({ api: getTaskListApi }, getList);
 }
 
 export default function* watchTask() {
