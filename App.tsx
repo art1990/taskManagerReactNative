@@ -8,9 +8,10 @@ import configureStore from "./src/redux/configureStore";
 import { Provider } from "react-redux";
 // hook
 import { useAuth } from "./src/hooks/useAuth";
+// paper
+import { Provider as PaperProvider } from "react-native-paper";
 // utils for remove warning setTimeout
 import "./src/utils/timeout";
-
 // components
 import Button from "./src/components/Button";
 
@@ -21,13 +22,15 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        {initializing ? (
-          <ActivityIndicator size="large" color="000ff" />
-        ) : (
-          <MainStackNavigator />
-        )}
-      </View>
+      <PaperProvider>
+        <View style={styles.container}>
+          {initializing ? (
+            <ActivityIndicator size="large" color="000ff" />
+          ) : (
+            <MainStackNavigator />
+          )}
+        </View>
+      </PaperProvider>
     </Provider>
   );
 }
