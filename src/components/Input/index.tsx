@@ -1,11 +1,14 @@
 // react
 import React from "react";
-import { StyleSheet, KeyboardTypeOptions } from "react-native";
+import { StyleSheet, KeyboardTypeOptions, View, Image } from "react-native";
 import { TextInput } from "react-native-paper";
+// assets
 
-interface InputProps {
-  value: string;
-  onChangeText: (text: string) => void;
+export interface InputProps {
+  style?: {};
+  name: string;
+  value?: string;
+  onChangeText?: (text: string) => void;
   secureTextEntry?: boolean;
   label?: string;
   placeholder?: string;
@@ -13,38 +16,44 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({
+  style,
   label,
   value,
   onChangeText,
   placeholder,
   secureTextEntry,
-  keyboardType
-}) => (
-  <TextInput
-    style={styles.input}
-    label={label}
-    autoCorrect={false}
-    onChangeText={onChangeText}
-    placeholder={placeholder}
-    keyboardType={keyboardType}
-    secureTextEntry={secureTextEntry}
-    value={value}
-  />
-);
+  keyboardType,
+  name,
+  ...rest
+}) => {
+  return (
+    <View>
+      <TextInput
+        {...rest}
+        mode="outlined"
+        style={[styles.input, style]}
+        label={label}
+        autoCorrect={false}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        value={value}
+        theme={{
+          colors: { primary: "#979797", placeholder: "rgba(0, 0, 0, 0.16)" }
+        }}
+      />
+      {secureTextEntry && (
+        <Image
+          source={require("../../assets/img/eye.svg")}
+          style={{ width: 50, height: 50 }}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    width: "100%",
-    borderColor: "grey",
-    borderWidth: 2
-  },
-  label: {
-    color: "#333",
-    fontSize: 17,
-    fontWeight: "700",
-    width: "100%"
-  },
   input: {
     paddingRight: 5,
     paddingLeft: 5,
@@ -53,12 +62,12 @@ const styles = StyleSheet.create({
     height: 50,
     color: "#333",
     fontSize: 18,
-    fontWeight: "700",
+    fontWeight: "700"
 
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "rgba(0, 0, 0, 0.16);",
-    borderRadius: 3
+    // borderWidth: 1,
+    // borderStyle: "solid",
+    // borderColor: "rgba(0, 0, 0, 0.16);",
+    // borderRadius: 3
   }
 });
 

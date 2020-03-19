@@ -6,6 +6,7 @@ import { register } from "../../../redux/user/index";
 // components
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+import SignUpForm from "../../../components/forms//SignUpForm";
 // navigate
 import { Routes } from "../../../navigation/routes";
 // styles
@@ -18,9 +19,9 @@ const SignUp: React.FC = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const onSignUpPress = () => {
+  const onSignUpPress = data => {
     if (password !== passwordConfirm) return Alert.alert("password dont mutch");
-    dispatch(register.request({ email, password }));
+    dispatch(register.request(data));
   };
 
   const toSignInPress = () => {
@@ -29,32 +30,11 @@ const SignUp: React.FC = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign up</Text>
-      <Input
-        label="Email"
-        placeholder="enter email..."
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <Input
-        label="Password"
-        placeholder="enter password..."
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <Input
-        label="Repeat password"
-        placeholder="repeat password..."
-        secureTextEntry
-        onChangeText={text => setPasswordConfirm(text)}
-        value={passwordConfirm}
-      />
+      <SignUpForm onSubmit={onSignUpPress} />
       <View style={styles.alreadySection}>
         <Text>Already have an account?</Text>
         <Button onPress={toSignInPress}>Sign In</Button>
       </View>
-      <Button onPress={onSignUpPress}>Sign up</Button>
     </View>
   );
 };
