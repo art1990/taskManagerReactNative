@@ -1,12 +1,7 @@
 // react
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  KeyboardTypeOptions
-} from "react-native";
+import { StyleSheet, KeyboardTypeOptions } from "react-native";
+import { TextInput } from "react-native-paper";
 
 interface InputProps {
   value: string;
@@ -25,18 +20,16 @@ const Input: React.FC<InputProps> = ({
   secureTextEntry,
   keyboardType
 }) => (
-  <View style={styles.container}>
-    <Text style={styles.label}>{label}</Text>
-    <TextInput
-      autoCorrect={false}
-      onChangeText={onChangeText}
-      placeholder={placeholder}
-      keyboardType={keyboardType}
-      style={styles.input}
-      secureTextEntry={secureTextEntry}
-      value={value}
-    />
-  </View>
+  <TextInput
+    style={styles.input}
+    label={label}
+    autoCorrect={false}
+    onChangeText={onChangeText}
+    placeholder={placeholder}
+    keyboardType={keyboardType}
+    secureTextEntry={secureTextEntry}
+    value={value}
+  />
 );
 
 const styles = StyleSheet.create({
@@ -44,10 +37,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
     borderColor: "grey",
-    borderBottomWidth: 2
+    borderWidth: 2
   },
   label: {
-    paddingBottom: 0,
     color: "#333",
     fontSize: 17,
     fontWeight: "700",
@@ -58,9 +50,15 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingBottom: 5,
     width: "100%",
+    height: 50,
     color: "#333",
     fontSize: 18,
-    fontWeight: "700"
+    fontWeight: "700",
+
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "rgba(0, 0, 0, 0.16);",
+    borderRadius: 3
   }
 });
 
