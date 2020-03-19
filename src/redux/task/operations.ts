@@ -57,7 +57,7 @@ function* updateTask() {}
 
 function* getIncompleteTask() {
   const userData = yield select(selectUser);
-  initializeVariableToApiService(userData);
+  yield initializeVariableToApiService(userData);
 
   yield apiHandler({ api: getIncompleteTaskApi }, getIncomplete);
 }

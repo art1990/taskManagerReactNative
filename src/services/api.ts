@@ -2,9 +2,11 @@
 import { db, firebaseApp, storage } from "../fireBase";
 
 /* START initialize user and userDoc variavle */
-let userDoc, user;
-export const initializeVariableToApiService = async userData => {
-  if (!user) return;
+let userDoc: firebase.firestore.DocumentReference, user: firebase.User;
+export const initializeVariableToApiService: (userdata: {
+  user: firebase.User;
+}) => Promise<void> = async userData => {
+  if (!userData.user) return;
   user = userData.user;
   userDoc = db.collection("users").doc(user.uid);
 };
