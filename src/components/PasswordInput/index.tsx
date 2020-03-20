@@ -8,20 +8,23 @@ import Input from "../Input";
 import { IInputProps } from "../Input";
 // icons
 import { Feather } from "@expo/vector-icons";
-import { transform } from "@babel/core";
+// constants
+import { Colors } from "../../assets/styles/constants";
 
 interface IPasswordInputProps extends IInputProps {
   iconSize: number;
+  isError?: boolean;
 }
 
 const PasswordInput: React.FC<IPasswordInputProps> = props => {
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
-  const { iconSize } = props;
+  const { iconSize, isError } = props;
 
   const changeSecureTextEntry = () => setSecureTextEntry(!secureTextEntry);
 
-  const size = iconSize || 24;
+  const size = iconSize || 20;
   const name = `eye${secureTextEntry ? "" : "-off"}`;
+  const color = isError ? Colors.error : "rgba(0, 0, 0, 0.16)";
 
   return (
     <View>
@@ -36,8 +39,8 @@ const PasswordInput: React.FC<IPasswordInputProps> = props => {
           { transform: [{ translateY: -size / 2 }] }
         ]}
         name={name}
-        size={24}
-        color="rgba(0, 0, 0, 0.16)"
+        size={size}
+        color={color}
         onPress={changeSecureTextEntry}
       />
     </View>
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
   eyeContainer: {
     position: "absolute",
     top: "50%",
-    right: 10
+    right: 15
   }
 });
 

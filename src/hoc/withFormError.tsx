@@ -3,6 +3,8 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 // react-hook-form
 import { useFormContext } from "react-hook-form";
+// constants
+import { Colors } from "../assets/styles/constants";
 
 function withFormError<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
@@ -13,8 +15,8 @@ function withFormError<T>(Component: React.ComponentType<T>) {
       <View>
         <Component
           {...props}
-          style={error && styles.errorStyle}
-          placeholderColor={error && "red"}
+          placeholderColor={error && Colors.error}
+          isError={!!error}
         />
         {error && <Text style={styles.text}>{error.message}</Text>}
       </View>
@@ -22,11 +24,8 @@ function withFormError<T>(Component: React.ComponentType<T>) {
   };
 }
 const styles = StyleSheet.create({
-  errorStyle: {
-    borderColor: "red"
-  },
   text: {
-    color: "red"
+    color: Colors.error
   }
 });
 
