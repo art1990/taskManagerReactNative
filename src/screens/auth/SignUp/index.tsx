@@ -42,7 +42,6 @@ const SignUp: React.FC = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 22,
     paddingLeft: 24,

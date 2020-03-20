@@ -6,9 +6,9 @@ import Input from "../../../Input";
 // react-hook-form
 import { useFormContext } from "react-hook-form";
 // interfase
-import { InputProps } from "../../../Input";
+import { IInputProps } from "../../../Input";
 
-const FormInput: React.FC<InputProps> = props => {
+const FormInput: React.FC<IInputProps> = props => {
   const context = useFormContext();
   const error = context?.errors[props.name];
 

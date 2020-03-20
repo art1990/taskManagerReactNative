@@ -1,10 +1,10 @@
 // react
 import React from "react";
-import { StyleSheet, KeyboardTypeOptions, View, Image } from "react-native";
+import { StyleSheet, KeyboardTypeOptions, View, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
-// assets
+// icons
 
-export interface InputProps {
+export interface IInputProps {
   style?: {};
   name: string;
   value?: string;
@@ -15,7 +15,7 @@ export interface InputProps {
   keyboardType?: KeyboardTypeOptions;
 }
 
-const Input: React.FC<InputProps> = ({
+const Input: React.FC<IInputProps> = ({
   style,
   label,
   value,
@@ -43,12 +43,6 @@ const Input: React.FC<InputProps> = ({
           colors: { primary: "#979797", placeholder: "rgba(0, 0, 0, 0.16)" }
         }}
       />
-      {secureTextEntry && (
-        <Image
-          source={require("../../assets/img/eye.svg")}
-          style={{ width: 50, height: 50 }}
-        />
-      )}
     </View>
   );
 };
