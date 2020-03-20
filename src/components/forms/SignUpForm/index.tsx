@@ -3,6 +3,7 @@ import React from "react";
 import { View, Button, Alert } from "react-native";
 // componets
 import FormInput from "../../forms/components/FormInput";
+import FormPasswordInput from "../../forms/components/FormPasswordInput";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -41,22 +42,20 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
           defaultValue=""
         />
         <Controller
-          as={FormInput}
+          as={FormPasswordInput}
           label="Password"
           control={control}
           name="password"
           onChange={args => args[0].nativeEvent.text}
           defaultValue=""
-          secureTextEntry
         />
         <Controller
-          as={FormInput}
+          as={FormPasswordInput}
           label="Repeat password"
           control={control}
           name="passwordConfirm"
           onChange={args => args[0].nativeEvent.text}
           defaultValue=""
-          secureTextEntry
         />
 
         <Button title="Submit" onPress={handleSubmit(handleUserSubmit)} />

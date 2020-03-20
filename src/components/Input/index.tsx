@@ -12,6 +12,7 @@ export interface IInputProps {
   secureTextEntry?: boolean;
   label?: string;
   placeholder?: string;
+  placeholderColor?: string;
   keyboardType?: KeyboardTypeOptions;
 }
 
@@ -21,6 +22,7 @@ const Input: React.FC<IInputProps> = ({
   value,
   onChangeText,
   placeholder,
+  placeholderColor,
   secureTextEntry,
   keyboardType,
   name,
@@ -40,7 +42,10 @@ const Input: React.FC<IInputProps> = ({
         secureTextEntry={secureTextEntry}
         value={value}
         theme={{
-          colors: { primary: "#979797", placeholder: "rgba(0, 0, 0, 0.16)" }
+          colors: {
+            primary: "#979797",
+            placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)"
+          }
         }}
       />
     </View>
