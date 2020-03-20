@@ -1,9 +1,10 @@
 // react
 import React from "react";
-import { View, Button, Alert } from "react-native";
+import { View } from "react-native";
 // componets
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
+import Button from "../../Button";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -58,7 +59,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
           defaultValue=""
         />
 
-        <Button title="Submit" onPress={handleSubmit(handleUserSubmit)} />
+        <Button onPress={handleSubmit(handleUserSubmit)}>Submit</Button>
       </FormContext>
     </View>
   );

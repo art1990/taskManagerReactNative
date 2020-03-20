@@ -12,7 +12,7 @@ import { Feather } from "@expo/vector-icons";
 import { Colors } from "../../assets/styles/constants";
 
 interface IPasswordInputProps extends IInputProps {
-  iconSize: number;
+  iconSize?: number;
   isError?: boolean;
 }
 

@@ -1,3 +1,6 @@
 export enum Colors {
-  error = "#DA0B0B"
+  white = "#FFFFFF",
+
+  error = "#DA0B0B",
+  button = "#979797"
 }

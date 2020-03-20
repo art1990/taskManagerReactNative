@@ -1,21 +1,40 @@
 // react
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  GestureResponderEvent
-} from "react-native";
+import { StyleSheet } from "react-native";
+// react-paper
+import { Button } from "react-native-paper";
+// contsnts
+import { Colors } from "../../assets/styles/constants";
 
 interface ButtonProps {
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: () => void;
   children: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ onPress, children }) => (
-  <TouchableOpacity onPress={onPress}>
-    <Text>{children}</Text>
-  </TouchableOpacity>
+const CustomButton: React.FC<ButtonProps> = ({
+  onPress,
+  children,
+  ...rest
+}) => (
+  <Button
+    mode="contained"
+    color={Colors.button}
+    onPress={onPress}
+    contentStyle={styles.buttonContainer}
+    labelStyle={styles.textContainer}
+    {...rest}
+  >
+    {children}
+  </Button>
 );
 
-export default Button;
+const styles = StyleSheet.create({
+  buttonContainer: {
+    height: 60
+  },
+  textContainer: {
+    color: Colors.white
+  }
+});
+
+export default CustomButton;
