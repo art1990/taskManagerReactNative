@@ -29,44 +29,34 @@ const Input: React.FC<IInputProps> = ({
   ...rest
 }) => {
   return (
-    <View>
-      <TextInput
-        {...rest}
-        mode="outlined"
-        style={[styles.input, style]}
-        label={label}
-        autoCorrect={false}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        keyboardType={keyboardType}
-        secureTextEntry={secureTextEntry}
-        value={value}
-        theme={{
-          colors: {
-            primary: "#979797",
-            placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)"
-          }
-        }}
-      />
-    </View>
+    <TextInput
+      {...rest}
+      mode="outlined"
+      style={[styles.input, style]}
+      label={label}
+      autoCorrect={false}
+      onChangeText={onChangeText}
+      placeholder={placeholder}
+      keyboardType={keyboardType}
+      secureTextEntry={secureTextEntry}
+      value={value}
+      theme={{
+        colors: {
+          primary: "#979797",
+          placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)"
+        }
+      }}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    paddingRight: 5,
-    paddingLeft: 5,
-    paddingBottom: 5,
     width: "100%",
     height: 50,
     color: "#333",
     fontSize: 18,
     fontWeight: "700"
-
-    // borderWidth: 1,
-    // borderStyle: "solid",
-    // borderColor: "rgba(0, 0, 0, 0.16);",
-    // borderRadius: 3
   }
 });
 

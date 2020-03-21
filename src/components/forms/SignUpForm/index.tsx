@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 // componets
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
@@ -26,7 +26,6 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
   });
   const { control, handleSubmit } = methods;
   const handleUserSubmit = data => {
-    console.log(data);
     onSubmit(data);
   };
 

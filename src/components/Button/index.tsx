@@ -9,31 +9,49 @@ import { Colors } from "../../assets/styles/constants";
 interface ButtonProps {
   onPress: () => void;
   children: string;
+  color?: string;
+  labelStyle?: {};
+  mode?: any;
 }
 
 const CustomButton: React.FC<ButtonProps> = ({
   onPress,
   children,
+  mode,
+  color,
+  labelStyle,
   ...rest
-}) => (
-  <Button
-    mode="contained"
-    color={Colors.button}
-    onPress={onPress}
-    contentStyle={styles.buttonContainer}
-    labelStyle={styles.textContainer}
-    {...rest}
-  >
-    {children}
-  </Button>
-);
+}) => {
+  const textStyle = [styles.text, mode === "text" && styles.modeText];
+
+  return (
+    <Button
+      mode={mode || "contained"}
+      color={Colors.button}
+      onPress={onPress}
+      labelStyle={textStyle}
+      uppercase={false}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    height: 60
-  },
-  textContainer: {
+  text: {
+    marginVertical: 22,
+    marginHorizontal: 0,
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 16,
+    lineHeight: 20,
     color: Colors.white
+  },
+  modeText: {
+    marginVertical: 0,
+    marginHorizontal: 0,
+    color: Colors.black
   }
 });
 

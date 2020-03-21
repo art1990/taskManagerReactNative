@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../../../redux/user/index";
 // components
-import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import SignUpForm from "../../../components/forms//SignUpForm";
 // navigate
@@ -30,10 +29,13 @@ const SignUp: React.FC = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text>Sign-up</Text>
       <SignUpForm onSubmit={onSignUpPress} />
       <View style={styles.alreadySection}>
-        <Text>Already have an account?</Text>
-        <Button onPress={toSignInPress}>Sign In</Button>
+        <Text style={styles.alreadyText}>Already have an account?</Text>
+        <Button mode="text" onPress={toSignInPress}>
+          Sign In
+        </Button>
       </View>
     </View>
   );
@@ -43,10 +45,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    paddingTop: 22,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingBottom: 44,
+    // paddingTop: 22,
+    // paddingLeft: 24,
+    // paddingRight: 24,
+    // paddingBottom: 44,
 
     backgroundColor: "#fff"
   },
@@ -57,7 +59,13 @@ const styles = StyleSheet.create({
   },
   alreadySection: {
     flexDirection: "row",
-    flex: 1
+    flex: 0
+  },
+  alreadyText: {
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 16,
+    lineHeight: 20
   }
 });
 
