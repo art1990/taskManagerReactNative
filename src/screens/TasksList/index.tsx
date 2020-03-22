@@ -12,11 +12,11 @@ import Button from "../../components/Button";
 import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import Title from "../../components/Title";
-
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 // constants
 import { Routes } from "../../navigation/routes";
+import { Colors } from "../../assets/styles/constants";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -53,8 +53,14 @@ export default ({ navigation }) => {
   return (
     <View>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
-      {tasksList?.map(({ title, duration, id }) => (
-        <TaskInfo key={id} title={title} duration={duration} />
+      {tasksList?.map(({ title, project, duration, id }, i) => (
+        <TaskInfo
+          key={id}
+          title={title}
+          project={project}
+          duration={duration}
+          background={!(i % 2) && Colors.taskInfoBGColor}
+        />
       ))}
       {startTime ? (
         <WorkingTaskInfo

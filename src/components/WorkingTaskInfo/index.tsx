@@ -8,6 +8,8 @@ import { IconButton } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 // constants
 import { Colors } from "../../assets/styles/constants";
+// styles
+import Styles from "../../assets/styles";
 
 interface IWorkingTaskInfo {
   title: string;
@@ -20,7 +22,7 @@ const WorkingTaskInfo: React.FC<IWorkingTaskInfo> = ({
   startTime,
   onCreateTask
 }) => (
-  <View style={styles.container}>
+  <View style={[Styles.rowSpaceBetween, styles.container]}>
     <Text style={styles.title}>{title}</Text>
     <Timer startTime={startTime} />
     <IconButton
@@ -32,13 +34,9 @@ const WorkingTaskInfo: React.FC<IWorkingTaskInfo> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     paddingVertical: 32,
 
-    backgroundColor: Colors.workingTaskBGColor
+    backgroundColor: Colors.taskInfoBGColor
   },
   title: {
     fontWeight: "normal",

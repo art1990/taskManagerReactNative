@@ -9,5 +9,5 @@ export enum Colors {
   error = "#DA0B0B",
   button = "#979797",
 
-  workingTaskBGColor = "#E9E5E5"
+  taskInfoBGColor = "#E9E5E5"
 }

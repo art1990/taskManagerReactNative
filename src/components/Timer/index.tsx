@@ -37,7 +37,7 @@ const Timer: React.FC<Timer> = ({ startTime }) => {
     [startTime, currentTime]
   );
 
-  return <Text>{time}</Text>;
+  return <Text style={styles.text}>{time} h</Text>;
 };
 
 const styles = StyleSheet.create({
