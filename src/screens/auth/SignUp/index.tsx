@@ -6,6 +6,7 @@ import { register } from "../../../redux/user/index";
 // components
 import Button from "../../../components/Button";
 import SignUpForm from "../../../components/forms//SignUpForm";
+import Title from "../../../components/Title";
 // navigate
 import { Routes } from "../../../navigation/routes";
 // styles
@@ -29,7 +30,7 @@ const SignUp: React.FC = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Sign-up</Text>
+      <Title text="Sign-up" />
       <SignUpForm onSubmit={onSignUpPress} />
       <View style={styles.alreadySection}>
         <Text style={styles.alreadyText}>Already have an account?</Text>

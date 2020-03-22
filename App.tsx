@@ -2,7 +2,7 @@
 import React from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 // navigation
-import MainStackNavigator from "./src/navigation/MainStackNavigator";
+import RootNavigator from "./src/navigation/RootNavigator";
 // redux
 import configureStore from "./src/redux/configureStore";
 import { Provider } from "react-redux";
@@ -12,8 +12,6 @@ import { useAuth } from "./src/hooks/useAuth";
 import { Provider as PaperProvider } from "react-native-paper";
 // utils for remove warning setTimeout
 import "./src/utils/timeout";
-// components
-import Button from "./src/components/Button";
 
 const { store } = configureStore();
 
@@ -27,7 +25,7 @@ export default function App() {
           {initializing ? (
             <ActivityIndicator size="large" color="000ff" />
           ) : (
-            <MainStackNavigator />
+            <RootNavigator />
           )}
         </View>
       </PaperProvider>
