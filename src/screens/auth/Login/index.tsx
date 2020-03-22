@@ -8,9 +8,6 @@ import { login } from "../../../redux/user";
 import LoginForm from "../../../components/forms/LoginForm";
 import Title from "../../../components/Title";
 import NavigationMessage from "../../../components/NavigationMessage";
-// screens
-import Input from "../../../components/Input";
-import Button from "../../../components/Button";
 // constants
 import { Routes } from "../../../navigation/routes";
 
