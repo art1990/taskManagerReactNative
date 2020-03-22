@@ -1,6 +1,5 @@
 // react
 import React from "react";
-import { View, StyleSheet } from "react-native";
 // navigation
 import { NavigationContainer } from "@react-navigation/native";
 // stack screens
@@ -18,17 +17,5 @@ const RootNavigator = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  authWrapper: {
-    flex: 1,
-    justifyContent: "space-between",
-    paddingTop: 22,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingBottom: 44
-  },
-  mainWrapper: {}
-});
 
 export default RootNavigator;

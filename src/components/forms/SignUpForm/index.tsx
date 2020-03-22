@@ -12,6 +12,7 @@ import { SignUpSchema } from "../../../utils/validation";
 
 interface ISignUpForm {
   onSubmit: any;
+  style?: {};
 }
 
 type FormData = {
@@ -20,7 +21,7 @@ type FormData = {
   passwordConfirm: string;
 };
 
-const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
+const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
   const methods = useForm<FormData>({
     validationSchema: SignUpSchema
   });
@@ -30,10 +31,11 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
   };
 
   return (
-    <View>
+    <View style={style}>
       <FormContext {...methods}>
         <Controller
           as={FormInput}
+          style={styles.ipnut}
           label="Email"
           control={control}
           name="email"
@@ -43,6 +45,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
         />
         <Controller
           as={FormPasswordInput}
+          style={styles.ipnut}
           label="Password"
           control={control}
           name="password"
@@ -51,6 +54,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
         />
         <Controller
           as={FormPasswordInput}
+          style={styles.ipnut}
           label="Repeat password"
           control={control}
           name="passwordConfirm"
@@ -63,5 +67,11 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  ipnut: {
+    marginBottom: 15
+  }
+});
 
 export default SignUpForm;

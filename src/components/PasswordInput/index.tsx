@@ -14,11 +14,12 @@ import { Colors } from "../../assets/styles/constants";
 interface IPasswordInputProps extends IInputProps {
   iconSize?: number;
   isError?: boolean;
+  style?: {};
 }
 
 const PasswordInput: React.FC<IPasswordInputProps> = props => {
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
-  const { iconSize, isError } = props;
+  const { iconSize, isError, style } = props;
 
   const changeSecureTextEntry = () => setSecureTextEntry(!secureTextEntry);
 
@@ -30,13 +31,13 @@ const PasswordInput: React.FC<IPasswordInputProps> = props => {
     <View>
       <Input
         {...props}
-        style={styles.input}
+        style={[styles.input, style]}
         secureTextEntry={secureTextEntry}
       />
       <Feather
         style={[
           styles.eyeContainer,
-          { transform: [{ translateY: -size / 2 }] }
+          { transform: [{ translateY: -size / 1.5 }] }
         ]}
         name={name}
         size={size}

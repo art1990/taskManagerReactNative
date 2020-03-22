@@ -3,6 +3,6 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "vn-89b",
+  "urlRandomness": "rf-tap",
   "https": false
 }

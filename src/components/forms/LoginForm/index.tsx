@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 // componets
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
@@ -8,10 +8,11 @@ import Button from "../../Button";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
-import { SignUpSchema } from "../../../utils/validation";
+import { LoginSchema } from "../../../utils/validation";
 
 interface ISignUpForm {
   onSubmit: any;
+  style?: {};
 }
 
 type FormData = {
@@ -20,21 +21,21 @@ type FormData = {
   passwordConfirm: string;
 };
 
-const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
+const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
   const methods = useForm<FormData>({
-    validationSchema: SignUpSchema
+    validationSchema: LoginSchema
   });
   const { control, handleSubmit } = methods;
   const handleUserSubmit = data => {
-    console.log(data);
     onSubmit(data);
   };
 
   return (
-    <View>
+    <View style={style}>
       <FormContext {...methods}>
         <Controller
           as={FormInput}
+          style={styles.ipnut}
           label="Email"
           control={control}
           name="email"
@@ -44,6 +45,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
         />
         <Controller
           as={FormPasswordInput}
+          style={styles.ipnut}
           label="Password"
           control={control}
           name="password"
@@ -56,4 +58,10 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit }) => {
   );
 };
 
-export default SignUpForm;
+const styles = StyleSheet.create({
+  ipnut: {
+    marginBottom: 15
+  }
+});
+
+export default LoginForm;
