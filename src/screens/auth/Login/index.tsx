@@ -1,6 +1,6 @@
 // react
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 // redux
 import { useDispatch } from "react-redux";
 import { login } from "../../../redux/user";
@@ -19,13 +19,10 @@ interface ILogin {
 }
 
 const Login: React.FC<ILogin> = ({ navigation }) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
   const dispatch = useDispatch();
 
-  const onLoginPress = () => {
-    dispatch(login.request({ email, password }));
+  const onLoginPress = data => {
+    dispatch(login.request(data));
   };
 
   const toSignUp: () => void = () => {
