@@ -5,7 +5,8 @@ import { View, Text } from "react-native";
 import { start } from "../../redux/task";
 import { useDispatch } from "react-redux";
 // components
-import Input from "../../components/Input";
+import Title from "../../components/Title";
+import CreateTaskForm from "../../components/forms/CreateTaskForm";
 import Button from "../../components/Button";
 import FileUploaderInput from "../../components/FileUploaderInput";
 // date-fns
@@ -14,17 +15,14 @@ import { getUnixTime } from "date-fns";
 import { Routes } from "../../navigation/routes";
 
 const CreateTask: React.FC = ({ navigation }) => {
-  const [title, setTitle] = useState<string>("");
-  const [project, setProject] = useState<string>("");
   const [file, setFile] = useState<object>(null);
 
   const dispatch = useDispatch();
 
-  const onStartTask = () => {
+  const onStartTask = data => {
     dispatch(
       start.request({
-        title,
-        project,
+        ...data,
         startTime: getUnixTime(new Date()),
         file
       })
@@ -34,11 +32,9 @@ const CreateTask: React.FC = ({ navigation }) => {
 
   return (
     <View>
-      <Text>New Task</Text>
-      <Input value={title} onChangeText={text => setTitle(text)} />
-      <Input value={project} onChangeText={text => setProject(text)} />
+      <Title text="New Task" />
+      <CreateTaskForm onSubmit={onStartTask} />
       <FileUploaderInput setFile={setFile} />
-      <Button onPress={onStartTask}>Start task</Button>
     </View>
   );
 };

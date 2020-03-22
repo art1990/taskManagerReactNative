@@ -1,10 +1,10 @@
 // react
 import React, { useState, useEffect, useMemo } from "react";
-import { View, Text } from "react-native";
+import { Text, StyleSheet } from "react-native";
 // date
-import { fromUnixTime, lightFormat, getUnixTime } from "date-fns";
+import { getUnixTime } from "date-fns";
 // utils
-import { getUTCDate, formatToUTCTime } from "../../utils/date";
+import { formatToUTCTime } from "../../utils/date";
 
 interface Timer {
   startTime: number;
@@ -37,11 +37,15 @@ const Timer: React.FC<Timer> = ({ startTime }) => {
     [startTime, currentTime]
   );
 
-  return (
-    <View>
-      <Text>{time}</Text>
-    </View>
-  );
+  return <Text>{time}</Text>;
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontWeight: "normal",
+    fontSize: 14,
+    lineHeight: 21
+  }
+});
 
 export default Timer;

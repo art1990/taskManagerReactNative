@@ -11,6 +11,8 @@ import { selectTaskData, selectTasksList } from "../../redux/task/selectors";
 import Button from "../../components/Button";
 import Timer from "../../components/Timer";
 import TaskInfo from "../../components/TaskInfo";
+import WorkingTaskInfo from "../../components/WorkingTaskInfo";
+import Title from "../../components/Title";
 
 // hooks
 import { useAuth } from "../../hooks/useAuth";
@@ -51,19 +53,13 @@ export default ({ navigation }) => {
   const { startTime, title } = taskData;
   return (
     <View>
-      <Text>Task List</Text>
-      {user && <Button onPress={onLogOut}>LogOut</Button>}
-      {startTime && (
-        <View style={{ flexDirection: "row" }}>
-          <Text>{title} </Text>
-          <Timer startTime={startTime} />
-        </View>
-      )}
+      <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
       <Button onPress={toAddTask}>Add task</Button>
       <Button onPress={onCreateTask}>Create Task</Button>
       {tasksList?.map(({ title, duration, id }) => (
         <TaskInfo key={id} title={title} duration={duration} />
       ))}
+      {startTime && <WorkingTaskInfo title={title} startTime={startTime} />}
     </View>
   );
 };

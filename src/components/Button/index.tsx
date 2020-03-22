@@ -22,7 +22,11 @@ const CustomButton: React.FC<ButtonProps> = ({
   labelStyle,
   ...rest
 }) => {
-  const textStyle = [styles.text, mode === "text" && styles.modeText];
+  const textStyle = [
+    styles.text,
+    mode === "text" && styles.modeText,
+    labelStyle
+  ];
 
   return (
     <Button
