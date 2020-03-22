@@ -10,6 +10,10 @@ import Calendar from "../screens/Calendar";
 import TaskStackScreen from "./TaskStackScreen";
 // constants
 import { Routes } from "./routes";
+// assets
+import AlarmIcon from "../assets/img/icons/alarm.svg";
+import CalendarIcon from "../assets/img/icons/calendar.svg";
+import StatisticIcon from "../assets/img/icons/statistic.svg";
 
 // statistic stack
 const StatisticStack = createStackNavigator();
@@ -33,7 +37,23 @@ const CalendarStackScreen = () => (
 const Tabs = createBottomTabNavigator();
 
 const TabsScreen = () => (
-  <Tabs.Navigator>
+  <Tabs.Navigator
+    tabBarOptions={{ showLabel: false }}
+    screenOptions={({ route }) => ({
+      gestureEnabled: true,
+      tabBarIcon: ({ focused }) => {
+        const color = focused ? "black" : "#979797";
+        switch (route.name) {
+          case Routes.TASK_TAB:
+            return <AlarmIcon width={22} height={22} fill={color} />;
+          case Routes.STATISTIC_TAB:
+            return <StatisticIcon width={22} height={22} fill={color} />;
+          case Routes.CALENDAR_TAB:
+            return <CalendarIcon width={22} height={22} fill={color} />;
+        }
+      }
+    })}
+  >
     <Tabs.Screen name={Routes.TASK_TAB} component={TaskStackScreen} />
     <Tabs.Screen name={Routes.STATISTIC_TAB} component={StatisticStackScreen} />
     <Tabs.Screen name={Routes.CALENDAR_TAB} component={CalendarStackScreen} />
