@@ -9,7 +9,6 @@ import { add, getIncomplete, getList } from "../../redux/task";
 import { selectTaskData, selectTasksList } from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
-import Timer from "../../components/Timer";
 import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import Title from "../../components/Title";
@@ -54,12 +53,18 @@ export default ({ navigation }) => {
   return (
     <View>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
-      <Button onPress={toAddTask}>Add task</Button>
-      <Button onPress={onCreateTask}>Create Task</Button>
       {tasksList?.map(({ title, duration, id }) => (
         <TaskInfo key={id} title={title} duration={duration} />
       ))}
-      {startTime && <WorkingTaskInfo title={title} startTime={startTime} />}
+      {startTime ? (
+        <WorkingTaskInfo
+          title={title}
+          startTime={startTime}
+          onCreateTask={onCreateTask}
+        />
+      ) : (
+        <Button onPress={toAddTask}>Add task</Button>
+      )}
     </View>
   );
 };
