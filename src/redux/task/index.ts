@@ -94,7 +94,7 @@ export default produce(
         return;
       case remove.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tasksList.filter(({ id }) => id !== payload);
+        draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
         return draft;
       case remove.FAILURE:
         draft.meta.isLoading = false;
@@ -106,7 +106,7 @@ export default produce(
         return;
       case update.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tasksList.map(task => {
+        draft.tasksList = draft.tasksList.map(task => {
           return task.id === payload.id ? { ...task, ...payload } : task;
         });
         return draft;

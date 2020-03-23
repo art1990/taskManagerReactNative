@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 // componets
 import FormInput from "../../forms/components/FormInput";
 import Button from "../../Button";
+import FileUploaderInput from "../../FileUploaderInput";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -21,11 +22,12 @@ type FormData = {
 
 const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
   const methods = useForm<FormData>({});
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, getValues } = methods;
   const handleUserSubmit = data => {
     onSubmit(data);
   };
 
+  // console.log(getValues());
   return (
     <View style={style}>
       <FormContext {...methods}>
@@ -49,6 +51,16 @@ const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
           rules={{ required: true }}
           defaultValue=""
         />
+        {/* <Controller
+          as={FileUploaderInput}
+          style={styles.ipnut}
+          label="Add file"
+          control={control}
+          name="file"
+          onChange={args => console.log(args)}
+          rules={{ required: true }}
+          defaultValue=""
+        /> */}
         <Button onPress={handleSubmit(handleUserSubmit)}>Start task</Button>
       </FormContext>
     </View>

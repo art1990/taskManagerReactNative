@@ -1,6 +1,8 @@
 // react
 import React from "react";
 import { View, Button, Alert } from "react-native";
+// components
+import FormInput from "../forms/components/FormInput";
 // expo
 import * as DocumentPicker from "expo-document-picker";
 
@@ -16,11 +18,7 @@ const FileUploaderInput = ({ setFile }) => {
     }
   };
 
-  return (
-    <View>
-      <Button title="Choose file" onPress={onChooseFilePress} />
-    </View>
-  );
+  return <FormInput label="Add file" onFocus={onChooseFilePress} />;
 };
 
 export default FileUploaderInput;
