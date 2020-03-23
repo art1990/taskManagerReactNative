@@ -67,6 +67,20 @@ export const addTaskApi = async task => {
   return task;
 };
 
+export const removeTaskApi = async ({ id, uri }) => {
+  await userDoc
+    .collection("tasksList")
+    .doc(id)
+    .delete();
+
+  if (uri) {
+    const ref = storage.refFromURL(uri);
+    await ref.delete();
+  }
+
+  return id;
+};
+
 export const getIncompleteTaskApi = async () => {
   const res = await userDoc.get();
   const { taskData } = await res.data();

@@ -31,15 +31,7 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   });
 
   return (
-    <Animated.View
-      style={[
-        {
-          flexDirection: "row",
-          flex: 0
-        },
-        { transform: [{ scale }] }
-      ]}
-    >
+    <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
       <IconButton
         icon={() => <TrashIcon width={20} height={20} />}
         onPress={onRemovePress}
@@ -89,6 +81,10 @@ const TaskInfo: React.FC<ITaskInfo> = ({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 15
+  },
+  iconContainer: {
+    flexDirection: "row",
+    flex: 0
   }
 });
 

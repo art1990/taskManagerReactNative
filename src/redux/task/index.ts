@@ -75,10 +75,10 @@ export default produce(
       case start.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
+
       case add.REQUEST:
         draft.meta.isLoading = true;
         return;
-
       case add.SUCCESS:
         draft.meta.isLoading = false;
         draft.tasksList = [...(draft.tasksList || []), payload];
@@ -87,6 +87,18 @@ export default produce(
       case add.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
+        return;
+
+      case remove.REQUES:
+        draft.meta.isLoading = true;
+        return;
+      case remove.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
+        return;
+      case remove.FAILURE:
+        draft.meta.isLoading = false;
+        draft.meta.error = payload;
         return;
 
       case getIncomplete.REQUEST:

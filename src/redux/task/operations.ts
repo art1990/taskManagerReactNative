@@ -10,6 +10,7 @@ import {
   uploadFileApi,
   updateIncompleteTaskApi,
   addTaskApi,
+  removeTaskApi,
   getIncompleteTaskApi,
   getTaskListApi
 } from "../../services/api";
@@ -24,7 +25,7 @@ function* startTask({ payload }) {
   if (payload.file) {
     const uri = yield apiHandler({
       api: uploadFileApi,
-      argApi: payload
+      argApi: payload.file
     });
 
     file = {
@@ -51,7 +52,9 @@ function* addTask({ payload }) {
   yield apiHandler({ api: updateIncompleteTaskApi });
 }
 
-function* removeTask({ payload: { id } }) {}
+function* removeTask({ payload }) {
+  yield apiHandler({ api: removeTaskApi, argApi: payload }, remove);
+}
 
 function* updateTask() {}
 

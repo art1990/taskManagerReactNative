@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
-import { add, getIncomplete, getList } from "../../redux/task";
+import { add, remove, getIncomplete, getList } from "../../redux/task";
 import { selectTaskData, selectTasksList } from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
@@ -45,6 +45,9 @@ export default ({ navigation }) => {
     dispatch(add.request(taskData));
   };
 
+  const onRemovePress = (id, uri = null) => {
+    dispatch(remove.request({ id, uri }));
+  };
   const toAddTask = () => {
     navigation.navigate(Routes.CREATE_TASK);
   };
@@ -53,13 +56,16 @@ export default ({ navigation }) => {
   return (
     <View>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
-      {tasksList?.map(({ title, project, duration, id }, i) => (
+      {tasksList?.map(({ title, project, duration, id, file }, i) => (
         <TaskInfo
           key={id}
           title={title}
           project={project}
           duration={duration}
           background={!(i % 2) && Colors.taskInfoBGColor}
+          onRemovePress={() => {
+            onRemovePress(id, file.uri);
+          }}
         />
       ))}
       {startTime ? (
