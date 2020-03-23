@@ -9,7 +9,7 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { LoginSchema } from "../../../utils/validation";
 
-interface ISignUpForm {
+interface ILoginForm {
   onSubmit: any;
   style?: {};
 }
@@ -17,10 +17,9 @@ interface ISignUpForm {
 type FormData = {
   email: string;
   password: string;
-  passwordConfirm: string;
 };
 
-const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
+const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
   const methods = useForm<FormData>({});
   const { control, handleSubmit } = methods;
   const handleUserSubmit = data => {

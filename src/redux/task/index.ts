@@ -25,14 +25,14 @@ export const getIncomplete = createAction(GET_INCOMPLETE);
 export const getList = createAction(GET_LIST);
 
 // initial state
-interface ITaskState {
+export interface ITaskState {
   tasksList: null | object[];
   taskData: {
     id: null | string;
     title: string;
     project: string;
-    startTime?: object;
-    endTime?: object;
+    startTime?: number;
+    endTime?: number;
     duration?: number;
     isPaused: boolean;
     file: null | object[];
@@ -94,9 +94,23 @@ export default produce(
         return;
       case remove.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
-        return;
+        draft.tasksList.filter(({ id }) => id !== payload);
+        return draft;
       case remove.FAILURE:
+        draft.meta.isLoading = false;
+        draft.meta.error = payload;
+        return;
+
+      case update.REQUES:
+        draft.meta.isLoading = true;
+        return;
+      case update.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.tasksList.map(task => {
+          return task.id === payload.id ? { ...task, ...payload } : task;
+        });
+        return draft;
+      case update.FAILURE:
         draft.meta.isLoading = false;
         draft.meta.error = payload;
         return;

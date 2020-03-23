@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
 import CreateTaskForm from "../../components/forms/CreateTaskForm";
-import Button from "../../components/Button";
 import FileUploaderInput from "../../components/FileUploaderInput";
 // date-fns
 import { getUnixTime } from "date-fns";

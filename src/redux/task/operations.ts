@@ -10,6 +10,7 @@ import {
   uploadFileApi,
   updateIncompleteTaskApi,
   addTaskApi,
+  updateTaskApi,
   removeTaskApi,
   getIncompleteTaskApi,
   getTaskListApi
@@ -56,7 +57,9 @@ function* removeTask({ payload }) {
   yield apiHandler({ api: removeTaskApi, argApi: payload }, remove);
 }
 
-function* updateTask() {}
+function* updateTask({ payload }) {
+  yield apiHandler({ api: updateTaskApi, argApi: payload }, update);
+}
 
 function* getIncompleteTask() {
   const userData = yield select(selectUser);

@@ -45,9 +45,14 @@ export default ({ navigation }) => {
     dispatch(add.request(taskData));
   };
 
-  const onRemovePress = (id, uri = null) => {
+  const onRemovePress = (id, uri) => {
     dispatch(remove.request({ id, uri }));
   };
+
+  const onEditPress = id => {
+    navigation.navigate(Routes.EDIT_TASK, { id });
+  };
+
   const toAddTask = () => {
     navigation.navigate(Routes.CREATE_TASK);
   };
@@ -64,7 +69,10 @@ export default ({ navigation }) => {
           duration={duration}
           background={!(i % 2) && Colors.taskInfoBGColor}
           onRemovePress={() => {
-            onRemovePress(id, file.uri);
+            onRemovePress(id, file?.uri);
+          }}
+          onEditPress={() => {
+            onEditPress(id);
           }}
         />
       ))}

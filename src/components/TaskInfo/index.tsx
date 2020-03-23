@@ -17,7 +17,6 @@ interface ITaskInfo {
   title: string;
   project: string;
   duration: number;
-  onSwipeFromRight: any;
   background?: string;
   onRemovePress: () => void;
   onEditPress: () => void;

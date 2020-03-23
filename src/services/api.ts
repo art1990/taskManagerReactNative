@@ -7,13 +7,14 @@ type UserDoc = firebase.firestore.DocumentReference<
 >;
 type User = firebase.User;
 
-let userDoc: UserDoc, user: User;
+let userDoc: UserDoc, user: User, tasksListCol: any;
 export const initializeVariableToApiService: (userdata: {
   user: firebase.User;
 }) => Promise<void> = async userData => {
   if (!userData.user) return;
   user = userData.user;
   userDoc = db.collection("users").doc(user.uid);
+  tasksListCol = userDoc?.collection("tasksList");
 };
 /* END initialize user and userDoc variavle */
 const auth = firebaseApp.auth();
@@ -59,7 +60,6 @@ export const updateIncompleteTaskApi = async (taskData = null) => {
 };
 
 export const addTaskApi = async task => {
-  const tasksListCol = await userDoc.collection("tasksList");
   const { id } = await tasksListCol.add(task);
   task.id = id;
   await tasksListCol.doc(id).update({ id });
@@ -67,11 +67,14 @@ export const addTaskApi = async task => {
   return task;
 };
 
+export const updateTaskApi = async task => {
+  await tasksListCol.doc(task.id).update(task);
+
+  return task;
+};
+
 export const removeTaskApi = async ({ id, uri }) => {
-  await userDoc
-    .collection("tasksList")
-    .doc(id)
-    .delete();
+  await tasksListCol.doc(id).delete();
 
   if (uri) {
     const ref = storage.refFromURL(uri);
@@ -89,7 +92,7 @@ export const getIncompleteTaskApi = async () => {
 };
 
 export const getTaskListApi = async () => {
-  const tasksListCollection = await userDoc.collection("tasksList").get();
+  const tasksListCollection = await tasksListCol.get();
   const tasksList = await tasksListCollection.docs.map(doc => doc.data());
 
   return tasksList;
