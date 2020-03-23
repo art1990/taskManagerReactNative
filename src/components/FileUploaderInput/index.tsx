@@ -1,12 +1,23 @@
 // react
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { View, Button, Alert } from "react-native";
 // components
 import FormInput from "../forms/components/FormInput";
 // expo
 import * as DocumentPicker from "expo-document-picker";
 
-const FileUploaderInput = ({ setFile }) => {
+const FileUploaderInput = ({ onBlur, ...rest }) => {
+  const [file, setFile] = useState(null);
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.blur();
+  }, [file]);
+
+  const handleOnBlur = () => {
+    onBlur(file);
+  };
+
   const onChooseFilePress = async () => {
     const file = await DocumentPicker.getDocumentAsync();
 
@@ -18,7 +29,15 @@ const FileUploaderInput = ({ setFile }) => {
     }
   };
 
-  return <FormInput label="Add file" onFocus={onChooseFilePress} />;
+  return (
+    <FormInput
+      label="Add file"
+      ref={inputRef}
+      onFocus={onChooseFilePress}
+      onBlur={handleOnBlur}
+      {...rest}
+    />
+  );
 };
 
 export default FileUploaderInput;

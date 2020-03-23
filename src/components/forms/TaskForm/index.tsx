@@ -1,17 +1,23 @@
 // react
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+
 // componets
 import FormInput from "../../forms/components/FormInput";
+import InfoAndRemoveFile from "./InfoAndRemoveFile";
 import Button from "../../Button";
 import FileUploaderInput from "../../FileUploaderInput";
+// interface
+import { ITaskState } from "../../../redux/task";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { LoginSchema } from "../../../utils/validation";
 
-interface ILoginForm {
+interface ITaskForm {
   onSubmit: any;
+  isEditing?: boolean;
+  taskData?: ITaskState["taskData"];
   style?: {};
 }
 
@@ -20,10 +26,18 @@ type FormData = {
   password: string;
 };
 
-const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
-  const methods = useForm<FormData>({});
-  const { control, handleSubmit, getValues, register, setValue } = methods;
-  const values = getValues();
+const LoginForm: React.FC<ITaskForm> = ({
+  isEditing,
+  taskData,
+  style,
+  onSubmit
+}) => {
+  const methods = useForm({
+    defaultValues: taskData
+  });
+  const { control, handleSubmit, register, setValue, watch } = methods;
+  const { file } = watch();
+  const name = file?.name;
 
   useEffect(() => {
     register({ name: "file" });
@@ -35,10 +49,16 @@ const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
     onSubmit(data);
   };
 
-  const fileHandleChange = file => {
-    setValue("file", file);
+  const fileHandleChange = data => {
+    setValue("file", data);
   };
-  console.log(getValues());
+
+  const removeTaskFile = () => {
+    setValue("file", null);
+  };
+
+  const buttonText = `${isEditing ? "Update" : "Start"} task`;
+  console.log("file", file);
   return (
     <View style={style}>
       <FormContext {...methods}>
@@ -62,14 +82,17 @@ const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
           rules={{ required: true }}
           defaultValue=""
         />
-        <FileUploaderInput
-          style={styles.ipnut}
-          label="Add file"
-          name="file"
-          onBlur={fileHandleChange}
-          value={values.file?.name}
-        />
-        <Button onPress={handleSubmit(handleUserSubmit)}>Start task</Button>
+        {!name ? (
+          <FileUploaderInput
+            style={styles.ipnut}
+            label="Add file"
+            name="file"
+            onBlur={fileHandleChange}
+          />
+        ) : (
+          <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
+        )}
+        <Button onPress={handleSubmit(handleUserSubmit)}>{buttonText}</Button>
       </FormContext>
     </View>
   );

@@ -7,7 +7,7 @@ import { TextInput } from "react-native-paper";
 export interface IInputProps {
   style?: {};
   name: string;
-  value?: string;
+  value: string;
   onChangeText?: (text: string) => void;
   secureTextEntry?: boolean;
   label?: string;
@@ -16,21 +16,25 @@ export interface IInputProps {
   keyboardType?: KeyboardTypeOptions;
 }
 
-const Input: React.FC<IInputProps> = ({
-  style,
-  label,
-  value,
-  onChangeText,
-  placeholder,
-  placeholderColor,
-  secureTextEntry,
-  keyboardType,
-  name,
-  ...rest
-}) => {
+const Input: React.FC<IInputProps> = (
+  {
+    style,
+    label,
+    value,
+    onChangeText,
+    placeholder,
+    placeholderColor,
+    secureTextEntry,
+    keyboardType,
+    name,
+    ...rest
+  },
+  ref
+) => {
   return (
     <TextInput
       {...rest}
+      ref={ref}
       mode="outlined"
       style={[styles.input, style]}
       label={label}
@@ -60,4 +64,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Input;
+export default React.forwardRef(Input);

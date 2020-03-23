@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 import { Colors } from "../assets/styles/constants";
 
 function withFormError<T>(Component: React.ComponentType<T>) {
-  return (props: T) => {
+  return React.forwardRef((props: T, ref) => {
     const context = useFormContext();
     const error = context?.errors[props.name];
 
@@ -15,13 +15,14 @@ function withFormError<T>(Component: React.ComponentType<T>) {
       <View>
         <Component
           {...props}
+          ref={ref}
           placeholderColor={error && Colors.error}
           isError={!!error}
         />
         {error && <Text style={styles.text}>{error.message}</Text>}
       </View>
     );
-  };
+  });
 }
 const styles = StyleSheet.create({
   text: {

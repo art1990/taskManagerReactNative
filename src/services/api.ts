@@ -73,13 +73,17 @@ export const updateTaskApi = async task => {
   return task;
 };
 
+export const removeFileApi = async uri => {
+  const ref = storage.refFromURL(uri);
+  await ref.delete();
+
+  return uri;
+};
+
 export const removeTaskApi = async ({ id, uri }) => {
   await tasksListCol.doc(id).delete();
 
-  if (uri) {
-    const ref = storage.refFromURL(uri);
-    await ref.delete();
-  }
+  if (uri) await removeFileApi(uri);
 
   return id;
 };

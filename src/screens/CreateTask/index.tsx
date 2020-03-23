@@ -6,8 +6,7 @@ import { start } from "../../redux/task";
 import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
-import CreateTaskForm from "../../components/forms/CreateTaskForm";
-import FileUploaderInput from "../../components/FileUploaderInput";
+import TaskForm from "../../components/forms/TaskForm";
 // date-fns
 import { getUnixTime } from "date-fns";
 // constants
@@ -32,8 +31,7 @@ const CreateTask: React.FC = ({ navigation }) => {
   return (
     <View>
       <Title text="New Task" />
-      <CreateTaskForm onSubmit={onStartTask} />
-      <FileUploaderInput setFile={setFile} />
+      <TaskForm onSubmit={onStartTask} />
     </View>
   );
 };
