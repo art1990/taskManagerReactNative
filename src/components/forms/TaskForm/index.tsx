@@ -7,8 +7,6 @@ import FormInput from "../../forms/components/FormInput";
 import InfoAndRemoveFile from "./InfoAndRemoveFile";
 import Button from "../../Button";
 import FileUploaderInput from "../../FileUploaderInput";
-// interface
-import { ITaskState } from "../../../redux/task";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -17,7 +15,7 @@ import { LoginSchema } from "../../../utils/validation";
 interface ITaskForm {
   onSubmit: any;
   isEditing?: boolean;
-  taskData?: ITaskState["taskData"];
+  formData?: {};
   style?: {};
 }
 
@@ -26,14 +24,14 @@ type FormData = {
   password: string;
 };
 
-const LoginForm: React.FC<ITaskForm> = ({
+const TaskForm: React.FC<ITaskForm> = ({
   isEditing,
-  taskData,
+  formData,
   style,
   onSubmit
 }) => {
   const methods = useForm({
-    defaultValues: taskData
+    defaultValues: formData
   });
   const {
     control,
@@ -41,20 +39,20 @@ const LoginForm: React.FC<ITaskForm> = ({
     register,
     unregister,
     setValue,
+    getValues,
     watch
   } = methods;
-  const { file } = watch();
+  const file = watch("file");
   const name = file?.name;
-
+  console.log("file", file);
   useEffect(() => {
     if (!file) {
-      console.log(taskData);
       register({ name: "file" });
-      taskData?.file && setValue("file", taskData.file);
+      formData?.file && setValue("file", formData.file);
     }
 
     return () => unregister("file");
-  }, [register, taskData]);
+  }, [register]);
 
   const onChange = args => args[0].nativeEvent.text;
 
@@ -69,7 +67,7 @@ const LoginForm: React.FC<ITaskForm> = ({
   const removeTaskFile = () => {
     setValue("file", null);
   };
-
+  console.log(getValues());
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
   return (
     <View style={style}>
@@ -114,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginForm;
+export default TaskForm;

@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { View, Text } from "react-native";
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentTaskData } from "../../redux/task/selectors";
+import { selectTaskFormData } from "../../redux/task/selectors";
 import { update, remove } from "../../redux/task";
 // components
 import EditTaskForm from "../../components/forms/EditTaskForm";
@@ -16,7 +16,7 @@ export default ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   const { id } = route?.params;
-  const taskData = useSelector(selectCurrentTaskData(id));
+  const formData = useSelector(selectTaskFormData(id));
 
   const onUpdateTask = data => {
     dispatch(update.request({ ...data, id }));
@@ -35,7 +35,7 @@ export default ({ route, navigation }) => {
         buttonText="Delete task"
         buttonAction={removeTaskAndNavigate}
       />
-      <TaskForm isEditing taskData={taskData} onSubmit={onUpdateTask} />
+      <TaskForm isEditing formData={formData} onSubmit={onUpdateTask} />
     </View>
   );
 };
