@@ -30,8 +30,10 @@ const TaskForm: React.FC<ITaskForm> = ({
   style,
   onSubmit
 }) => {
+  const defaultValues = formData?.defaultValues;
+
   const methods = useForm({
-    defaultValues: formData?.defaultValues
+    defaultValues
   });
   const {
     control,
@@ -44,12 +46,11 @@ const TaskForm: React.FC<ITaskForm> = ({
   } = methods;
   const file = watch("file");
   const name = file?.name;
-  console.log("file", file);
-  console.log("fileProp", formData?.file);
   useEffect(() => {
     if (!file) {
       register({ name: "file" });
-      formData?.file && setValue("file", formData.file);
+      const file = formData?.file;
+      file && setValue("file", file);
     }
 
     return () => unregister("file");
@@ -68,7 +69,6 @@ const TaskForm: React.FC<ITaskForm> = ({
   const removeTaskFile = () => {
     setValue("file", null);
   };
-  console.log(getValues());
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
   return (
     <View style={style}>
@@ -85,6 +85,12 @@ const TaskForm: React.FC<ITaskForm> = ({
         <Controller
           as={FormInput}
           style={styles.ipnut}
+          как
+          удалить
+          ключ
+          из
+          обьекта
+          js
           label="Project"
           control={control}
           name="project"

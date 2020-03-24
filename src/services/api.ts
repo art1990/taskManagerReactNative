@@ -43,7 +43,7 @@ export const uploadFileApi = async file => {
   const response = await fetch(file.uri);
   const blob = await response.blob();
 
-  const ref = storage.ref().child("file/" + file.name);
+  const ref = storage.ref().child(`file/${user.uid}/${file.name}`);
   const snapshot = await ref.put(blob);
 
   const uri = await snapshot.ref.getDownloadURL();
