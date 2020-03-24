@@ -26,13 +26,13 @@ export default ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!user) return;
     user && dispatch(initialize.run(user));
+    dispatch(getIncomplete.request());
   }, [user]);
 
   useFocusEffect(
     useCallback(() => {
-      if (!user) return;
-      dispatch(getIncomplete.request());
       dispatch(getList.request());
     }, [user])
   );

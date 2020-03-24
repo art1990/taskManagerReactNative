@@ -35,13 +35,26 @@ const LoginForm: React.FC<ITaskForm> = ({
   const methods = useForm({
     defaultValues: taskData
   });
-  const { control, handleSubmit, register, setValue, watch } = methods;
+  const {
+    control,
+    handleSubmit,
+    register,
+    unregister,
+    setValue,
+    watch
+  } = methods;
   const { file } = watch();
   const name = file?.name;
 
   useEffect(() => {
-    register({ name: "file" });
-  }, [register]);
+    if (!file) {
+      console.log(taskData);
+      register({ name: "file" });
+      taskData?.file && setValue("file", taskData.file);
+    }
+
+    return () => unregister("file");
+  }, [register, taskData]);
 
   const onChange = args => args[0].nativeEvent.text;
 
@@ -58,7 +71,6 @@ const LoginForm: React.FC<ITaskForm> = ({
   };
 
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
-  console.log("file", file);
   return (
     <View style={style}>
       <FormContext {...methods}>
@@ -70,7 +82,6 @@ const LoginForm: React.FC<ITaskForm> = ({
           name="title"
           onChange={onChange}
           rules={{ required: true }}
-          defaultValue=""
         />
         <Controller
           as={FormInput}
@@ -80,7 +91,6 @@ const LoginForm: React.FC<ITaskForm> = ({
           name="project"
           onChange={onChange}
           rules={{ required: true }}
-          defaultValue=""
         />
         {!name ? (
           <FileUploaderInput

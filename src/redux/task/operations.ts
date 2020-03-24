@@ -37,6 +37,7 @@ function* startTask({ payload }) {
   }
 
   const argApi = { ...payload, file };
+  console.log(argApi);
   yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
 }
 

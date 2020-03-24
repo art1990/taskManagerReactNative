@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 // redux
 import { start } from "../../redux/task";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTaskData } from "../../redux/task/selectors";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
@@ -13,16 +14,13 @@ import { getUnixTime } from "date-fns";
 import { Routes } from "../../navigation/routes";
 
 const CreateTask: React.FC = ({ navigation }) => {
-  const [file, setFile] = useState<object>(null);
-
   const dispatch = useDispatch();
 
   const onStartTask = data => {
     dispatch(
       start.request({
         ...data,
-        startTime: getUnixTime(new Date()),
-        file
+        startTime: getUnixTime(new Date())
       })
     );
     navigation.navigate(Routes.TASKS_LIST);

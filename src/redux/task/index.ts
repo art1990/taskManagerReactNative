@@ -119,7 +119,7 @@ export default produce(
         draft.meta.isLoading = true;
         return;
       case getIncomplete.SUCCESS:
-        draft.taskData = payload;
+        draft.taskData = payload || draft.taskData;
         draft.meta.isLoading = false;
         return;
       case getIncomplete.FAILURE:
