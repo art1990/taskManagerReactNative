@@ -31,7 +31,7 @@ const TaskForm: React.FC<ITaskForm> = ({
   onSubmit
 }) => {
   const methods = useForm({
-    defaultValues: formData
+    defaultValues: formData?.defaultValues
   });
   const {
     control,
@@ -45,6 +45,7 @@ const TaskForm: React.FC<ITaskForm> = ({
   const file = watch("file");
   const name = file?.name;
   console.log("file", file);
+  console.log("fileProp", formData?.file);
   useEffect(() => {
     if (!file) {
       register({ name: "file" });

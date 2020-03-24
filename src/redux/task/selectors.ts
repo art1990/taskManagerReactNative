@@ -8,7 +8,7 @@ export const selectTaskFormData = searchId => state => {
 
   if (task) {
     const { title, project, file } = task;
-    return { title, project, file };
+    return { defaultValues: { title, project }, file };
   } else {
     return undefined;
   }
