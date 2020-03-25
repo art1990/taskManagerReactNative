@@ -1,10 +1,13 @@
+// utils
+import { searchTask } from "../utils/state";
+
 export const selectTaskData = state => state.task.taskData;
 export const selectTasksList = state => state.task.tasksList;
 export const selectCurrentTaskData = searchId => state =>
-  state.task.tasksList.find(({ id }) => id === searchId);
+  searchTask(searchId, state);
 
 export const selectTaskFormData = searchId => state => {
-  const task = state.task.tasksList.find(({ id }) => id === searchId);
+  const task = searchTask(searchId, state);
 
   if (task) {
     const { title, project, file } = task;
@@ -12,4 +15,19 @@ export const selectTaskFormData = searchId => state => {
   } else {
     return undefined;
   }
+};
+
+export const selectTaskTimeData = searchId => state => {
+  const task = searchTask(searchId, state);
+
+  if (task) {
+    const { startTaskTime, duration, endTime } = task;
+    return { startTaskTime, duration, endTime };
+  } else {
+    return undefined;
+  }
+};
+
+export const selectTaskSate = searchId => state => {
+  const task = searchTask(searchId, state);
 };

@@ -3,7 +3,10 @@ import React, { useCallback } from "react";
 import { View, Text } from "react-native";
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectTaskFormData } from "../../redux/task/selectors";
+import {
+  selectTaskFormData,
+  selectCurrentTaskData
+} from "../../redux/task/selectors";
 import { update, remove } from "../../redux/task";
 // components
 import EditTaskForm from "../../components/forms/EditTaskForm";
@@ -17,6 +20,13 @@ export default ({ route, navigation }) => {
 
   const { id } = route?.params;
   const formData = useSelector(selectTaskFormData(id));
+  const {
+    startTaskTime,
+    endTime,
+    duration,
+    isCompleted,
+    isPaused
+  } = useSelector(selectCurrentTaskData);
 
   const onUpdateTask = data => {
     dispatch(update.request({ ...data, id }));
