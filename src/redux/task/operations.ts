@@ -35,8 +35,10 @@ function* startTask({ payload }) {
       uri
     };
   }
+  let { startTaskTime, startTime } = payload;
+  startTaskTime = startTaskTime || startTime;
 
-  const argApi = { ...payload, file };
+  const argApi = { ...payload, startTaskTime, isPaused: false, file };
   yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
 }
 
@@ -46,7 +48,8 @@ function* addTask({ payload }) {
   const argApi = {
     ...payload,
     endTime,
-    duration
+    duration,
+    isPaused: true
   };
 
   yield apiHandler({ api: addTaskApi, argApi }, add);

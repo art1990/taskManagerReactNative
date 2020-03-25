@@ -13,6 +13,8 @@ const REMOVE = "taskManager/task/remove";
 const UPDATE = "taskManager/task/update";
 const GET_INCOMPLETE = "taskManager/task/getIncomplate";
 const GET_LIST = "taskManager/task/getList";
+const TOOGGLE_PAUSE = "taskManager/task/tooglePause";
+const MARK_COMPLETE = "taskManager/task/markComplete";
 
 // actions
 export const start = createAction(START);
@@ -24,6 +26,8 @@ export const update = createAction(UPDATE);
 export const getIncomplete = createAction(GET_INCOMPLETE);
 export const getList = createAction(GET_LIST);
 
+export const tooglePause = actionCreator(TOOGGLE_PAUSE);
+export const markComplete = actionCreator(MARK_COMPLETE);
 // initial state
 export interface ITaskState {
   tasksList: null | object[];
@@ -33,8 +37,10 @@ export interface ITaskState {
     project: string;
     startTime?: number;
     endTime?: number;
+    startTaskTime?: number;
     duration?: number;
     isPaused: boolean;
+    isCompleted: boolean;
     file: null | object[];
   };
   meta: { isLoading: boolean; error: null | {} };
@@ -48,8 +54,10 @@ const initialState: ITaskState = {
     project: "",
     startTime: null,
     endTime: null,
+    startTaskTime: null,
     duration: null,
     isPaused: false,
+    isCompleted: false,
     file: null
   },
   meta: {
@@ -138,6 +146,12 @@ export default produce(
         draft.meta.error = payload;
         draft.meta.isLoading = false;
         return;
+
+      case tooglePause.type:
+        draft.taskData.isPaused = !draft.taskData.isPaused;
+
+      case markComplete.type:
+        draft.taskData.isCompleted = true;
 
       default:
         return draft;

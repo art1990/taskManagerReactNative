@@ -60,6 +60,8 @@ export const updateIncompleteTaskApi = async (taskData = null) => {
 };
 
 export const addTaskApi = async task => {
+  if (task.id) return updateTaskApi(task);
+
   const { id } = await tasksListCol.add(task);
   task.id = id;
   await tasksListCol.doc(id).update({ id });

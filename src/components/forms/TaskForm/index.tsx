@@ -41,7 +41,6 @@ const TaskForm: React.FC<ITaskForm> = ({
     register,
     unregister,
     setValue,
-    getValues,
     watch
   } = methods;
   const file = watch("file");
@@ -85,12 +84,6 @@ const TaskForm: React.FC<ITaskForm> = ({
         <Controller
           as={FormInput}
           style={styles.ipnut}
-          как
-          удалить
-          ключ
-          из
-          обьекта
-          js
           label="Project"
           control={control}
           name="project"
