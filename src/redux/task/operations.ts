@@ -1,9 +1,18 @@
 // redux
-import { start, add, remove, update, getIncomplete, getList } from ".";
+import {
+  create,
+  resume,
+  start,
+  add,
+  remove,
+  update,
+  getIncomplete,
+  getList
+} from ".";
 import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
-import { takeEvery, take, select } from "redux-saga/effects";
+import { takeEvery, take, select, put } from "redux-saga/effects";
 // api
 import {
   initializeVariableToApiService,
@@ -22,24 +31,67 @@ import { getUnixTime } from "date-fns";
 
 function* startTask({ payload }) {
   let file = null;
+  let argApi = {};
 
-  if (payload.file) {
-    const uri = yield apiHandler({
-      api: uploadFileApi,
-      argApi: payload.file
-    });
+  if (!payload.id) {
+    if (payload.file) {
+      const uri = yield apiHandler({
+        api: uploadFileApi,
+        argApi: payload.file
+      });
 
-    file = {
-      name: payload.file.name,
-      size: payload.file.size,
-      uri
-    };
+      file = {
+        name: payload.file.name,
+        size: payload.file.size,
+        uri
+      };
+    }
   }
+
   let { startTaskTime, startTime } = payload;
   startTaskTime = startTaskTime || startTime;
 
-  const argApi = { ...payload, startTaskTime, isPaused: false, file };
+  argApi = { ...payload, startTaskTime, isPaused: false, file };
   yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
+}
+
+function* createTask({ payload }) {
+  try {
+    let file = null;
+    let argApi = {};
+
+    if (payload.file) {
+      const uri = yield apiHandler({
+        api: uploadFileApi,
+        argApi: payload.file
+      });
+
+      file = {
+        name: payload.file.name,
+        size: payload.file.size,
+        uri
+      };
+    }
+
+    const startTaskTime = payload.startTime;
+
+    argApi = { ...payload, startTaskTime, isPaused: false, file };
+    yield apiHandler({ api: updateIncompleteTaskApi, argApi });
+    yield apiHandler({ api: addTaskApi, argApi });
+    yield put(create.success(argApi));
+  } catch (err) {
+    yield put(create.failure(err));
+  }
+}
+
+function* resumeTask({ payload }) {
+  try {
+    yield apiHandler({ api: updateIncompleteTaskApi, argApi: payload });
+    yield apiHandler({ api: updateTaskApi, argApi: payload });
+    yield put(resume.success(payload));
+  } catch (err) {
+    yield put(resume.failure(err));
+  }
 }
 
 function* addTask({ payload }) {
@@ -78,6 +130,8 @@ function* getTasksList() {
 export default function* watchTask() {
   yield take(initialize.type);
   yield takeEvery(start.REQUEST, startTask);
+  yield takeEvery(create.REQUEST, createTask);
+  yield takeEvery(resume.REQUEST, resumeTask);
   yield takeEvery(add.REQUEST, addTask);
   yield takeEvery(remove.REQUEST, removeTask);
   yield takeEvery(update.REQUEST, updateTask);

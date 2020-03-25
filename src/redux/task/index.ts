@@ -13,8 +13,8 @@ const REMOVE = "taskManager/task/remove";
 const UPDATE = "taskManager/task/update";
 const GET_INCOMPLETE = "taskManager/task/getIncomplate";
 const GET_LIST = "taskManager/task/getList";
-const TOOGGLE_PAUSE = "taskManager/task/tooglePause";
-const MARK_COMPLETE = "taskManager/task/markComplete";
+const CREATE = "taskManager/task/create";
+const RESUME = "taskManager/task/resume";
 
 // actions
 export const start = createAction(START);
@@ -25,9 +25,9 @@ export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
 export const getIncomplete = createAction(GET_INCOMPLETE);
 export const getList = createAction(GET_LIST);
+export const create = createAction(CREATE);
+export const resume = createAction(RESUME);
 
-export const tooglePause = actionCreator(TOOGGLE_PAUSE);
-export const markComplete = actionCreator(MARK_COMPLETE);
 // initial state
 export interface ITaskState {
   tasksList: null | object[];
@@ -55,7 +55,7 @@ const initialState: ITaskState = {
     startTime: null,
     endTime: null,
     startTaskTime: null,
-    duration: null,
+    duration: 0,
     isPaused: false,
     isCompleted: false,
     file: null
@@ -147,11 +147,32 @@ export default produce(
         draft.meta.isLoading = false;
         return;
 
-      case tooglePause.type:
-        draft.taskData.isPaused = !draft.taskData.isPaused;
+      case create.REQUEST:
+        draft.meta.isLoading = true;
+        return;
+      case create.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.taskData = payload;
+        draft.tasksList = [...(draft.tasksList || []), payload];
+        return;
+      case create.FAILURE:
+        draft.meta.isLoading = false;
+        draft.meta.error = payload;
+        return;
 
-      case markComplete.type:
-        draft.taskData.isCompleted = true;
+      case resume.REQUEST:
+        draft.meta.isLoading = true;
+      case resume.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.taskData = payload;
+        draft.tasksList = draft.tasksList.map(task => {
+          return task.id === payload.id ? { ...task, ...payload } : task;
+        });
+        return;
+      case resume.FAILURE:
+        draft.meta.isLoading = false;
+        draft.meta.error = payload;
+        return;
 
       default:
         return draft;

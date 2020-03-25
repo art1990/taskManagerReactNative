@@ -8,9 +8,10 @@ import { formatToUTCTime } from "../../utils/date";
 
 interface Timer {
   startTime: number;
+  duration: number;
 }
 
-const Timer: React.FC<Timer> = ({ startTime }) => {
+const Timer: React.FC<Timer> = ({ startTime, duration }) => {
   const [currentTime, setCurrentTime] = useState<number>(
     getUnixTime(new Date())
   );
@@ -32,7 +33,7 @@ const Timer: React.FC<Timer> = ({ startTime }) => {
   const time = useMemo(
     () =>
       (() => {
-        return formatToUTCTime(currentTime - startTime);
+        return formatToUTCTime(currentTime - startTime + duration);
       })(),
     [startTime, currentTime]
   );

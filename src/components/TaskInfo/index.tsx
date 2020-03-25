@@ -14,21 +14,26 @@ import Resume from "../../assets/img/icons/resume.svg";
 export interface ITaskInfo {
   title: string;
   project: string;
-  duration: number;
+  duration?: number;
+  startTaskTime?: number;
   isCompleted?: boolean;
   isPaused?: boolean;
-  onResumePress: () => void;
+  onResumePress?: () => void;
 }
 
 const TaskInfo: React.FC<ITaskInfo> = ({
   title,
   project,
+  startTaskTime,
   duration,
   isCompleted,
   isPaused,
   onResumePress
 }) => {
   const size = 22;
+  const timeText = startTaskTime
+    ? "start: " + formatToUTCTime(startTaskTime)
+    : formatToUTCTime(duration);
 
   return (
     <View style={[Styles.rowSpaceBetween, styles.container]}>
@@ -36,7 +41,7 @@ const TaskInfo: React.FC<ITaskInfo> = ({
         <Text>title: {title} </Text>
         <Text>project: {project}</Text>
       </View>
-      <Text> {formatToUTCTime(duration)}</Text>
+      <Text> {timeText}</Text>
       {isCompleted ? (
         <Completed width={size} height={size} />
       ) : (

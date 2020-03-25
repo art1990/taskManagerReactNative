@@ -15,17 +15,19 @@ import Styles from "../../assets/styles";
 interface IWorkingTaskInfo {
   title: string;
   startTime: number;
+  duration: number;
   onCreateTask: () => void;
 }
 
 const WorkingTaskInfo: React.FC<IWorkingTaskInfo> = ({
   title,
   startTime,
+  duration,
   onCreateTask
 }) => (
   <View style={[Styles.rowSpaceBetween, styles.container]}>
     <Text style={styles.title}>{title}</Text>
-    <Timer startTime={startTime} />
+    <Timer startTime={startTime} duration={duration} />
     <IconButton
       icon={() => <MaterialIcons name="pause-circle-filled" size={20} />}
       onPress={onCreateTask}
