@@ -1,10 +1,9 @@
 // react
-import React, { useState } from "react";
-import { View, Text } from "react-native";
+import React from "react";
+import { View } from "react-native";
 // redux
-import { start } from "../../redux/task";
-import { useDispatch, useSelector } from "react-redux";
-import { selectTaskData } from "../../redux/task/selectors";
+import { start, create } from "../../redux/task";
+import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
@@ -13,17 +12,21 @@ import { getUnixTime } from "date-fns";
 // constants
 import { Routes } from "../../navigation/routes";
 
-const CreateTask: React.FC = ({ navigation }) => {
+interface ICreateTask {
+  navigation: any;
+}
+
+const CreateTask: React.FC<ICreateTask> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const onStartTask = data => {
     dispatch(
-      start.request({
+      create.request({
         ...data,
-        startTime: getUnixTime(new Date())
+        startTime: getUnixTime(new Date()),
+        navigation
       })
     );
-    navigation.navigate(Routes.TASKS_LIST);
   };
 
   return (

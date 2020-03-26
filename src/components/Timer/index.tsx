@@ -30,10 +30,12 @@ const Timer: React.FC<Timer> = ({ startTime, duration }) => {
     };
   }, [startTime, currentTime]);
 
+  const delta = duration || 0;
+
   const time = useMemo(
     () =>
       (() => {
-        return formatToUTCTime(currentTime - startTime + duration);
+        return formatToUTCTime(currentTime - startTime + delta);
       })(),
     [startTime, currentTime]
   );

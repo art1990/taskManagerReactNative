@@ -25,15 +25,16 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
     outputRange: [1, 0],
     extrapolate: "clamp"
   });
+  const size = 20;
 
   return (
     <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
       <IconButton
-        icon={() => <TrashIcon width={20} height={20} />}
+        icon={() => <TrashIcon width={size} height={size} />}
         onPress={onRemovePress}
       />
       <IconButton
-        icon={() => <PencilIcon width={20} height={20} />}
+        icon={() => <PencilIcon width={size} height={size} />}
         onPress={onEditPress}
       />
     </Animated.View>

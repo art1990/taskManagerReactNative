@@ -2,6 +2,7 @@
 import {
   create,
   resume,
+  pause,
   start,
   add,
   remove,
@@ -13,6 +14,8 @@ import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
 import { takeEvery, take, select, put } from "redux-saga/effects";
+// navigation
+import { NavigationActions } from "@react-navigation/compat";
 // api
 import {
   initializeVariableToApiService,
@@ -21,6 +24,7 @@ import {
   addTaskApi,
   updateTaskApi,
   removeTaskApi,
+  pauseTaskApi,
   getIncompleteTaskApi,
   getTaskListApi
 } from "../../services/api";
@@ -28,6 +32,8 @@ import {
 import { apiHandler } from "../utils/apiHandler";
 // date
 import { getUnixTime } from "date-fns";
+// constants
+import { Routes } from "../../navigation/routes";
 
 function* startTask({ payload }) {
   let file = null;
@@ -55,7 +61,7 @@ function* startTask({ payload }) {
   yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
 }
 
-function* createTask({ payload }) {
+function* createTask({ payload: { navigation, ...payload } }) {
   try {
     let file = null;
     let argApi = {};
@@ -75,13 +81,23 @@ function* createTask({ payload }) {
 
     const startTaskTime = payload.startTime;
 
-    argApi = { ...payload, startTaskTime, isPaused: false, file };
-    yield apiHandler({ api: updateIncompleteTaskApi, argApi });
-    yield apiHandler({ api: addTaskApi, argApi });
-    yield put(create.success(argApi));
+    argApi = {
+      ...payload,
+      startTaskTime,
+      isPaused: false,
+      file
+    };
+    const task = yield apiHandler({ api: addTaskApi, argApi });
+    yield apiHandler({ api: updateIncompleteTaskApi, argApi: task });
+    yield navigation.navigate(Routes.TASKS_LIST);
+    yield put(create.success(task));
   } catch (err) {
     yield put(create.failure(err));
   }
+}
+
+function* pauseTask({ payload }) {
+  yield apiHandler({ api: pauseTaskApi, argApi: payload }, pause);
 }
 
 function* resumeTask({ payload }) {
@@ -131,6 +147,7 @@ export default function* watchTask() {
   yield take(initialize.type);
   yield takeEvery(start.REQUEST, startTask);
   yield takeEvery(create.REQUEST, createTask);
+  yield takeEvery(pause.REQUEST, pauseTask);
   yield takeEvery(resume.REQUEST, resumeTask);
   yield takeEvery(add.REQUEST, addTask);
   yield takeEvery(remove.REQUEST, removeTask);

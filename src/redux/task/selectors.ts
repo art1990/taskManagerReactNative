@@ -17,17 +17,4 @@ export const selectTaskFormData = searchId => state => {
   }
 };
 
-export const selectTaskTimeData = searchId => state => {
-  const task = searchTask(searchId, state);
-
-  if (task) {
-    const { startTaskTime, duration, endTime } = task;
-    return { startTaskTime, duration, endTime };
-  } else {
-    return undefined;
-  }
-};
-
-export const selectTaskSate = searchId => state => {
-  const task = searchTask(searchId, state);
-};
+export const selectMeta = state => state.task.meta;

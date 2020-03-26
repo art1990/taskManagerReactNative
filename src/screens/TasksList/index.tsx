@@ -5,8 +5,19 @@ import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
-import { add, remove, getIncomplete, getList, start } from "../../redux/task";
-import { selectTaskData, selectTasksList } from "../../redux/task/selectors";
+import task, {
+  add,
+  remove,
+  pause,
+  getIncomplete,
+  getList,
+  start
+} from "../../redux/task";
+import {
+  selectTaskData,
+  selectTasksList,
+  selectMeta
+} from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
 import TaskSwipeableInfo from "./TaskSwipeableInfo";
@@ -22,8 +33,9 @@ import { getUnixTime } from "date-fns";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
-  const taskData = useSelector(selectTaskData) || {};
+  const taskData = useSelector(selectTaskData);
   const tasksList = useSelector(selectTasksList);
+  const { isLoading, isLoadingIncomplete } = useSelector(selectMeta);
 
   const dispatch = useDispatch();
 
@@ -47,6 +59,10 @@ export default ({ navigation }) => {
     dispatch(add.request(taskData));
   };
 
+  const onPausePress = () => {
+    dispatch(pause.request(taskData));
+  };
+
   const onRemovePress = (id, uri) => {
     dispatch(remove.request({ id, uri }));
   };
@@ -63,51 +79,54 @@ export default ({ navigation }) => {
     const startTime = getUnixTime(new Date());
     dispatch(start.request({ ...el, startTime }));
   };
-
   const { startTime, duration, title } = taskData;
   return (
     <View>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
-      {tasksList?.map(el => {
-        const {
-          title,
-          project,
-          duration,
-          startTaskTime,
-          isPaused,
-          isCompleted,
-          id,
-          file
-        } = el;
+      {!isLoading && !isLoadingIncomplete && (
+        <>
+          {tasksList?.map(el => {
+            const {
+              title,
+              project,
+              duration,
+              startTaskTime,
+              isPaused,
+              isCompleted,
+              id,
+              file
+            } = el;
+            if (taskData?.id === id) {
+              const props = { title, project, startTaskTime, isPaused };
+              return <TaskInfo key={id} {...props} />;
+            }
 
-        if (taskData?.id === id) {
-          const props = { title, project, startTaskTime };
-          return <TaskInfo key={id} {...props} />;
-        }
-        const props = { title, project, duration, isPaused, isCompleted };
-        return (
-          <TaskSwipeableInfo
-            key={id}
-            {...props}
-            onRemovePress={() => {
-              onRemovePress(id, file?.uri);
-            }}
-            onEditPress={() => {
-              onEditPress(id);
-            }}
-            onResumePress={() => onResumePress(el)}
-          />
-        );
-      })}
-      {startTime ? (
-        <WorkingTaskInfo
-          title={title}
-          startTime={startTime}
-          duration={duration}
-          onCreateTask={onCreateTask}
-        />
-      ) : (
-        <Button onPress={toAddTask}>Add task</Button>
+            const props = { title, project, duration, isPaused, isCompleted };
+            return (
+              <TaskSwipeableInfo
+                key={id}
+                {...props}
+                onRemovePress={() => {
+                  onRemovePress(id, file?.uri);
+                }}
+                onEditPress={() => {
+                  onEditPress(id);
+                }}
+                onResumePress={() => onResumePress(el)}
+              />
+            );
+          })}
+          {startTime ? (
+            <WorkingTaskInfo
+              title={title}
+              startTime={startTime}
+              duration={duration}
+              onCreateTask={onPausePress}
+            />
+          ) : (
+            <Button onPress={toAddTask}>Add task</Button>
+          )}
+        </>
       )}
     </View>
   );

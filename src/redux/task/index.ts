@@ -3,10 +3,11 @@ import { createAction } from "redux-saga-actions";
 import actionCreator from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
+// utils
+import { updateTasksList } from "../utils/reducer";
 
 // action types
 const START = "taskManager/task/start";
-const STOP = "taskManager/task/stop";
 const PAUSE = "taskManager/task/pause";
 const ADD = "taskManager/task/add";
 const REMOVE = "taskManager/task/remove";
@@ -18,8 +19,7 @@ const RESUME = "taskManager/task/resume";
 
 // actions
 export const start = createAction(START);
-export const stop = actionCreator(STOP);
-export const pause = actionCreator(PAUSE);
+export const pause = createAction(PAUSE);
 export const add = createAction(ADD);
 export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
@@ -43,7 +43,7 @@ export interface ITaskState {
     isCompleted: boolean;
     file: null | object[];
   };
-  meta: { isLoading: boolean; error: null | {} };
+  meta: { isLoading: boolean; isLoadingIncomplete: boolean; error: null | {} };
 }
 
 const initialState: ITaskState = {
@@ -62,6 +62,7 @@ const initialState: ITaskState = {
   },
   meta: {
     isLoading: false,
+    isLoadingIncomplete: false,
     error: null
   }
 };
@@ -114,9 +115,7 @@ export default produce(
         return;
       case update.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tasksList = draft.tasksList.map(task => {
-          return task.id === payload.id ? { ...task, ...payload } : task;
-        });
+        draft.tasksList = updateTasksList(draft.tasksList, payload);
         return draft;
       case update.FAILURE:
         draft.meta.isLoading = false;
@@ -124,15 +123,15 @@ export default produce(
         return;
 
       case getIncomplete.REQUEST:
-        draft.meta.isLoading = true;
+        draft.meta.isLoadingIncomplete = true;
         return;
       case getIncomplete.SUCCESS:
         draft.taskData = payload || draft.taskData;
-        draft.meta.isLoading = false;
+        draft.meta.isLoadingIncomplete = false;
         return;
       case getIncomplete.FAILURE:
         draft.meta.error = payload;
-        draft.meta.isLoading = false;
+        draft.meta.isLoadingIncomplete = false;
         return;
 
       case getList.REQUEST:
@@ -153,7 +152,7 @@ export default produce(
       case create.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = payload;
-        draft.tasksList = [...(draft.tasksList || []), payload];
+        // draft.tasksList = [...(draft.tasksList || []), payload];
         return;
       case create.FAILURE:
         draft.meta.isLoading = false;
@@ -165,15 +164,25 @@ export default produce(
       case resume.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = payload;
-        draft.tasksList = draft.tasksList.map(task => {
-          return task.id === payload.id ? { ...task, ...payload } : task;
-        });
+        draft.tasksList = updateTasksList(draft.tasksList, payload);
         return;
       case resume.FAILURE:
         draft.meta.isLoading = false;
         draft.meta.error = payload;
         return;
 
+      case pause.REQUEST:
+        draft.meta.isLoading = true;
+        return;
+      case pause.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.taskData = initialState.taskData;
+        draft.tasksList = updateTasksList(draft.tasksList, payload);
+        return;
+      case pause.FAILURE:
+        draft.meta.isLoading = false;
+        draft.meta.error = payload;
+        return;
       default:
         return draft;
     }
