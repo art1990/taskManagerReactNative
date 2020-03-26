@@ -161,6 +161,7 @@ export default produce(
 
       case resume.REQUEST:
         draft.meta.isLoading = true;
+        return;
       case resume.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = payload;

@@ -23,6 +23,7 @@ import {
   updateTaskApi,
   removeTaskApi,
   pauseTaskApi,
+  resumeTaskApi,
   getIncompleteTaskApi,
   getTaskListApi
 } from "../../services/api";
@@ -77,12 +78,12 @@ function* createTask({ payload: { navigation, ...payload } }) {
       };
     }
 
-    const startTaskTime = payload.startTime;
+    const startTaskTime = getUnixTime(new Date());
 
     argApi = {
       ...payload,
       startTaskTime,
-      isPaused: false,
+      startTime: startTaskTime,
       file
     };
     const task = yield apiHandler({ api: addTaskApi, argApi });
@@ -96,7 +97,7 @@ function* createTask({ payload: { navigation, ...payload } }) {
 
 function* pauseTask({ payload }) {
   const endTime = getUnixTime(new Date());
-  const duration = endTime - payload.startTime;
+  const duration = endTime - payload.startTime + payload.duration;
   const argApi = {
     ...payload,
     endTime,
@@ -106,13 +107,10 @@ function* pauseTask({ payload }) {
 }
 
 function* resumeTask({ payload }) {
-  try {
-    yield apiHandler({ api: updateIncompleteTaskApi, argApi: payload });
-    yield apiHandler({ api: updateTaskApi, argApi: payload });
-    yield put(resume.success(payload));
-  } catch (err) {
-    yield put(resume.failure(err));
-  }
+  const startTime = getUnixTime(new Date());
+
+  const argApi = { ...payload, startTime };
+  yield apiHandler({ api: resumeTaskApi, argApi }, resume);
 }
 
 function* addTask({ payload }) {

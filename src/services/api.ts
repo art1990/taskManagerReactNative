@@ -98,7 +98,13 @@ export const pauseTaskApi = async task => {
   return taskData;
 };
 
-export const resumeTaskApi = async () => {};
+export const resumeTaskApi = async task => {
+  const taskData = { ...task, isPaused: false };
+  await updateIncompleteTaskApi(taskData);
+  await updateTaskApi(taskData);
+
+  return taskData;
+};
 
 export const getIncompleteTaskApi = async () => {
   const res = await userDoc.get();

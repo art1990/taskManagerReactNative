@@ -23,7 +23,6 @@ const CreateTask: React.FC<ICreateTask> = ({ navigation }) => {
     dispatch(
       create.request({
         ...data,
-        startTime: getUnixTime(new Date()),
         navigation
       })
     );

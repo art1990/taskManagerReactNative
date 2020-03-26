@@ -5,10 +5,11 @@ import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
-import task, {
+import {
   add,
   remove,
   pause,
+  resume,
   getIncomplete,
   getList,
   start
@@ -28,8 +29,6 @@ import Title from "../../components/Title";
 import { useAuth } from "../../hooks/useAuth";
 // constants
 import { Routes } from "../../navigation/routes";
-// date-fns
-import { getUnixTime } from "date-fns";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -55,10 +54,6 @@ export default ({ navigation }) => {
     dispatch(logout.run());
   };
 
-  const onCreateTask = () => {
-    dispatch(add.request(taskData));
-  };
-
   const onPausePress = () => {
     dispatch(pause.request(taskData));
   };
@@ -75,9 +70,8 @@ export default ({ navigation }) => {
     navigation.navigate(Routes.CREATE_TASK);
   };
 
-  const onResumePress = el => {
-    const startTime = getUnixTime(new Date());
-    dispatch(start.request({ ...el, startTime }));
+  const onResumePress = task => {
+    dispatch(resume.request(task));
   };
   const { startTime, duration, title } = taskData;
   return (
