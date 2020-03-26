@@ -92,9 +92,10 @@ export const removeTaskApi = async ({ id, uri }) => {
 
 export const pauseTaskApi = async task => {
   await updateIncompleteTaskApi();
-  await updateTaskApi(task);
+  const taskData = { ...task, isPaused: true };
+  await updateTaskApi(taskData);
 
-  return task;
+  return taskData;
 };
 
 export const resumeTaskApi = async () => {};

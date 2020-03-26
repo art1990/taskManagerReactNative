@@ -14,8 +14,6 @@ import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
 import { takeEvery, take, select, put } from "redux-saga/effects";
-// navigation
-import { NavigationActions } from "@react-navigation/compat";
 // api
 import {
   initializeVariableToApiService,
@@ -97,7 +95,14 @@ function* createTask({ payload: { navigation, ...payload } }) {
 }
 
 function* pauseTask({ payload }) {
-  yield apiHandler({ api: pauseTaskApi, argApi: payload }, pause);
+  const endTime = getUnixTime(new Date());
+  const duration = endTime - payload.startTime;
+  const argApi = {
+    ...payload,
+    endTime,
+    duration
+  };
+  yield apiHandler({ api: pauseTaskApi, argApi }, pause);
 }
 
 function* resumeTask({ payload }) {
