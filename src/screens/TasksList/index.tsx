@@ -1,6 +1,6 @@
 // react
 import React, { useCallback, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Alert } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -73,6 +73,10 @@ export default ({ navigation }) => {
   const onResumePress = task => {
     dispatch(resume.request(task));
   };
+
+  const toView = task => {
+    navigation.navigate(Routes.VIEW_TASK);
+  };
   const { startTime, duration, title } = taskData;
   return (
     <View>
@@ -107,6 +111,7 @@ export default ({ navigation }) => {
                   onEditPress(id);
                 }}
                 onResumePress={() => onResumePress(el)}
+                toView={() => toView(el)}
               />
             );
           })}

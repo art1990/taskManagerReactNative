@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // react-native-paper
 import { IconButton } from "react-native-paper";
 // utils
@@ -19,6 +19,7 @@ export interface ITaskInfo {
   startTaskTime?: number;
   isCompleted?: boolean;
   onResumePress?: () => void;
+  toView?: () => void;
 }
 
 const TaskInfo: React.FC<ITaskInfo> = ({
@@ -28,7 +29,8 @@ const TaskInfo: React.FC<ITaskInfo> = ({
   duration,
   isCompleted,
   isPaused,
-  onResumePress
+  onResumePress,
+  toView
 }) => {
   const size = 22;
   const timeText = isPaused
@@ -36,23 +38,25 @@ const TaskInfo: React.FC<ITaskInfo> = ({
     : "start: " + formatToUTCTime(startTaskTime);
 
   return (
-    <View style={[Styles.rowSpaceBetween, styles.container]}>
-      <View style={Styles.rowSpaceBetween}>
-        <Text>title: {title} </Text>
-        <Text>project: {project}</Text>
+    <TouchableOpacity onPress={toView}>
+      <View style={[Styles.rowSpaceBetween, styles.container]}>
+        <View style={Styles.rowSpaceBetween}>
+          <Text>title: {title} </Text>
+          <Text>project: {project}</Text>
+        </View>
+        <Text> {timeText}</Text>
+        {isCompleted ? (
+          <Completed width={size} height={size} />
+        ) : (
+          isPaused && (
+            <IconButton
+              icon={() => <Resume width={size} heigth={size} />}
+              onPress={onResumePress}
+            />
+          )
+        )}
       </View>
-      <Text> {timeText}</Text>
-      {isCompleted ? (
-        <Completed width={size} height={size} />
-      ) : (
-        isPaused && (
-          <IconButton
-            icon={() => <Resume width={size} heigth={size} />}
-            onPress={onResumePress}
-          />
-        )
-      )}
-    </View>
+    </TouchableOpacity>
   );
 };
 

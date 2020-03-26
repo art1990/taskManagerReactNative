@@ -3,6 +3,7 @@ export enum Routes {
   SIGNUP = "SignUp",
   CREATE_TASK = "Create new task",
   EDIT_TASK = "Edit task",
+  VIEW_TASK = "View task",
   TASKS_LIST = "Tasks list",
   ADD_TAGS = "Add tags to task",
   FILTERS = "Filters",

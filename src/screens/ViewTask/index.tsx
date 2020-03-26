@@ -2,10 +2,14 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-export default () => {
+interface ITaskView {}
+
+const ViewTask: React.FC<ITaskView> = () => {
   return (
     <View>
       <Text>View Task</Text>
     </View>
   );
 };
+
+export default ViewTask;

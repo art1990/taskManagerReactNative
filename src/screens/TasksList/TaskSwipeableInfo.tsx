@@ -49,7 +49,8 @@ const TaskSwipeableInfo: React.FC<ITaskSwipeableInfo> = ({
   isCompleted,
   onRemovePress,
   onEditPress,
-  onResumePress
+  onResumePress,
+  toView
 }) => (
   <Swipeable
     renderRightActions={(progress, dragX) => (
@@ -68,6 +69,7 @@ const TaskSwipeableInfo: React.FC<ITaskSwipeableInfo> = ({
       isPaused={isPaused}
       isCompleted={isCompleted}
       onResumePress={onResumePress}
+      toView={toView}
     />
   </Swipeable>
 );
@@ -78,7 +80,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: "row",
-    flex: 0
+    flex: 0,
+    alignItems: "center"
   }
 });
 
