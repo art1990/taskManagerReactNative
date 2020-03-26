@@ -6,13 +6,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
 import {
-  add,
   remove,
   pause,
   resume,
   getIncomplete,
-  getList,
-  start
+  getList
 } from "../../redux/task";
 import {
   selectTaskData,
@@ -74,8 +72,8 @@ export default ({ navigation }) => {
     dispatch(resume.request(task));
   };
 
-  const toView = task => {
-    navigation.navigate(Routes.VIEW_TASK);
+  const toView = ({ id }) => {
+    navigation.navigate(Routes.VIEW_TASK, { id });
   };
   const { startTime, duration, title } = taskData;
   return (

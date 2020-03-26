@@ -11,6 +11,7 @@ interface ButtonProps {
   children: string;
   color?: string;
   labelStyle?: {};
+  style?: {};
   mode?: any;
 }
 
@@ -20,6 +21,7 @@ const CustomButton: React.FC<ButtonProps> = ({
   mode,
   color,
   labelStyle,
+  style,
   ...rest
 }) => {
   const textStyle = [
@@ -34,6 +36,7 @@ const CustomButton: React.FC<ButtonProps> = ({
       color={Colors.button}
       onPress={onPress}
       labelStyle={textStyle}
+      style={style}
       uppercase={false}
       {...rest}
     >

@@ -78,7 +78,7 @@ export default produce(
         draft.meta.isLoading = true;
         return;
       case start.SUCCESS:
-        draft.taskData = payload;
+        draft.taskData = { ...draft.taskData, ...payload };
         draft.meta.isLoading = false;
         return;
       case start.FAILURE:
@@ -126,7 +126,8 @@ export default produce(
         draft.meta.isLoadingIncomplete = true;
         return;
       case getIncomplete.SUCCESS:
-        draft.taskData = payload || draft.taskData;
+        draft.taskData =
+          (payload && { ...draft.taskData, ...payload }) || draft.taskData;
         draft.meta.isLoadingIncomplete = false;
         return;
       case getIncomplete.FAILURE:
@@ -151,7 +152,7 @@ export default produce(
         return;
       case create.SUCCESS:
         draft.meta.isLoading = false;
-        draft.taskData = payload;
+        draft.taskData = { ...draft.taskData, ...payload };
         // draft.tasksList = [...(draft.tasksList || []), payload];
         return;
       case create.FAILURE:

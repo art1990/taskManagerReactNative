@@ -106,11 +106,12 @@ function* pauseTask({ payload }) {
   yield apiHandler({ api: pauseTaskApi, argApi }, pause);
 }
 
-function* resumeTask({ payload }) {
+function* resumeTask({ payload: { navigation, ...payload } }) {
   const startTime = getUnixTime(new Date());
 
   const argApi = { ...payload, startTime };
   yield apiHandler({ api: resumeTaskApi, argApi }, resume);
+  if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
 }
 
 function* addTask({ payload }) {

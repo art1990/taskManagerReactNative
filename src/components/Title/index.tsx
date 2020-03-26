@@ -3,23 +3,25 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 // components
 import Button from "../Button";
-// react-native-paper
-import { IconButton } from "react-native-paper";
 // constants
 import { Colors } from "../../assets/styles/constants";
+// assets
+import Complete from "../../assets/img/icons/complete.svg";
 
 interface ITitle {
   text: string;
   buttonText?: string;
   buttonAction?: () => void;
-  iconButton?: { icon: any; action: any }[];
+  iconButtonList?: JSX.Element[];
+  isCompleted?: boolean;
 }
 
 const Title: React.FC<ITitle> = ({
   text,
   buttonText,
   buttonAction,
-  iconButton
+  iconButtonList,
+  isCompleted
 }) => (
   <View style={styles.container}>
     <Text style={styles.text}>{text}</Text>
@@ -28,11 +30,9 @@ const Title: React.FC<ITitle> = ({
         {buttonText}
       </Button>
     )}
-    {iconButton && (
+    {(iconButtonList || isCompleted) && (
       <View style={styles.iconButtonContainer}>
-        {iconButton.map((el, id) => (
-          <IconButton key={id} icon={el.icon} onPress={el.action} />
-        ))}
+        {isCompleted ? <Complete width={20} height={20} /> : iconButtonList}
       </View>
     )}
   </View>
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 0,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   text: {
     fontStyle: "normal",

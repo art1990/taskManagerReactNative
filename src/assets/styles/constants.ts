@@ -3,6 +3,8 @@ export enum Colors {
   activeTab = "#000000",
   tabBarBGColor = "#F1F0F0",
 
+  placeholder = "rgba(0,0,0, 0.54)",
+
   white = "#FFFFFF",
   black = "#000000",
 
