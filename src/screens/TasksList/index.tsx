@@ -60,6 +60,7 @@ export default ({ navigation }) => {
   const toView = ({ id }) => {
     navigation.navigate(Routes.VIEW_TASK, { id });
   };
+
   const { startTime, duration, title } = taskData;
   return (
     <View>

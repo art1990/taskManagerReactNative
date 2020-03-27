@@ -8,7 +8,7 @@ import { Colors } from "../../../assets/styles/constants";
 
 interface ITaskField {
   title: string;
-  text: string;
+  text: string | number;
   isTime?: boolean;
 }
 

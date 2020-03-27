@@ -117,8 +117,9 @@ function* removeTask({ payload }) {
   yield apiHandler({ api: removeTaskApi, argApi: payload }, remove);
 }
 
-function* updateTask({ payload }) {
+function* updateTask({ payload: { navigation, ...payload } }) {
   yield apiHandler({ api: updateTaskApi, argApi: payload }, update);
+  if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
 }
 
 function* getIncompleteTask() {

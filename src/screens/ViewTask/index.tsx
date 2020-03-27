@@ -10,6 +10,8 @@ import IconButton from "../../components/IconButton";
 import TaskField from "../components/TaskField";
 import Button from "../../components/Button";
 import Dialog from "../../components/Dialog";
+// sections
+import Time from "../sections/Time";
 // constants
 import { Colors } from "../../assets/styles/constants";
 // hooks
@@ -23,7 +25,11 @@ interface ITaskView {
 
 const ViewTask: React.FC<ITaskView> = ({ route }) => {
   const { id } = route?.params;
-  const { onEditPress, onResumePress } = useTaskAction();
+  const {
+    onEditPress,
+    onResumePress,
+    onMarkAsCompletedPress
+  } = useTaskAction();
 
   const task: any = useSelector(selectCurrentTaskData(id));
 
@@ -39,17 +45,29 @@ const ViewTask: React.FC<ITaskView> = ({ route }) => {
   );
 
   const iconButtonList = [EditIconButton, ResumeIconButton];
-  const { title, project, startTaskTime, endTime, duration, file } = task;
+  const {
+    title,
+    project,
+    startTaskTime,
+    endTime,
+    duration,
+    file,
+    isCompleted
+  } = task;
   return (
     <View style={styles.container}>
-      <Title text="Task" iconButtonList={iconButtonList} />
+      <Title
+        text="Task"
+        iconButtonList={iconButtonList}
+        isCompleted={isCompleted}
+      />
       <TaskField title="Title" text={title} />
       <TaskField title="Project" text={project} />
-      <View style={styles.timeSection}>
-        <TaskField title="Start time" text={startTaskTime} isTime />
-        <TaskField title="End time" text={endTime} isTime />
-      </View>
-      <TaskField title="Duration" text={duration} isTime />
+      <Time
+        startTaskTime={startTaskTime}
+        endTime={endTime}
+        duration={duration}
+      />
       {file && <TaskField title="Added file" text={file.name} />}
       <Button
         mode="text"
@@ -59,6 +77,9 @@ const ViewTask: React.FC<ITaskView> = ({ route }) => {
       >
         Delete task
       </Button>
+      {!isCompleted && (
+        <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>
+      )}
     </View>
   );
 };
@@ -67,11 +88,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column"
-  },
-  timeSection: {
-    flexDirection: "row",
-    flex: 0,
-    justifyContent: "space-between"
   },
   buttonContainer: {
     alignSelf: "flex-start"

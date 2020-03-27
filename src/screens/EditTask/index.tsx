@@ -9,9 +9,10 @@ import {
 } from "../../redux/task/selectors";
 import { update, remove } from "../../redux/task";
 // components
-import EditTaskForm from "../../components/forms/EditTaskForm";
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
+// sections
+import Time from "../sections/Time";
 // routes
 import { Routes } from "../../navigation/routes";
 
@@ -26,7 +27,7 @@ export default ({ route, navigation }) => {
     duration,
     isCompleted,
     isPaused
-  } = useSelector(selectCurrentTaskData);
+  } = useSelector(selectCurrentTaskData(id));
 
   const onUpdateTask = data => {
     dispatch(update.request({ ...data, id }));
@@ -38,6 +39,8 @@ export default ({ route, navigation }) => {
     navigation.navigate(Routes.TASKS_LIST);
   }, [id]);
 
+  const timeProps = { startTaskTime, endTime, duration };
+
   return (
     <View>
       <Title
@@ -45,7 +48,9 @@ export default ({ route, navigation }) => {
         buttonText="Delete task"
         buttonAction={removeTaskAndNavigate}
       />
-      <TaskForm isEditing formData={formData} onSubmit={onUpdateTask} />
+      <TaskForm isEditing formData={formData} onSubmit={onUpdateTask}>
+        <Time {...timeProps} />
+      </TaskForm>
     </View>
   );
 };

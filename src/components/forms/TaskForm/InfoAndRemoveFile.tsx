@@ -1,12 +1,16 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 // react-native-papper
 import { IconButton } from "react-native-paper";
+// components
+import TaskField from "../../../screens/components/TaskField";
 // expo icons
 import { MaterialIcons } from "@expo/vector-icons";
 // styles
 import Styles from "../../../assets/styles";
+// constants
+import { Colors } from "../../../assets/styles/constants";
 
 interface IInfoAndRemoveFile {
   name: string;
@@ -16,21 +20,20 @@ interface IInfoAndRemoveFile {
 const InfoAndRemoveFile: React.FC<IInfoAndRemoveFile> = ({
   name,
   onRemovePress
-}) => (
-  <View style={Styles.rowSpaceBetween}>
-    <Text>{name}</Text>
-    <IconButton
-      icon={() => <MaterialIcons name="cancel" />}
-      onPress={onRemovePress}
-    />
-  </View>
-);
+}) => {
+  const size = 20;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    flexDirection: "row"
-  }
-});
+  return (
+    <View style={Styles.rowSpaceBetween}>
+      <TaskField title="Added file" text={name} />
+      <IconButton
+        icon={() => (
+          <MaterialIcons name="cancel" size={size} color={Colors.button} />
+        )}
+        onPress={onRemovePress}
+      />
+    </View>
+  );
+};
 
 export default InfoAndRemoveFile;

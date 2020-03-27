@@ -1,5 +1,5 @@
 // react
-import React, { useEffect } from "react";
+import React, { useEffect, ReactElement } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 // componets
@@ -17,6 +17,7 @@ interface ITaskForm {
   isEditing?: boolean;
   formData?: FormData;
   style?: {};
+  children?: ReactElement;
 }
 
 type FormData = {
@@ -28,7 +29,8 @@ const TaskForm: React.FC<ITaskForm> = ({
   isEditing,
   formData,
   style,
-  onSubmit
+  onSubmit,
+  children
 }) => {
   const defaultValues = formData?.defaultValues;
 
@@ -91,6 +93,7 @@ const TaskForm: React.FC<ITaskForm> = ({
           onChange={onChange}
           rules={{ required: true }}
         />
+        {children || null}
         {!name ? (
           <FileUploaderInput
             style={styles.ipnut}

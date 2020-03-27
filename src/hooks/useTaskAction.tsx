@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { selectTaskData, selectCurrentTaskData } from "../redux/task/selectors";
-import { pause, resume, remove } from "../redux/task";
+import { pause, resume, remove, update } from "../redux/task";
 // react-navigation
 import { useRoute, useNavigation } from "@react-navigation/native";
 // constants
@@ -23,11 +23,11 @@ const useTaskAction = () => {
     dispatch(pause.request(taskData));
   };
 
-  const onRemovePress = (_id: string, uri: string) => {
+  const onRemovePress: (_id?: string, uri?: string) => void = (_id, uri) => {
     dispatch(remove.request({ id: id || _id, uri }));
   };
 
-  const onEditPress = _id => {
+  const onEditPress: (_id?: string) => void = _id => {
     navigation.navigate(Routes.EDIT_TASK, { id: id || _id });
   };
 
@@ -36,7 +36,17 @@ const useTaskAction = () => {
     dispatch(resume.request(data));
   };
 
-  return { onEditPress, onPausePress, onRemovePress, onResumePress };
+  const onMarkAsCompletedPress = () => {
+    dispatch(update.request({ id, isCompleted: true, navigation }));
+  };
+
+  return {
+    onEditPress,
+    onPausePress,
+    onRemovePress,
+    onResumePress,
+    onMarkAsCompletedPress
+  };
 };
 
 export default useTaskAction;

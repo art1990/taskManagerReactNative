@@ -3,7 +3,7 @@ import { searchTask } from "../utils/state";
 
 export const selectTaskData = state => state.task.taskData;
 export const selectTasksList = state => state.task.tasksList;
-export const selectCurrentTaskData = searchId => state =>
+export const selectCurrentTaskData: any = searchId => state =>
   searchTask(searchId, state);
 
 export const selectTaskFormData = searchId => state => {
