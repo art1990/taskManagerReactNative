@@ -15,13 +15,13 @@ import { LoginSchema } from "../../../utils/validation";
 interface ITaskForm {
   onSubmit: any;
   isEditing?: boolean;
-  formData?: {};
+  formData?: FormData;
   style?: {};
 }
 
 type FormData = {
-  email: string;
-  password: string;
+  file: {};
+  defaultValues: {};
 };
 
 const TaskForm: React.FC<ITaskForm> = ({
@@ -57,8 +57,9 @@ const TaskForm: React.FC<ITaskForm> = ({
 
   const onChange = args => args[0].nativeEvent.text;
 
-  const handleUserSubmit = data => {
-    onSubmit(data);
+  const handleUserSubmit = ({ file, ...data }) => {
+    const values = file ? { file, ...data } : data;
+    onSubmit(values);
   };
 
   const fileHandleChange = data => {

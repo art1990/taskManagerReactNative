@@ -5,13 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
-import {
-  remove,
-  pause,
-  resume,
-  getIncomplete,
-  getList
-} from "../../redux/task";
+import { getIncomplete, getList } from "../../redux/task";
 import {
   selectTaskData,
   selectTasksList,
@@ -25,6 +19,7 @@ import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import Title from "../../components/Title";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
+import useTaskAction from "../../hooks/useTaskAction";
 // constants
 import { Routes } from "../../navigation/routes";
 
@@ -33,6 +28,12 @@ export default ({ navigation }) => {
   const taskData = useSelector(selectTaskData);
   const tasksList = useSelector(selectTasksList);
   const { isLoading, isLoadingIncomplete } = useSelector(selectMeta);
+  const {
+    onEditPress,
+    onResumePress,
+    onRemovePress,
+    onPausePress
+  } = useTaskAction();
 
   const dispatch = useDispatch();
 
@@ -52,24 +53,8 @@ export default ({ navigation }) => {
     dispatch(logout.run());
   };
 
-  const onPausePress = () => {
-    dispatch(pause.request(taskData));
-  };
-
-  const onRemovePress = (id, uri) => {
-    dispatch(remove.request({ id, uri }));
-  };
-
-  const onEditPress = id => {
-    navigation.navigate(Routes.EDIT_TASK, { id });
-  };
-
   const toAddTask = () => {
     navigation.navigate(Routes.CREATE_TASK);
-  };
-
-  const onResumePress = task => {
-    dispatch(resume.request(task));
   };
 
   const toView = ({ id }) => {

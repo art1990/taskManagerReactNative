@@ -20,7 +20,6 @@ const RESUME = "taskManager/task/resume";
 // actions
 export const start = createAction(START);
 export const pause = createAction(PAUSE);
-export const add = createAction(ADD);
 export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
 export const getIncomplete = createAction(GET_INCOMPLETE);
@@ -84,19 +83,6 @@ export default produce(
       case start.FAILURE:
         draft.meta.error = payload;
         draft.meta.isLoading = false;
-
-      case add.REQUEST:
-        draft.meta.isLoading = true;
-        return;
-      case add.SUCCESS:
-        draft.meta.isLoading = false;
-        draft.tasksList = [...(draft.tasksList || []), payload];
-        draft.taskData = initialState.taskData;
-        return;
-      case add.FAILURE:
-        draft.meta.error = payload;
-        draft.meta.isLoading = false;
-        return;
 
       case remove.REQUES:
         draft.meta.isLoading = true;

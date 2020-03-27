@@ -1,18 +1,19 @@
 // react
-import React from "react";
+import React, { useCallback } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 // redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentTaskData } from "../../redux/task/selectors";
-import { resume } from "../../redux/task";
 // components
 import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
 import TaskField from "../components/TaskField";
 import Button from "../../components/Button";
+import Dialog from "../../components/Dialog";
 // constants
-import { Routes } from "../../navigation/routes";
 import { Colors } from "../../assets/styles/constants";
+// hooks
+import useTaskAction from "../../hooks/useTaskAction";
 
 interface ITaskView {
   task: any;
@@ -20,20 +21,11 @@ interface ITaskView {
   navigation: any;
 }
 
-const ViewTask: React.FC<ITaskView> = ({ route, navigation }) => {
+const ViewTask: React.FC<ITaskView> = ({ route }) => {
   const { id } = route?.params;
+  const { onEditPress, onResumePress } = useTaskAction();
 
-  const dispatch = useDispatch();
   const task: any = useSelector(selectCurrentTaskData(id));
-
-  const onEditPress = () => {
-    navigation.navigate(Routes.EDIT_TASK, { id });
-  };
-
-  const onResumePress = () => {
-    const taskData = { ...task, navigation };
-    dispatch(resume.request(taskData));
-  };
 
   const onRemovePress = () => {
     Alert.alert("hahah");

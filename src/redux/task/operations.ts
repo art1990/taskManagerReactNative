@@ -4,7 +4,6 @@ import {
   resume,
   pause,
   start,
-  add,
   remove,
   update,
   getIncomplete,
@@ -114,20 +113,6 @@ function* resumeTask({ payload: { navigation, ...payload } }) {
   if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
 }
 
-function* addTask({ payload }) {
-  const endTime = getUnixTime(new Date());
-  const duration = endTime - payload.startTime;
-  const argApi = {
-    ...payload,
-    endTime,
-    duration,
-    isPaused: true
-  };
-
-  yield apiHandler({ api: addTaskApi, argApi }, add);
-  yield apiHandler({ api: updateIncompleteTaskApi });
-}
-
 function* removeTask({ payload }) {
   yield apiHandler({ api: removeTaskApi, argApi: payload }, remove);
 }
@@ -153,7 +138,6 @@ export default function* watchTask() {
   yield takeEvery(create.REQUEST, createTask);
   yield takeEvery(pause.REQUEST, pauseTask);
   yield takeEvery(resume.REQUEST, resumeTask);
-  yield takeEvery(add.REQUEST, addTask);
   yield takeEvery(remove.REQUEST, removeTask);
   yield takeEvery(update.REQUEST, updateTask);
   yield takeEvery(getIncomplete.REQUEST, getIncompleteTask);
