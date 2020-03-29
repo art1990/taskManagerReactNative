@@ -1,4 +1,5 @@
 // firebase
+import * as firebase from "firebase";
 import { db, firebaseApp, storage } from "../fireBase";
 
 /* START initialize user and userDoc variavle */
@@ -18,6 +19,14 @@ export const initializeVariableToApiService: (userdata: {
 };
 /* END initialize user and userDoc variavle */
 const auth = firebaseApp.auth();
+
+const getDataFromUserDoc = async field => {
+  const res = await userDoc.get();
+
+  const { [field]: data } = res.data();
+
+  return data;
+};
 
 // user
 export const signUpApi = async ({ email, password }) => {
@@ -107,8 +116,7 @@ export const resumeTaskApi = async task => {
 };
 
 export const getIncompleteTaskApi = async () => {
-  const res = await userDoc.get();
-  const { taskData } = await res.data();
+  const taskData = await getDataFromUserDoc("taskData");
 
   return taskData;
 };
@@ -118,4 +126,15 @@ export const getTaskListApi = async () => {
   const tasksList = await tasksListCollection.docs.map(doc => doc.data());
 
   return tasksList;
+};
+
+// tags
+export const getTagsApi = async () => {
+  const tags = new Set();
+  const tagsCol = await tasksListCol.get();
+  await tagsCol.docs.forEach(doc =>
+    doc.get("tags").forEach(el => tags.add(el))
+  );
+
+  return Array.from(tags);
 };

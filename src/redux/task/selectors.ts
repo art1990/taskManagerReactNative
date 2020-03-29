@@ -10,11 +10,13 @@ export const selectTaskFormData = searchId => state => {
   const task = searchTask(searchId, state);
 
   if (task) {
-    const { title, project, file } = task;
-    return { defaultValues: { title, project }, file };
+    const { title, project, file, tags } = task;
+    return { defaultValues: { title, project, tags }, file };
   } else {
     return undefined;
   }
 };
 
 export const selectMeta = state => state.task.meta;
+
+export const selectAllTags = state => state.task.tags;

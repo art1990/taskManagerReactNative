@@ -38,7 +38,6 @@ const LoginForm: React.FC<ILoginForm> = ({ style, onSubmit }) => {
   const fileHandleChange = file => {
     setValue("file", file);
   };
-  console.log(getValues());
   return (
     <View style={style}>
       <FormContext {...methods}>

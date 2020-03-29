@@ -2,15 +2,11 @@
 import React from "react";
 import { View } from "react-native";
 // redux
-import { start, create } from "../../redux/task";
+import { create } from "../../redux/task";
 import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
-// date-fns
-import { getUnixTime } from "date-fns";
-// constants
-import { Routes } from "../../navigation/routes";
 
 interface ICreateTask {
   navigation: any;

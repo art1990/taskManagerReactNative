@@ -31,6 +31,10 @@ const useTaskAction = () => {
     navigation.navigate(Routes.EDIT_TASK, { id: id || _id });
   };
 
+  const toAddTags: () => void = () => {
+    navigation.navigate(Routes.ADD_TAGS);
+  };
+
   const onResumePress = taskData => {
     const data = { ...(task || taskData), navigation };
     dispatch(resume.request(data));
@@ -45,7 +49,9 @@ const useTaskAction = () => {
     onPausePress,
     onRemovePress,
     onResumePress,
-    onMarkAsCompletedPress
+    onMarkAsCompletedPress,
+    toAddTags,
+    task
   };
 };
 

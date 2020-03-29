@@ -1,14 +1,16 @@
 // react
 import React, { useEffect, ReactElement } from "react";
 import { View, StyleSheet, Text } from "react-native";
-
 // componets
 import FormInput from "../../forms/components/FormInput";
 import InfoAndRemoveFile from "./InfoAndRemoveFile";
 import Button from "../../Button";
 import FileUploaderInput from "../../FileUploaderInput";
+import TagInput from "./TagInput";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
+// hooks
+import { useTags } from "../../../hooks/useTags";
 // validation
 import { LoginSchema } from "../../../utils/validation";
 
@@ -33,7 +35,7 @@ const TaskForm: React.FC<ITaskForm> = ({
   children
 }) => {
   const defaultValues = formData?.defaultValues;
-
+  const { tags } = useTags();
   const methods = useForm({
     defaultValues
   });
@@ -72,6 +74,7 @@ const TaskForm: React.FC<ITaskForm> = ({
     setValue("file", null);
   };
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
+  console.log("form tag", tags);
   return (
     <View style={style}>
       <FormContext {...methods}>
@@ -79,7 +82,6 @@ const TaskForm: React.FC<ITaskForm> = ({
           as={FormInput}
           style={styles.ipnut}
           label="Title"
-          control={control}
           name="title"
           onChange={onChange}
           rules={{ required: true }}
@@ -104,6 +106,8 @@ const TaskForm: React.FC<ITaskForm> = ({
         ) : (
           <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
         )}
+        <Controller as={TagInput} name="tags" />
+
         <Button onPress={handleSubmit(handleUserSubmit)}>{buttonText}</Button>
       </FormContext>
     </View>

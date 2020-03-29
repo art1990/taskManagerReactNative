@@ -9,13 +9,13 @@ import { updateTasksList } from "../utils/reducer";
 // action types
 const START = "taskManager/task/start";
 const PAUSE = "taskManager/task/pause";
-const ADD = "taskManager/task/add";
 const REMOVE = "taskManager/task/remove";
 const UPDATE = "taskManager/task/update";
 const GET_INCOMPLETE = "taskManager/task/getIncomplate";
 const GET_LIST = "taskManager/task/getList";
 const CREATE = "taskManager/task/create";
 const RESUME = "taskManager/task/resume";
+const GET_TAGS = "taskManager/task/getTags";
 
 // actions
 export const start = createAction(START);
@@ -26,6 +26,7 @@ export const getIncomplete = createAction(GET_INCOMPLETE);
 export const getList = createAction(GET_LIST);
 export const create = createAction(CREATE);
 export const resume = createAction(RESUME);
+export const getTags = createAction(GET_TAGS);
 
 // initial state
 export interface ITaskState {
@@ -42,6 +43,7 @@ export interface ITaskState {
     isCompleted: boolean;
     file: null | object[];
   };
+  tags: string[];
   meta: { isLoading: boolean; isLoadingIncomplete: boolean; error: null | {} };
 }
 
@@ -59,6 +61,7 @@ const initialState: ITaskState = {
     isCompleted: false,
     file: null
   },
+  tags: [],
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
@@ -72,18 +75,13 @@ export default produce(
     draft: Draft<ITaskState> = initialState,
     { type, payload }: { type: string; payload?: any }
   ) => {
-    switch (type) {
-      case start.REQUEST:
-        draft.meta.isLoading = true;
-        return;
-      case start.SUCCESS:
-        draft.taskData = { ...draft.taskData, ...payload };
-        draft.meta.isLoading = false;
-        return;
-      case start.FAILURE:
-        draft.meta.error = payload;
-        draft.meta.isLoading = false;
+    const failure = () => {
+      draft.meta.isLoading = false;
+      draft.meta.error = payload;
+      console.log(payload);
+    };
 
+    switch (type) {
       case remove.REQUES:
         draft.meta.isLoading = true;
         return;
@@ -92,9 +90,7 @@ export default produce(
         draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
         return draft;
       case remove.FAILURE:
-        draft.meta.isLoading = false;
-        draft.meta.error = payload;
-        return;
+        return failure();
 
       case update.REQUES:
         draft.meta.isLoading = true;
@@ -104,9 +100,7 @@ export default produce(
         draft.tasksList = updateTasksList(draft.tasksList, payload);
         return draft;
       case update.FAILURE:
-        draft.meta.isLoading = false;
-        draft.meta.error = payload;
-        return;
+        return failure();
 
       case getIncomplete.REQUEST:
         draft.meta.isLoadingIncomplete = true;
@@ -117,9 +111,7 @@ export default produce(
         draft.meta.isLoadingIncomplete = false;
         return;
       case getIncomplete.FAILURE:
-        draft.meta.error = payload;
-        draft.meta.isLoadingIncomplete = false;
-        return;
+        return failure();
 
       case getList.REQUEST:
         draft.meta.isLoading = true;
@@ -129,9 +121,7 @@ export default produce(
         draft.meta.isLoading = false;
         return;
       case getList.FAILURE:
-        draft.meta.error = payload;
-        draft.meta.isLoading = false;
-        return;
+        return failure();
 
       case create.REQUEST:
         draft.meta.isLoading = true;
@@ -142,9 +132,7 @@ export default produce(
         // draft.tasksList = [...(draft.tasksList || []), payload];
         return;
       case create.FAILURE:
-        draft.meta.isLoading = false;
-        draft.meta.error = payload;
-        return;
+        return failure();
 
       case resume.REQUEST:
         draft.meta.isLoading = true;
@@ -155,9 +143,7 @@ export default produce(
         draft.tasksList = updateTasksList(draft.tasksList, payload);
         return;
       case resume.FAILURE:
-        draft.meta.isLoading = false;
-        draft.meta.error = payload;
-        return;
+        return failure();
 
       case pause.REQUEST:
         draft.meta.isLoading = true;
@@ -168,9 +154,17 @@ export default produce(
         draft.tasksList = updateTasksList(draft.tasksList, payload);
         return;
       case pause.FAILURE:
-        draft.meta.isLoading = false;
-        draft.meta.error = payload;
+        return failure();
+
+      case getTags.REQUEST:
+        draft.meta.isLoading = true;
         return;
+      case getTags.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.tags = payload;
+        return;
+      case getTags.FAILURE:
+        return failure();
       default:
         return draft;
     }

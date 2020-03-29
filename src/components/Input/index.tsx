@@ -47,7 +47,8 @@ const Input: React.FC<IInputProps> = (
       theme={{
         colors: {
           primary: "#979797",
-          placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)"
+          placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)",
+          disabled: placeholderColor || "rgba(0, 0, 0, 0.16)"
         }
       }}
     />

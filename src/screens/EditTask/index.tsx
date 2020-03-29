@@ -1,6 +1,6 @@
 // react
 import React, { useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, ScrollView } from "react-native";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -42,15 +42,17 @@ export default ({ route, navigation }) => {
   const timeProps = { startTaskTime, endTime, duration };
 
   return (
-    <View>
-      <Title
-        text="Edit task"
-        buttonText="Delete task"
-        buttonAction={removeTaskAndNavigate}
-      />
-      <TaskForm isEditing formData={formData} onSubmit={onUpdateTask}>
-        <Time {...timeProps} />
-      </TaskForm>
-    </View>
+    <ScrollView>
+      <View>
+        <Title
+          text="Edit task"
+          buttonText="Delete task"
+          buttonAction={removeTaskAndNavigate}
+        />
+        <TaskForm isEditing formData={formData} onSubmit={onUpdateTask}>
+          <Time {...timeProps} />
+        </TaskForm>
+      </View>
+    </ScrollView>
   );
 };

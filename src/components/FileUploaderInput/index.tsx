@@ -18,7 +18,7 @@ const FileUploaderInput = ({ onBlur, ...rest }) => {
     onBlur(file);
   };
 
-  const onChooseFilePress = async () => {
+  const onChooseFilePress = async e => {
     const file = await DocumentPicker.getDocumentAsync();
 
     if (file.type === "success") {
@@ -27,6 +27,8 @@ const FileUploaderInput = ({ onBlur, ...rest }) => {
     } else {
       Alert.alert("file donot upload");
     }
+
+    inputRef.current.blur();
   };
 
   return (

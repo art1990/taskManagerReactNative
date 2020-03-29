@@ -3,11 +3,11 @@ import {
   create,
   resume,
   pause,
-  start,
   remove,
   update,
   getIncomplete,
-  getList
+  getList,
+  getTags
 } from ".";
 import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
@@ -24,7 +24,8 @@ import {
   pauseTaskApi,
   resumeTaskApi,
   getIncompleteTaskApi,
-  getTaskListApi
+  getTaskListApi,
+  getTagsApi
 } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
@@ -32,32 +33,6 @@ import { apiHandler } from "../utils/apiHandler";
 import { getUnixTime } from "date-fns";
 // constants
 import { Routes } from "../../navigation/routes";
-
-function* startTask({ payload }) {
-  let file = null;
-  let argApi = {};
-
-  if (!payload.id) {
-    if (payload.file) {
-      const uri = yield apiHandler({
-        api: uploadFileApi,
-        argApi: payload.file
-      });
-
-      file = {
-        name: payload.file.name,
-        size: payload.file.size,
-        uri
-      };
-    }
-  }
-
-  let { startTaskTime, startTime } = payload;
-  startTaskTime = startTaskTime || startTime;
-
-  argApi = { ...payload, startTaskTime, isPaused: false, file };
-  yield apiHandler({ api: updateIncompleteTaskApi, argApi }, start);
-}
 
 function* createTask({ payload: { navigation, ...payload } }) {
   try {
@@ -133,9 +108,12 @@ function* getTasksList() {
   yield apiHandler({ api: getTaskListApi }, getList);
 }
 
+function* getTagsList() {
+  yield apiHandler({ api: getTagsApi }, getTags);
+}
+
 export default function* watchTask() {
   yield take(initialize.type);
-  yield takeEvery(start.REQUEST, startTask);
   yield takeEvery(create.REQUEST, createTask);
   yield takeEvery(pause.REQUEST, pauseTask);
   yield takeEvery(resume.REQUEST, resumeTask);
@@ -143,4 +121,5 @@ export default function* watchTask() {
   yield takeEvery(update.REQUEST, updateTask);
   yield takeEvery(getIncomplete.REQUEST, getIncompleteTask);
   yield takeEvery(getList.REQUEST, getTasksList);
+  yield takeEvery(getTags.REQUEST, getTagsList);
 }
