@@ -4,6 +4,7 @@ import React from "react";
 import { IconButton as ICButton } from "react-native-paper";
 // icons
 import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 // assets
 import Resume from "../../assets/img/icons/resume.svg";
 import Edit from "../../assets/img/icons/pencil.svg";
@@ -13,7 +14,7 @@ import { Colors } from "../../assets/styles/constants";
 
 interface IResumeIconButton {
   size?: number;
-  icon: "edit" | "resume" | "remove" | "pause" | "cansel";
+  icon: "edit" | "resume" | "remove" | "pause" | "cansel" | "addTag";
   onPress: (id?) => void;
   color?: string;
   style?: {};
@@ -36,6 +37,18 @@ const Cansel: React.FC<{ width: number; height: number; color?: string }> = ({
   />
 );
 
+const AddTag: React.FC<{ width: number; height: number; color?: string }> = ({
+  width,
+  height,
+  color
+}) => (
+  <MaterialCommunityIcons
+    name="tag-plus"
+    size={width || height}
+    color={color || Colors.canselIcon}
+  />
+);
+
 const IconButton: React.FC<IResumeIconButton> = ({
   size = 20,
   icon,
@@ -47,7 +60,8 @@ const IconButton: React.FC<IResumeIconButton> = ({
     pause: Pause,
     remove: Remove,
     edit: Edit,
-    cansel: Cansel
+    cansel: Cansel,
+    addTag: AddTag
   };
 
   const Icon = iconComponents[icon];

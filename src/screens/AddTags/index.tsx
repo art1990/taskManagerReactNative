@@ -4,7 +4,8 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 // hooks
 import { useTags } from "../../hooks/useTags";
 // components
-import Input from "../../components/Input";
+import Title from "../../components/Title";
+import AddTagInput from "./AddTagInput";
 import Button from "../../components/Button";
 import Tag from "../../components/Tag";
 // styles
@@ -15,12 +16,12 @@ interface IAddTags {
   value: string[];
 }
 
-let a = 1;
-const AddTags: React.FC<IAddTags> = props => {
-  const { allTags, tags, setTags } = useTags();
+const AddTags: React.FC<IAddTags> = () => {
+  const { allTags, tags: initialTags, addTags } = useTags();
   const [text, setText] = useState("");
+  const [tags, setTags] = useState(initialTags);
 
-  const addTag = () => {
+  const createTag = () => {
     setTags([...tags, text.trim()]);
     setText("");
   };
@@ -38,11 +39,20 @@ const AddTags: React.FC<IAddTags> = props => {
 
   return (
     <ScrollView>
-      <Text>Add tags</Text>
-      <Input label="Add tag" onChangeText={onChangeText} value={text} />
+      <Title text="Add tags" />
+      <AddTagInput
+        onChangeText={onChangeText}
+        value={text}
+        onAddPress={createTag}
+      />
       <View style={[Styles.row, styles.currenTagContainer]}>
         {tags.map((el, i) => (
-          <Tag key={i} text={el} onDeletePress={() => deleteTag(i)} />
+          <Tag
+            key={i}
+            text={el}
+            onDeletePress={() => deleteTag(i)}
+            style={styles.tag}
+          />
         ))}
       </View>
       <View style={styles.line} />
@@ -51,15 +61,14 @@ const AddTags: React.FC<IAddTags> = props => {
           <Tag key={i} text={el} style={styles.tag} />
         ))}
       </View>
-      <Button onPress={addTag}>Add</Button>
+      <Button onPress={() => addTags(tags)}>Done</Button>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   currenTagContainer: {
-    marginTop: 18,
-    marginBottom: 30
+    marginBottom: 10
   },
   line: {
     borderBottomColor: Colors.line,
