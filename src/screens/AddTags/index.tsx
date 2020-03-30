@@ -21,8 +21,8 @@ const AddTags: React.FC<IAddTags> = () => {
   const [text, setText] = useState("");
   const [tags, setTags] = useState(initialTags);
 
-  const createTag = () => {
-    setTags([...tags, text.trim()]);
+  const addLocalTag = (tag?: string) => {
+    setTags([...tags, tag || text.trim()]);
     setText("");
   };
 
@@ -37,13 +37,15 @@ const AddTags: React.FC<IAddTags> = () => {
     setTags(copyTags);
   };
 
+  const filteredAllTags = allTags.filter(el => !tags.includes(el));
+
   return (
     <ScrollView>
       <Title text="Add tags" />
       <AddTagInput
         onChangeText={onChangeText}
         value={text}
-        onAddPress={createTag}
+        onAddPress={addLocalTag}
       />
       <View style={[Styles.row, styles.currenTagContainer]}>
         {tags.map((el, i) => (
@@ -57,8 +59,8 @@ const AddTags: React.FC<IAddTags> = () => {
       </View>
       <View style={styles.line} />
       <View style={Styles.row}>
-        {allTags.map((el, i) => (
-          <Tag key={i} text={el} style={styles.tag} />
+        {filteredAllTags.map((el, i) => (
+          <Tag key={i} text={el} style={styles.tag} setTags={setTags} />
         ))}
       </View>
       <Button onPress={() => addTags(tags)}>Done</Button>

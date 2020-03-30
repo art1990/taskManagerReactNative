@@ -1,6 +1,6 @@
 // ract
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 // coponents
 import IconButton from "../IconButton";
 // constants
@@ -10,16 +10,29 @@ interface ITag {
   text: string;
   onDeletePress?: () => void;
   style?: {};
+  setTags?: any;
 }
 
-const Tag: React.FC<ITag> = ({ text, onDeletePress, style }) => (
-  <View style={[styles.container, style]}>
-    <Text style={styles.text}>{text}</Text>
-    {onDeletePress && (
-      <IconButton onPress={onDeletePress} icon="cansel" style={styles.icon} />
-    )}
-  </View>
-);
+const Tag: React.FC<ITag> = ({ text, onDeletePress, style, setTags }) => {
+  const onAddThisTag = () => {
+    setTags(prevTags => [...prevTags, text]);
+  };
+
+  return (
+    <TouchableOpacity onPress={onAddThisTag} disabled={!setTags}>
+      <View style={[styles.container, style]}>
+        <Text style={styles.text}>{text}</Text>
+        {onDeletePress && (
+          <IconButton
+            onPress={onDeletePress}
+            icon="cansel"
+            style={styles.icon}
+          />
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
