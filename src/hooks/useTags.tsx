@@ -1,16 +1,18 @@
 // react
-import react, { useCallback } from "react";
-import { useGlobal } from "reactn";
+import react, { useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getTags } from "../redux/task/index";
-import { selectAllTags } from "../redux/task/selectors";
+import { getTags, updateCurrentTags } from "../redux/task/index";
+import { selectTags } from "../redux/task/selectors";
 
-export const useTags = () => {
+export const useTags = (setValue?: (field: string, value: string) => void) => {
   const dispatch = useDispatch();
-  const allTags = useSelector(selectAllTags);
-  const [tags, setTags] = useGlobal<string>("tags");
+  const { current, all } = useSelector(selectTags);
+
+  const setTags = (tags = []) => {
+    dispatch(updateCurrentTags.run(tags));
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -18,5 +20,9 @@ export const useTags = () => {
     }, [getTags])
   );
 
-  return { allTags, tags, setTags };
+  useEffect(() => {
+    setValue && setValue("tags", current);
+  }, [current]);
+
+  return { allTags: all, tags: current, setTags };
 };

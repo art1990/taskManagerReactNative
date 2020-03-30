@@ -1,10 +1,9 @@
 // react
 import React from "react";
 import { View, Text } from "react-native";
-// react-native-papper
-import { IconButton } from "react-native-paper";
 // components
 import TaskField from "../../../screens/components/TaskField";
+import IconButton from "../../../components/IconButton";
 // expo icons
 import { MaterialIcons } from "@expo/vector-icons";
 // styles
@@ -26,12 +25,7 @@ const InfoAndRemoveFile: React.FC<IInfoAndRemoveFile> = ({
   return (
     <View style={Styles.rowSpaceBetween}>
       <TaskField title="Added file" text={name} />
-      <IconButton
-        icon={() => (
-          <MaterialIcons name="cancel" size={size} color={Colors.button} />
-        )}
-        onPress={onRemovePress}
-      />
+      <IconButton icon="cansel" color={Colors.button} onPress={onRemovePress} />
     </View>
   );
 };

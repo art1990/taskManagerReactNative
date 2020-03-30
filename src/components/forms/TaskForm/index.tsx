@@ -35,7 +35,7 @@ const TaskForm: React.FC<ITaskForm> = ({
   children
 }) => {
   const defaultValues = formData?.defaultValues;
-  const { tags } = useTags();
+
   const methods = useForm({
     defaultValues
   });
@@ -47,6 +47,9 @@ const TaskForm: React.FC<ITaskForm> = ({
     setValue,
     watch
   } = methods;
+
+  const { tags, setTags } = useTags(setValue);
+
   const file = watch("file");
   const name = file?.name;
   useEffect(() => {
@@ -56,8 +59,15 @@ const TaskForm: React.FC<ITaskForm> = ({
       file && setValue("file", file);
     }
 
-    return () => unregister("file");
+    return () => {
+      unregister("file");
+      setTags();
+    };
   }, [register]);
+
+  useEffect(() => {
+    defaultValues?.tags && setTags([...defaultValues.tags, ...tags]);
+  }, []);
 
   const onChange = args => args[0].nativeEvent.text;
 
@@ -74,7 +84,6 @@ const TaskForm: React.FC<ITaskForm> = ({
     setValue("file", null);
   };
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
-  console.log("form tag", tags);
   return (
     <View style={style}>
       <FormContext {...methods}>
@@ -106,7 +115,7 @@ const TaskForm: React.FC<ITaskForm> = ({
         ) : (
           <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
         )}
-        <Controller as={TagInput} name="tags" />
+        <Controller as={TagInput} name="tags" tags={tags} />
 
         <Button onPress={handleSubmit(handleUserSubmit)}>{buttonText}</Button>
       </FormContext>

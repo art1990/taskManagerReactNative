@@ -1,6 +1,5 @@
 // react
 import React from "react";
-import { setGlobal } from "reactn";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 // navigation
 import RootNavigator from "./src/navigation/RootNavigator";
@@ -15,7 +14,6 @@ import { Provider as PaperProvider } from "react-native-paper";
 import "./src/utils/timeout";
 
 const { store } = configureStore();
-setGlobal({ tags: [] });
 
 export default function App() {
   const { initializing } = useAuth();

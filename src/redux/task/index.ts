@@ -16,6 +16,7 @@ const GET_LIST = "taskManager/task/getList";
 const CREATE = "taskManager/task/create";
 const RESUME = "taskManager/task/resume";
 const GET_TAGS = "taskManager/task/getTags";
+const UPDATE_CURRENT_TAGS = "taskManager/task/updateCurrentTags";
 
 // actions
 export const start = createAction(START);
@@ -27,6 +28,7 @@ export const getList = createAction(GET_LIST);
 export const create = createAction(CREATE);
 export const resume = createAction(RESUME);
 export const getTags = createAction(GET_TAGS);
+export const updateCurrentTags = actionCreator(UPDATE_CURRENT_TAGS);
 
 // initial state
 export interface ITaskState {
@@ -43,7 +45,7 @@ export interface ITaskState {
     isCompleted: boolean;
     file: null | object[];
   };
-  tags: string[];
+  tags: { current: string[]; all: string[] };
   meta: { isLoading: boolean; isLoadingIncomplete: boolean; error: null | {} };
 }
 
@@ -61,7 +63,7 @@ const initialState: ITaskState = {
     isCompleted: false,
     file: null
   },
-  tags: [],
+  tags: { current: [], all: [] },
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
@@ -161,10 +163,14 @@ export default produce(
         return;
       case getTags.SUCCESS:
         draft.meta.isLoading = false;
-        draft.tags = payload;
+        draft.tags.all = payload;
         return;
       case getTags.FAILURE:
         return failure();
+
+      case updateCurrentTags.type:
+        draft.tags.current = payload;
+        return;
       default:
         return draft;
     }

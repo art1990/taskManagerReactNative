@@ -10,6 +10,7 @@ export enum Colors {
 
   error = "#DA0B0B",
   button = "#979797",
+  canselIcon = "#000000",
 
   taskInfoBGColor = "#E9E5E5"
 }

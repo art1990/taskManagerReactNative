@@ -19,4 +19,4 @@ export const selectTaskFormData = searchId => state => {
 
 export const selectMeta = state => state.task.meta;
 
-export const selectAllTags = state => state.task.tags;
+export const selectTags = state => state.task.tags;
