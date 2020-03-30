@@ -69,13 +69,18 @@ export const updateIncompleteTaskApi = async (taskData = null) => {
 };
 
 export const addTaskApi = async task => {
-  if (task.id) return updateTaskApi(task);
+  const taskData = {
+    ...task,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  };
 
-  const { id } = await tasksListCol.add(task);
-  task.id = id;
+  if (taskData.id) return updateTaskApi(taskData);
+
+  const { id } = await tasksListCol.add(taskData);
+  taskData.id = id;
   await tasksListCol.doc(id).update({ id });
 
-  return task;
+  return taskData;
 };
 
 export const updateTaskApi = async task => {
@@ -122,7 +127,7 @@ export const getIncompleteTaskApi = async () => {
 };
 
 export const getTaskListApi = async () => {
-  const tasksListCollection = await tasksListCol.get();
+  const tasksListCollection = await tasksListCol.orderBy("timestamp").get();
   const tasksList = await tasksListCollection.docs.map(doc => doc.data());
 
   return tasksList;

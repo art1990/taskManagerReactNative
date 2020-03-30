@@ -1,11 +1,15 @@
 // react
 import React from "react";
 import { View, Text } from "react-native";
+// components
+import Title from "../../components/Title";
+import LineCharts from "../../components/LineChart";
 
 export default () => {
   return (
     <View>
-      <Text>Statistic</Text>
+      <Title text="Statistic" />
+      <LineCharts />
     </View>
   );
 };

@@ -45,7 +45,7 @@ const AddTags: React.FC<IAddTags> = () => {
       <AddTagInput
         onChangeText={onChangeText}
         value={text}
-        onAddPress={addLocalTag}
+        onAddPress={() => addLocalTag()}
       />
       <View style={[Styles.row, styles.currenTagContainer]}>
         {tags.map((el, i) => (
