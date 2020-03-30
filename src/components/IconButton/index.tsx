@@ -16,6 +16,7 @@ interface IResumeIconButton {
   icon: "edit" | "resume" | "remove" | "pause" | "cansel";
   onPress: (id?) => void;
   color?: string;
+  style?: {};
 }
 
 const Pause: React.FC<{ width: number; height: number }> = ({
@@ -36,8 +37,9 @@ const Cansel: React.FC<{ width: number; height: number; color?: string }> = ({
 );
 
 const IconButton: React.FC<IResumeIconButton> = ({
-  size = 14,
+  size = 20,
   icon,
+  style,
   onPress
 }) => {
   const iconComponents = {
@@ -49,11 +51,20 @@ const IconButton: React.FC<IResumeIconButton> = ({
   };
 
   const Icon = iconComponents[icon];
+  const iconSize = icon === "cansel" ? 12 : size;
+
   return (
     <ICButton
-      icon={() => <Icon width={size} heigth={size} />}
+      icon={() => <Icon width={iconSize} heigth={iconSize} />}
       onPress={onPress}
-      style={[icon === "cansel" && { height: size, width: size, margin: 0 }]}
+      style={[
+        icon === "cansel" && {
+          height: iconSize,
+          width: iconSize,
+          margin: 0
+        },
+        style
+      ]}
     />
   );
 };

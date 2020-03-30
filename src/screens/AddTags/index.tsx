@@ -1,12 +1,15 @@
 // react
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 // hooks
 import { useTags } from "../../hooks/useTags";
 // components
 import Input from "../../components/Input";
-import IconButton from "../../components/IconButton";
 import Button from "../../components/Button";
+import Tag from "../../components/Tag";
+// styles
+import Styles from "../../assets/styles";
+import { Colors } from "../../assets/styles/constants";
 
 interface IAddTags {
   value: string[];
@@ -37,30 +40,35 @@ const AddTags: React.FC<IAddTags> = props => {
     <ScrollView>
       <Text>Add tags</Text>
       <Input label="Add tag" onChangeText={onChangeText} value={text} />
-      <Text>Текущии теги:</Text>
-      {tags.map((el, i) => (
-        <>
-          <Text style={{ backgroundColor: "grey", marginVertical: 10 }} key={i}>
-            {el}
-          </Text>
-          <IconButton onPress={() => deleteTag(i)} icon="cansel" />
-        </>
-      ))}
-      <View
-        style={{
-          borderBottomColor: "black",
-          borderBottomWidth: 1
-        }}
-      />
-      <Text>Все теги:</Text>
-      {allTags.map((el, i) => (
-        <Text style={{ backgroundColor: "grey", marginVertical: 10 }} key={i}>
-          {el}
-        </Text>
-      ))}
+      <View style={[Styles.row, styles.currenTagContainer]}>
+        {tags.map((el, i) => (
+          <Tag key={i} text={el} onDeletePress={() => deleteTag(i)} />
+        ))}
+      </View>
+      <View style={styles.line} />
+      <View style={Styles.row}>
+        {allTags.map((el, i) => (
+          <Tag key={i} text={el} style={styles.tag} />
+        ))}
+      </View>
       <Button onPress={addTag}>Add</Button>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  currenTagContainer: {
+    marginTop: 18,
+    marginBottom: 30
+  },
+  line: {
+    borderBottomColor: Colors.line,
+    borderBottomWidth: 1
+  },
+  tag: {
+    marginHorizontal: 7,
+    marginVertical: 18
+  }
+});
 
 export default AddTags;

@@ -12,5 +12,7 @@ export enum Colors {
   button = "#979797",
   canselIcon = "#000000",
 
-  taskInfoBGColor = "#E9E5E5"
+  taskInfoBGColor = "#E9E5E5",
+
+  line = "#D8D8D8"
 }
