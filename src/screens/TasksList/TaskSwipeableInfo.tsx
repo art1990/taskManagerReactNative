@@ -28,7 +28,9 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   const size = 20;
 
   return (
-    <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
+    <Animated.View
+      style={[styles.iconContainer, { transform: [{ scale }] }, styles.swipe]}
+    >
       <IconButton
         icon={() => <TrashIcon width={size} height={size} />}
         onPress={onRemovePress}
@@ -82,6 +84,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 0,
     alignItems: "center"
+  },
+  swipe: {
+    backgroundColor: "red"
   }
 });
 

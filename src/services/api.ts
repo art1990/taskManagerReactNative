@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import { db, firebaseApp, storage } from "../fireBase";
 // utils
 import { getStartWeek } from "../utils/date";
+import { generateTasksData } from "../utils/facker";
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -73,7 +74,7 @@ export const updateIncompleteTaskApi = async (taskData = null) => {
 
 export const addTaskApi = async task => {
   const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-  const startWeek = getStartWeek();
+  const { startWeek, startWeekSec } = getStartWeek();
 
   const taskData = {
     ...task,
@@ -88,7 +89,8 @@ export const addTaskApi = async task => {
   await weeksCol.doc(startWeek).set(
     {
       tasksId: firebase.firestore.FieldValue.arrayUnion(id),
-      timestamp
+      timestamp,
+      startWeek: startWeekSec
     },
     { merge: true }
   );
@@ -155,6 +157,35 @@ export const getTagsApi = async () => {
   );
 
   return Array.from(tags);
+};
+
+// faker
+export const generateTasksApi = async () => {
+  const batch = db.batch();
+
+  const { tasks, generateWeeks } = generateTasksData();
+
+  tasks.forEach(task => {
+    let doc = tasksListCol.doc();
+    task.id = doc.id;
+
+    batch.set(doc, { ...task, id: task.id });
+  });
+
+  const weeks = generateWeeks(tasks);
+
+  Object.entries(weeks).forEach(([startWeek, { tasksId, startWeekSec }]) => {
+    const weekDoc = weeksCol.doc(startWeek);
+    console.log(tasksId);
+
+    batch.set(weekDoc, {
+      tasksId,
+      timestamp: startWeek,
+      startWeek: startWeekSec
+    });
+  });
+
+  await batch.commit();
 };
 
 // charts

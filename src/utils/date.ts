@@ -1,5 +1,11 @@
 // date-fns
-import { lightFormat, fromUnixTime, formatISO, startOfWeek } from "date-fns";
+import {
+  lightFormat,
+  fromUnixTime,
+  formatISO,
+  startOfWeek,
+  getUnixTime
+} from "date-fns";
 
 export const getUTCDate = date => {
   //const date = new Date(dateString);
@@ -15,12 +21,15 @@ export const getUTCDate = date => {
 };
 
 export const formatToUTCTime = seconds => {
-  const date = fromUnixTime(seconds);
+  const date = fromUnixTime(+seconds);
   return lightFormat(getUTCDate(date), "HH:mm:ss");
 };
 
-export const getStartWeek = () => {
-  const startOfWeekDate = startOfWeek(new Date());
+export const getStartWeek = (time?: string) => {
+  const startOfWeekDate = startOfWeek(time ? fromUnixTime(+time) : new Date());
 
-  return formatISO(startOfWeekDate);
+  return {
+    startWeek: formatISO(startOfWeekDate),
+    startWeekSec: getUnixTime(startOfWeekDate)
+  };
 };

@@ -20,6 +20,7 @@ export interface ITaskInfo {
   isCompleted?: boolean;
   onResumePress?: () => void;
   toView?: () => void;
+  style?: {};
 }
 
 const TaskInfo: React.FC<ITaskInfo> = ({
@@ -30,7 +31,8 @@ const TaskInfo: React.FC<ITaskInfo> = ({
   isCompleted,
   isPaused,
   onResumePress,
-  toView
+  toView,
+  style
 }) => {
   const size = 22;
   const timeText = isPaused
@@ -39,7 +41,7 @@ const TaskInfo: React.FC<ITaskInfo> = ({
 
   return (
     <TouchableOpacity onPress={toView}>
-      <View style={[Styles.rowSpaceBetween, styles.container]}>
+      <View style={[Styles.rowSpaceBetween, styles.container, style]}>
         <View style={Styles.rowSpaceBetween}>
           <Text>title: {title} </Text>
           <Text>project: {project}</Text>

@@ -1,6 +1,6 @@
 // react
 import React, { useCallback, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import TaskSwipeableInfo from "./TaskSwipeableInfo";
 import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import Title from "../../components/Title";
+import GenerateListOfTask from "./GenerateListOfTask";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 import useTaskAction from "../../hooks/useTaskAction";
@@ -63,42 +64,44 @@ export default ({ navigation }) => {
 
   const { startTime, duration, title } = taskData;
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
       {!isLoading && !isLoadingIncomplete && (
         <>
-          {tasksList?.map(el => {
-            const {
-              title,
-              project,
-              duration,
-              startTaskTime,
-              isPaused,
-              isCompleted,
-              id,
-              file
-            } = el;
-            if (taskData?.id === id) {
-              const props = { title, project, startTaskTime, isPaused };
-              return <TaskInfo key={id} {...props} />;
-            }
+          <ScrollView>
+            {tasksList?.map(el => {
+              const {
+                title,
+                project,
+                duration,
+                startTaskTime,
+                isPaused,
+                isCompleted,
+                id,
+                file
+              } = el;
+              if (taskData?.id === id) {
+                const props = { title, project, startTaskTime, isPaused };
+                return <TaskInfo key={id} {...props} />;
+              }
 
-            const props = { title, project, duration, isPaused, isCompleted };
-            return (
-              <TaskSwipeableInfo
-                key={id}
-                {...props}
-                onRemovePress={() => {
-                  onRemovePress(id, file?.uri);
-                }}
-                onEditPress={() => {
-                  onEditPress(id);
-                }}
-                onResumePress={() => onResumePress(el)}
-                toView={() => toView(el)}
-              />
-            );
-          })}
+              const props = { title, project, duration, isPaused, isCompleted };
+              return (
+                <TaskSwipeableInfo
+                  key={id}
+                  {...props}
+                  onRemovePress={() => {
+                    onRemovePress(id, file?.uri);
+                  }}
+                  onEditPress={() => {
+                    onEditPress(id);
+                  }}
+                  onResumePress={() => onResumePress(el)}
+                  toView={() => toView(el)}
+                />
+              );
+            })}
+          </ScrollView>
           {startTime ? (
             <WorkingTaskInfo
               title={title}
@@ -107,10 +110,17 @@ export default ({ navigation }) => {
               onCreateTask={onPausePress}
             />
           ) : (
-            <Button onPress={toAddTask}>Add task</Button>
+            <>
+              <Button onPress={toAddTask}>Add task</Button>
+              <GenerateListOfTask />
+            </>
           )}
         </>
       )}
-    </ScrollView>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1 }
+});
