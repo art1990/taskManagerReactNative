@@ -7,7 +7,6 @@ import produce, { Draft } from "immer";
 import { updateTasksList } from "../utils/reducer";
 
 // action types
-const START = "taskManager/task/start";
 const PAUSE = "taskManager/task/pause";
 const REMOVE = "taskManager/task/remove";
 const UPDATE = "taskManager/task/update";
@@ -19,7 +18,6 @@ const GET_TAGS = "taskManager/task/getTags";
 const UPDATE_CURRENT_TAGS = "taskManager/task/updateCurrentTags";
 
 // actions
-export const start = createAction(START);
 export const pause = createAction(PAUSE);
 export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
@@ -46,6 +44,7 @@ export interface ITaskState {
     file: null | object[];
   };
   tags: { current: string[]; all: string[] };
+  charts: { loggedTime: {}; loggedTasks: {}; loggedPerDay: {} };
   meta: { isLoading: boolean; isLoadingIncomplete: boolean; error: null | {} };
 }
 
@@ -64,6 +63,7 @@ const initialState: ITaskState = {
     file: null
   },
   tags: { current: [], all: [] },
+  charts: { loggedTime: null, loggedTasks: null, loggedPerDay: null },
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
@@ -83,10 +83,13 @@ export default produce(
       console.log(payload);
     };
 
+    const request = () => {
+      draft.meta.isLoading = true;
+    };
+
     switch (type) {
       case remove.REQUES:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case remove.SUCCESS:
         draft.meta.isLoading = false;
         draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
@@ -95,8 +98,7 @@ export default produce(
         return failure();
 
       case update.REQUES:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case update.SUCCESS:
         draft.meta.isLoading = false;
         draft.tasksList = updateTasksList(draft.tasksList, payload);
@@ -116,8 +118,7 @@ export default produce(
         return failure();
 
       case getList.REQUEST:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case getList.SUCCESS:
         draft.tasksList = payload;
         draft.meta.isLoading = false;
@@ -126,19 +127,16 @@ export default produce(
         return failure();
 
       case create.REQUEST:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case create.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = { ...draft.taskData, ...payload };
-        // draft.tasksList = [...(draft.tasksList || []), payload];
         return;
       case create.FAILURE:
         return failure();
 
       case resume.REQUEST:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case resume.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = payload;
@@ -148,8 +146,7 @@ export default produce(
         return failure();
 
       case pause.REQUEST:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case pause.SUCCESS:
         draft.meta.isLoading = false;
         draft.taskData = initialState.taskData;
@@ -159,8 +156,7 @@ export default produce(
         return failure();
 
       case getTags.REQUEST:
-        draft.meta.isLoading = true;
-        return;
+        return request();
       case getTags.SUCCESS:
         draft.meta.isLoading = false;
         draft.tags.all = payload;

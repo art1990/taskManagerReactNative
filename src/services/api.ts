@@ -1,6 +1,8 @@
 // firebase
 import * as firebase from "firebase";
 import { db, firebaseApp, storage } from "../fireBase";
+// utils
+import { getStartWeek } from "../utils/date";
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -8,7 +10,7 @@ type UserDoc = firebase.firestore.DocumentReference<
 >;
 type User = firebase.User;
 
-let userDoc: UserDoc, user: User, tasksListCol: any;
+let userDoc: UserDoc, user: User, tasksListCol: any, weeksCol: any;
 export const initializeVariableToApiService: (userdata: {
   user: firebase.User;
 }) => Promise<void> = async userData => {
@@ -16,6 +18,7 @@ export const initializeVariableToApiService: (userdata: {
   user = userData.user;
   userDoc = db.collection("users").doc(user.uid);
   tasksListCol = userDoc?.collection("tasksList");
+  weeksCol = userDoc?.collection("weeks");
 };
 /* END initialize user and userDoc variavle */
 const auth = firebaseApp.auth();
@@ -69,9 +72,12 @@ export const updateIncompleteTaskApi = async (taskData = null) => {
 };
 
 export const addTaskApi = async task => {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  const startWeek = getStartWeek();
+
   const taskData = {
     ...task,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    timestamp
   };
 
   if (taskData.id) return updateTaskApi(taskData);
@@ -79,6 +85,13 @@ export const addTaskApi = async task => {
   const { id } = await tasksListCol.add(taskData);
   taskData.id = id;
   await tasksListCol.doc(id).update({ id });
+  await weeksCol.doc(startWeek).set(
+    {
+      tasksId: firebase.firestore.FieldValue.arrayUnion(id),
+      timestamp
+    },
+    { merge: true }
+  );
 
   return taskData;
 };
@@ -143,3 +156,8 @@ export const getTagsApi = async () => {
 
   return Array.from(tags);
 };
+
+// charts
+const getLoggedTimeApi = async () => {};
+const getLoggedTasksApi = async () => {};
+const getLoggedPerDayApi = async () => {};

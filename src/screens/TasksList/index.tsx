@@ -1,6 +1,6 @@
 // react
 import React, { useCallback, useEffect } from "react";
-import { View, Alert } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -63,7 +63,7 @@ export default ({ navigation }) => {
 
   const { startTime, duration, title } = taskData;
   return (
-    <View>
+    <ScrollView>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
       {!isLoading && !isLoadingIncomplete && (
         <>
@@ -111,6 +111,6 @@ export default ({ navigation }) => {
           )}
         </>
       )}
-    </View>
+    </ScrollView>
   );
 };

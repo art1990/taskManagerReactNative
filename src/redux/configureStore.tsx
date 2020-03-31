@@ -2,6 +2,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import user from "./user";
 import task from "./task";
+import charts from "./charts";
 // redux-saga
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./rootSaga";
@@ -10,7 +11,8 @@ import rootSaga from "./rootSaga";
 const configureStore = () => {
   const rootReducer = combineReducers({
     user,
-    task
+    task,
+    charts
   });
 
   const sagaMiddleware = createSagaMiddleware();
