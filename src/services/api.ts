@@ -178,7 +178,6 @@ export const generateTasksApi = async () => {
 
   Object.entries(weeks).forEach(([startWeek, { tasksId, startWeekSec }]) => {
     const weekDoc = weeksCol.doc(startWeek);
-    console.log(tasksId);
 
     batch.set(weekDoc, {
       tasksId,
@@ -193,17 +192,45 @@ export const generateTasksApi = async () => {
 // charts
 export const getLoggedTimeApi = async meta => {
   const batch = db.batch();
+  const getDataFromDoc = doc => doc.docs[0].data();
+  const { size: totalWeeks } = await weeksCol.get();
 
-  const { currentWeek } = meta;
-  if (currentWeek === 1) {
-    const doc = await weeksCol
-      .orderBy("timestamp")
-      .limit(1)
-      .get();
-    console.log(doc.data());
-  }
+  const {
+    currentWeekTimeNumber,
+    currentWeekTaskNumber,
+    lastLoggedTimeSnapshot,
+    lastLoggedTaskSnapshot,
+    action
+  } = meta;
 
-  if (meta.currentWeek > 1) weeksCol.orderBy("timestamp").limit(1);
+  const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
+
+  const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTaskSnapshot;
+
+  const cursor = action === "next" ? "startAfter" : "startAt";
+  const weekDoc =
+    currentWeekNumber === 1
+      ? await weeksCol.limit(1).get()
+      : await weeksCol[cursor](lastSnapshot)
+          .limit(1)
+          .get();
+
+  const lastVisible = weekDoc.docs[weekDoc.docs.length - 1];
+
+  const { tasksId } = getDataFromDoc(weekDoc);
+
+  const tasksDoc = await tasksListCol
+    .where("id", "in", tasksId)
+    .orderBy("timestamp")
+    .get();
+
+  const data = tasksDoc.docs.map(doc => {
+    const { id, startTaskTime, duration = 0 } = doc.data();
+
+    return { id, startTaskTime, duration };
+  });
+
+  return { data, lastVisible, totalWeeks };
 };
 export const getLoggedTasksApi = async () => {};
 export const getLoggedPerDayApi = async () => {};

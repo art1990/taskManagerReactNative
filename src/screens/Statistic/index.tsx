@@ -11,12 +11,16 @@ import { useCharts } from "../../hooks/useCharts";
 interface IStatistic {}
 
 const Statistic: React.FC<IStatistic> = () => {
-  const {} = useCharts();
+  const { toNextTimeWeek, toPrevTimeWeek } = useCharts();
 
   return (
     <View>
       <Title text="Statistic" />
-      <Paginator />
+      <Paginator
+        onNextPress={toNextTimeWeek}
+        onPrevPress={toPrevTimeWeek}
+        text="abra kadabra"
+      />
       <LineCharts />
     </View>
   );

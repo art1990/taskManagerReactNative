@@ -10,9 +10,9 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
 
 interface ITaskAction {
-  onEditPress: () => void;
+  onEditPress: (_id?: string) => void;
   onPausePress: () => void;
-  onRemovePress: () => void;
+  onRemovePress: (_id?: string, uri?: string) => void;
   onResumePress: (tasksData: any) => void;
   onMarkAsCompletedPress: () => void;
   toAddTags: () => void;

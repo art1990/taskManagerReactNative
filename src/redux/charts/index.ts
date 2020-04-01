@@ -25,10 +25,14 @@ export interface IChartsState {
     totalWeeks: number;
     currentWeekTimeNumber: number;
     currentWeekTaskNumber: number;
+    lastLoggedTimeSnapshot: any;
+    lastLoggedTaskSnapshot: any;
+    lastLoggedPerTimeSnapshot: any;
     isLoadingLoggedTime: boolean;
     isLoadingLoggedTask: boolean;
     isLoadingLoggedPerDay: boolean;
     error: null | {};
+    action: "next" | "prev";
   };
 }
 
@@ -40,10 +44,14 @@ const initialState: IChartsState = {
     totalWeeks: null,
     currentWeekTimeNumber: 1,
     currentWeekTaskNumber: 1,
+    lastLoggedTimeSnapshot: null,
+    lastLoggedTaskSnapshot: null,
+    lastLoggedPerTimeSnapshot: null,
     isLoadingLoggedTime: false,
     isLoadingLoggedTask: false,
     isLoadingLoggedPerDay: false,
-    error: null
+    error: null,
+    action: null
   }
 };
 // reducer
@@ -57,13 +65,21 @@ export default produce(
     };
 
     const success = (section, isLoading) => {
+      const { lastVisible, data, totalWeeks } = payload;
+
       draft.meta[isLoading] = false;
-      draft[section] = payload;
+      draft.meta.totalWeeks = totalWeeks;
+      draft.meta.action = null;
+      draft.meta[
+        `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
+      ] = lastVisible;
+      draft[section] = data;
     };
 
     const failure = isLoading => {
       draft.meta[isLoading] = false;
       draft.meta.error = payload;
+      draft.meta.action = null;
     };
 
     switch (type) {

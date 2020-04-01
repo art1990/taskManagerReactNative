@@ -20,11 +20,11 @@ const generateTask = () => {
 
   const duration = random.number({ min: 5, max: 80000 });
 
-  const startTaskTime = date;
-  const startTime = date;
-  const endTime = (+startTime + duration).toString();
+  const startTaskTime = +date;
+  const startTime = startTaskTime;
+  const endTime = startTime + duration;
 
-  const timestamp = date;
+  const timestamp = startTaskTime;
   date = (+date + duration).toString();
 
   return {

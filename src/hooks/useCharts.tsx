@@ -30,13 +30,13 @@ export const useCharts = (): ICharts => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getLoggedTime.run(currentWeekTimeNumber));
+      dispatch(getLoggedTime.request({ currentWeekTimeNumber }));
     }, [getLoggedTime, currentWeekTimeNumber])
   );
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getLoggedTasks.run(currentWeekTaskNumber));
+      dispatch(getLoggedTasks.request({ currentWeekTaskNumber }));
     }, [getLoggedTasks, currentWeekTaskNumber])
   );
 
@@ -44,28 +44,28 @@ export const useCharts = (): ICharts => {
     if (currentWeekTimeNumber === totalWeeks) return;
 
     const weekNumber = { currentWeekTimeNumber: currentWeekTimeNumber + 1 };
-    dispatch(updateMeta.run(weekNumber));
+    dispatch(updateMeta.run({ ...weekNumber, action: "next" }));
   };
 
   const toNextTaskWeek = () => {
     if (currentWeekTaskNumber === totalWeeks) return;
 
     const weekNumber = { currentWeekTaskNumber: currentWeekTaskNumber + 1 };
-    dispatch(updateMeta.run(weekNumber));
+    dispatch(updateMeta.run({ ...weekNumber, action: "next" }));
   };
 
   const toPrevTimeWeek = () => {
     if (currentWeekTimeNumber === 1) return;
 
     const weekNumber = { currentWeekTimeNumber: currentWeekTimeNumber - 1 };
-    dispatch(updateMeta.run(weekNumber));
+    dispatch(updateMeta.run({ ...weekNumber, action: "prev" }));
   };
 
   const toPrevTaskWeek = () => {
     if (currentWeekTaskNumber === 1) return;
 
     const weekNumber = { currentWeekTaskNumber: currentWeekTaskNumber - 1 };
-    dispatch(updateMeta.run(weekNumber));
+    dispatch(updateMeta.run({ ...weekNumber, action: "prev" }));
   };
 
   return {
