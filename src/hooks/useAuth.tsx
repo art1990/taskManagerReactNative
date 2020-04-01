@@ -3,7 +3,12 @@ import react, { useState, useEffect } from "react";
 // firebase
 import firebase from "firebase";
 
-export const useAuth = () => {
+interface IAuth {
+  initializing: boolean;
+  user: firebase.User;
+}
+
+export const useAuth = (): IAuth => {
   const [auth, setAuth] = useState(() => {
     const user = firebase.auth().currentUser;
     return { initializing: !user, user };

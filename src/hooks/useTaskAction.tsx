@@ -9,12 +9,22 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 // constants
 import { Routes } from "../navigation/routes";
 
-const useTaskAction = () => {
+interface ITaskAction {
+  onEditPress: () => void;
+  onPausePress: () => void;
+  onRemovePress: () => void;
+  onResumePress: (tasksData: any) => void;
+  onMarkAsCompletedPress: () => void;
+  toAddTags: () => void;
+  task: {};
+}
+
+const useTaskAction = (): ITaskAction => {
   const navigation = useNavigation();
   const route = useRoute();
   const id = route.params?.id;
 
-  const task: any = id && useSelector(selectCurrentTaskData(id));
+  const task: {} = id && useSelector(selectCurrentTaskData(id));
   const dispatch = useDispatch();
 
   const taskData = useSelector(selectTaskData);

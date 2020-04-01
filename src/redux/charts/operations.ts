@@ -15,7 +15,7 @@ function* getLoggedTimeForChart({ payload }) {}
 function* getLoggedTasksForChart({ payload }) {}
 function* getLoggedPerDayForChart({ payload }) {}
 
-export default function* watchTask() {
+export default function* watchCharts() {
   yield takeEvery(getLoggedTime.REQUEST, getLoggedTimeForChart);
   yield takeEvery(getLoggedTasks.REQUEST, getLoggedTasksForChart);
   yield takeEvery(getLoggedPerDay.REQUEST, getLoggedPerDayForChart);

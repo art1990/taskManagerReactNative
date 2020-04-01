@@ -14,38 +14,63 @@ import { Colors } from "../../assets/styles/constants";
 
 interface IResumeIconButton {
   size?: number;
-  icon: "edit" | "resume" | "remove" | "pause" | "cansel" | "addTag";
+  icon:
+    | "edit"
+    | "resume"
+    | "remove"
+    | "pause"
+    | "cansel"
+    | "addTag"
+    | "prev"
+    | "next";
   onPress: (id?) => void;
   color?: string;
   style?: {};
 }
 
-const Pause: React.FC<{ width: number; height: number }> = ({
-  width,
-  height
-}) => <MaterialIcons name="pause-circle-filled" size={width || height} />;
+interface IMaterialIcon {
+  name: string;
+  color?: string;
+  width: number;
+  height: number;
+}
 
-const Cansel: React.FC<{ width: number; height: number; color?: string }> = ({
+const MaterialIcon: React.FC<IMaterialIcon> = ({
+  name,
   width,
   height,
   color
-}) => (
-  <MaterialIcons
-    name="cancel"
-    size={width || height}
-    color={color || Colors.canselIcon}
-  />
+}) => <MaterialIcons name={name} size={width || height} color={color} />;
+
+const Pause: React.FC<IMaterialIcon> = props => (
+  <MaterialIcon name="pause-circle-filled" {...props} />
 );
 
-const AddTag: React.FC<{ width: number; height: number; color?: string }> = ({
-  width,
-  height,
-  color
-}) => (
+const Cansel: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+  <MaterialIcons name="cancel" color={color || Colors.canselIcon} {...rest} />
+);
+
+const AddTag: React.FC<IMaterialIcon> = ({ width, height, color }) => (
   <MaterialCommunityIcons
     name="tag-plus"
     size={width || height}
+    color={color || Colors.chartsNav}
+  />
+);
+
+const Next: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+  <MaterialIcon
+    name="navigate-next"
     color={color || Colors.canselIcon}
+    {...rest}
+  />
+);
+
+const Prev: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+  <MaterialIcon
+    name="navigate-before"
+    color={color || Colors.chartsNav}
+    {...rest}
   />
 );
 
@@ -61,7 +86,9 @@ const IconButton: React.FC<IResumeIconButton> = ({
     remove: Remove,
     edit: Edit,
     cansel: Cansel,
-    addTag: AddTag
+    addTag: AddTag,
+    prev: Prev,
+    next: Next
   };
 
   const Icon = iconComponents[icon];

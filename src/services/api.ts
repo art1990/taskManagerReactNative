@@ -143,7 +143,9 @@ export const getIncompleteTaskApi = async () => {
 
 export const getTaskListApi = async () => {
   const tasksListCollection = await tasksListCol.orderBy("timestamp").get();
-  const tasksList = await tasksListCollection.docs.map(doc => doc.data());
+  const data = await tasksListCollection.docs.map(doc => doc.data());
+
+  const tasksList = data.length > 0 ? data : null;
 
   return tasksList;
 };
@@ -189,6 +191,19 @@ export const generateTasksApi = async () => {
 };
 
 // charts
-const getLoggedTimeApi = async () => {};
-const getLoggedTasksApi = async () => {};
-const getLoggedPerDayApi = async () => {};
+export const getLoggedTimeApi = async meta => {
+  const batch = db.batch();
+
+  const { currentWeek } = meta;
+  if (currentWeek === 1) {
+    const doc = await weeksCol
+      .orderBy("timestamp")
+      .limit(1)
+      .get();
+    console.log(doc.data());
+  }
+
+  if (meta.currentWeek > 1) weeksCol.orderBy("timestamp").limit(1);
+};
+export const getLoggedTasksApi = async () => {};
+export const getLoggedPerDayApi = async () => {};

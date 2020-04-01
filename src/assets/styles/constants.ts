@@ -14,5 +14,7 @@ export enum Colors {
 
   taskInfoBGColor = "#E9E5E5",
 
-  line = "#D8D8D8"
+  line = "#D8D8D8",
+
+  chartsNav = "rgba(0, 0, 0, 0.4)"
 }

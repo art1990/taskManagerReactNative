@@ -24,11 +24,11 @@ const CustomButton: React.FC<ButtonProps> = ({
   style,
   ...rest
 }) => {
-  const textStyle = [
-    styles.text,
-    mode === "text" && styles.modeText,
-    labelStyle
-  ];
+  const isText = mode === "text";
+
+  const textStyle = [styles.text, isText && styles.modeText, labelStyle];
+
+  const containerStyle = [isText && styles.container];
 
   return (
     <Button
@@ -36,7 +36,7 @@ const CustomButton: React.FC<ButtonProps> = ({
       color={Colors.button}
       onPress={onPress}
       labelStyle={textStyle}
-      style={style}
+      style={containerStyle}
       uppercase={false}
       {...rest}
     >
@@ -46,6 +46,9 @@ const CustomButton: React.FC<ButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: "center"
+  },
   text: {
     marginVertical: 22,
     marginHorizontal: 0,

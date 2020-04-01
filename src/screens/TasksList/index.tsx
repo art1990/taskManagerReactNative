@@ -21,8 +21,10 @@ import GenerateListOfTask from "./GenerateListOfTask";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 import useTaskAction from "../../hooks/useTaskAction";
-// constants
+// routes
 import { Routes } from "../../navigation/routes";
+
+import { getLoggedTimeApi } from "../../services/api";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -66,57 +68,67 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
-      {!isLoading && !isLoadingIncomplete && (
-        <>
-          <ScrollView>
-            {tasksList?.map(el => {
-              const {
-                title,
-                project,
-                duration,
-                startTaskTime,
-                isPaused,
-                isCompleted,
-                id,
-                file
-              } = el;
-              if (taskData?.id === id) {
-                const props = { title, project, startTaskTime, isPaused };
-                return <TaskInfo key={id} {...props} />;
-              }
+      {!isLoading &&
+        !isLoadingIncomplete &&
+        (tasksList ? (
+          <>
+            <ScrollView>
+              {tasksList.map(el => {
+                const {
+                  title,
+                  project,
+                  duration,
+                  startTaskTime,
+                  isPaused,
+                  isCompleted,
+                  id,
+                  file
+                } = el;
+                if (taskData?.id === id) {
+                  const props = { title, project, startTaskTime, isPaused };
+                  return <TaskInfo key={id} {...props} />;
+                }
 
-              const props = { title, project, duration, isPaused, isCompleted };
-              return (
-                <TaskSwipeableInfo
-                  key={id}
-                  {...props}
-                  onRemovePress={() => {
-                    onRemovePress(id, file?.uri);
-                  }}
-                  onEditPress={() => {
-                    onEditPress(id);
-                  }}
-                  onResumePress={() => onResumePress(el)}
-                  toView={() => toView(el)}
-                />
-              );
-            })}
-          </ScrollView>
-          {startTime ? (
-            <WorkingTaskInfo
-              title={title}
-              startTime={startTime}
-              duration={duration}
-              onCreateTask={onPausePress}
-            />
-          ) : (
-            <>
-              <Button onPress={toAddTask}>Add task</Button>
-              <GenerateListOfTask />
-            </>
-          )}
-        </>
-      )}
+                const props = {
+                  title,
+                  project,
+                  duration,
+                  isPaused,
+                  isCompleted
+                };
+                return (
+                  <TaskSwipeableInfo
+                    key={id}
+                    {...props}
+                    onRemovePress={() => {
+                      onRemovePress(id, file?.uri);
+                    }}
+                    onEditPress={() => {
+                      onEditPress(id);
+                    }}
+                    onResumePress={() => onResumePress(el)}
+                    toView={() => toView(el)}
+                  />
+                );
+              })}
+            </ScrollView>
+            {startTime ? (
+              <WorkingTaskInfo
+                title={title}
+                startTime={startTime}
+                duration={duration}
+                onCreateTask={onPausePress}
+              />
+            ) : (
+              <>
+                <Button onPress={toAddTask}>Add task</Button>
+              </>
+            )}
+          </>
+        ) : (
+          <GenerateListOfTask />
+        ))}
+      <Button onPress={() => getLoggedTimeApi()}>get logged time</Button>
     </View>
   );
 };

@@ -1,5 +1,6 @@
 // redux
 import { createAction } from "redux-saga-actions";
+import actionCreator from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
 
@@ -7,11 +8,13 @@ import produce, { Draft } from "immer";
 const GET_LOGGED_TIME = "taskManager/charts/getLoggedTime";
 const GET_LOGGED_TASKS = "taskManager/charts/getLoggedTasks";
 const GET_LOGGED_PER_DAY = "taskManager/charts/getLoggedPerDay";
+const UPDATE_META = "taskManager/charts/updateMeta";
 
 // actions
 export const getLoggedTime = createAction(GET_LOGGED_TIME);
 export const getLoggedTasks = createAction(GET_LOGGED_TASKS);
 export const getLoggedPerDay = createAction(GET_LOGGED_PER_DAY);
+export const updateMeta = actionCreator(UPDATE_META);
 
 // initial state
 export interface IChartsState {
@@ -19,6 +22,9 @@ export interface IChartsState {
   loggedTasks: {};
   loggedPerDay: {};
   meta: {
+    totalWeeks: number;
+    currentWeekTimeNumber: number;
+    currentWeekTaskNumber: number;
     isLoadingLoggedTime: boolean;
     isLoadingLoggedTask: boolean;
     isLoadingLoggedPerDay: boolean;
@@ -31,6 +37,9 @@ const initialState: IChartsState = {
   loggedTasks: null,
   loggedPerDay: null,
   meta: {
+    totalWeeks: null,
+    currentWeekTimeNumber: 1,
+    currentWeekTaskNumber: 1,
     isLoadingLoggedTime: false,
     isLoadingLoggedTask: false,
     isLoadingLoggedPerDay: false,
@@ -78,6 +87,10 @@ export default produce(
         return success("loggedTime", "isLoadingLoggedPerDay");
       case getLoggedTime.FAILURE:
         return failure("isLoadingLoggedPerDay");
+
+      case updateMeta.type:
+        draft.meta = { ...draft.meta, ...payload };
+        return;
 
       default:
         return draft;
