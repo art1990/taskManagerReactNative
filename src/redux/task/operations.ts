@@ -31,6 +31,7 @@ import {
 import { apiHandler } from "../utils/apiHandler";
 // date
 import { getUnixTime } from "date-fns";
+import { dateNow } from "../../utils/date";
 // constants
 import { Routes } from "../../navigation/routes";
 
@@ -51,14 +52,16 @@ function* createTask({ payload: { navigation, ...payload } }) {
         uri
       };
     }
+    const date = new Date();
 
-    const startTaskTime = getUnixTime(new Date());
+    const startTaskTime = getUnixTime(date);
 
     argApi = {
       ...payload,
       startTaskTime,
       startTime: startTaskTime,
-      file
+      file,
+      date: dateNow(date)
     };
     const task = yield apiHandler({ api: addTaskApi, argApi });
     yield apiHandler({ api: updateIncompleteTaskApi, argApi: task });

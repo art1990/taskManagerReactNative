@@ -33,3 +33,8 @@ export const getStartWeek = (time?: string) => {
     startWeekSec: getUnixTime(startOfWeekDate)
   };
 };
+export const dateNow = (date: Date | number = new Date()) => {
+  const formatDate = typeof date === "number" ? fromUnixTime(date) : date;
+
+  return lightFormat(formatDate, "dd/MM/yyyy");
+};

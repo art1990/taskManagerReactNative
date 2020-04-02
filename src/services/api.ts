@@ -2,7 +2,7 @@
 import * as firebase from "firebase";
 import { db, firebaseApp, storage } from "../fireBase";
 // utils
-import { getStartWeek } from "../utils/date";
+import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
 
 /* START initialize user and userDoc variavle */
@@ -170,8 +170,9 @@ export const generateTasksApi = async () => {
   tasks.forEach(task => {
     let doc = tasksListCol.doc();
     task.id = doc.id;
+    const date = dateNow(task.startTaskTime);
 
-    batch.set(doc, { ...task, id: task.id });
+    batch.set(doc, { ...task, id: task.id, date });
   });
 
   const weeks = generateWeeks(tasks);
