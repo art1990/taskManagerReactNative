@@ -3,8 +3,12 @@ import React from "react";
 import { LineChart as Chart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
+// utils
+import { generateWeek } from "../../utils/date";
 
-interface ILineChart {}
+interface ILineChart {
+  weeksList: { startTaskTime: string; duration: string; id: string }[];
+}
 
 const data = {
   labels: ["January", "February", "March", "April", "May", "June"],
@@ -40,21 +44,28 @@ const chartConfig = {
   }
 };
 
-const LineChart: React.FC<ILineChart> = () => {
+const LineChart: React.FC<ILineChart> = ({ weeksList }) => {
+  const { labels, data: d } = weeksList && generateWeek(weeksList);
+  const datasets = [{ data: d, strokeWidth: 2 }];
+
   return (
-    <Chart
-      data={data}
-      width={Dimensions.get("window").width}
-      height={220}
-      yAxisLabel="$"
-      yAxisSuffix="k"
-      yAxisInterval={1}
-      chartConfig={chartConfig}
-      style={{
-        marginVertical: 8,
-        borderRadius: 16
-      }}
-    />
+    <>
+      {weeksList && (
+        <Chart
+          data={{ ...data, labels, datasets }}
+          width={Dimensions.get("window").width}
+          height={220}
+          yAxisLabel=""
+          yAxisSuffix=" H"
+          yAxisInterval={1}
+          chartConfig={chartConfig}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />
+      )}
+    </>
   );
 };
 

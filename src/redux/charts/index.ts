@@ -18,9 +18,9 @@ export const updateMeta = actionCreator(UPDATE_META);
 
 // initial state
 export interface IChartsState {
-  loggedTime: {};
-  loggedTasks: {};
-  loggedPerDay: {};
+  loggedTime: [];
+  loggedTasks: [];
+  loggedPerDay: [];
   meta: {
     totalWeeks: number;
     currentWeekTimeNumber: number;
@@ -65,7 +65,7 @@ export default produce(
     };
 
     const success = (section, isLoading) => {
-      const { lastVisible, data, totalWeeks } = payload;
+      const { lastVisible, weeksList, totalWeeks } = payload;
 
       draft.meta[isLoading] = false;
       draft.meta.totalWeeks = totalWeeks;
@@ -73,7 +73,7 @@ export default produce(
       draft.meta[
         `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
       ] = lastVisible;
-      draft[section] = data;
+      draft[section] = weeksList;
     };
 
     const failure = isLoading => {

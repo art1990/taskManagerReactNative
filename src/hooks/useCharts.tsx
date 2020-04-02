@@ -9,11 +9,13 @@ import {
   getLoggedPerDay,
   updateMeta
 } from "../redux/charts";
-import { selectMeta } from "../redux/charts/selectors";
+import { selectMeta, selectChartsData } from "../redux/charts/selectors";
 
 interface ICharts {
   currentWeekTimeNumber: number;
   currentWeekTaskNumber: number;
+  loggedTime: [];
+  isLoadingLoggedTime: boolean;
   toNextTaskWeek: () => void;
   toNextTimeWeek: () => void;
   toPrevTimeWeek: () => void;
@@ -25,8 +27,11 @@ export const useCharts = (): ICharts => {
   const {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
-    totalWeeks
+    totalWeeks,
+    isLoadingLoggedTime
   } = useSelector(selectMeta);
+
+  const { loggedTime } = useSelector(selectChartsData);
 
   useFocusEffect(
     useCallback(() => {
@@ -71,6 +76,8 @@ export const useCharts = (): ICharts => {
   return {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
+    loggedTime,
+    isLoadingLoggedTime,
     toNextTaskWeek,
     toNextTimeWeek,
     toPrevTimeWeek,

@@ -17,7 +17,6 @@ const TagInput: React.FC<ITagInput> = props => {
   const [tags, setTags] = useState(initialTags);
   const [text, setText] = useState(initialText);
 
-  console.log(props);
   useEffect(() => {
     onChange(tags);
   }, [tags]);

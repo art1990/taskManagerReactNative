@@ -3,6 +3,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 // components
 import IconButton from "../../../components/IconButton";
+// styles
+import Styles from "../../../assets/styles";
 
 interface IPaginator {
   text: string;
@@ -15,7 +17,7 @@ const Paginator: React.FC<IPaginator> = ({
   onNextPress,
   onPrevPress
 }) => (
-  <View style={styles.constainer}>
+  <View style={Styles.rowSpaceBetween}>
     <IconButton icon="prev" onPress={onPrevPress} />
     <Text>{text}</Text>
     <IconButton icon="next" onPress={onNextPress} />

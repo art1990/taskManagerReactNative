@@ -11,7 +11,12 @@ import { useCharts } from "../../hooks/useCharts";
 interface IStatistic {}
 
 const Statistic: React.FC<IStatistic> = () => {
-  const { toNextTimeWeek, toPrevTimeWeek } = useCharts();
+  const {
+    toNextTimeWeek,
+    toPrevTimeWeek,
+    loggedTime,
+    isLoadingLoggedTime
+  } = useCharts();
 
   return (
     <View>
@@ -21,7 +26,9 @@ const Statistic: React.FC<IStatistic> = () => {
         onPrevPress={toPrevTimeWeek}
         text="abra kadabra"
       />
-      <LineCharts />
+      {!isLoadingLoggedTime && loggedTime && (
+        <LineCharts weeksList={loggedTime} />
+      )}
     </View>
   );
 };

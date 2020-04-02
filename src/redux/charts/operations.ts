@@ -4,11 +4,7 @@ import { selectMeta } from "./selectors";
 // saga
 import { takeEvery, take, select, put } from "redux-saga/effects";
 // api
-import {
-  getLoggedTimeApi,
-  getLoggedTasksApi,
-  getLoggedPerDayApi
-} from "../../services/api";
+import { getWeekDataApi } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
 // date
@@ -20,7 +16,7 @@ function* getLoggedTimeForChart({ payload }) {
   const { lastLoggedTimeSnapshot, action } = yield select(selectMeta);
 
   const argApi = { ...payload, lastLoggedTimeSnapshot, action };
-  yield apiHandler({ api: getLoggedTimeApi, argApi }, getLoggedTime);
+  yield apiHandler({ api: getWeekDataApi, argApi }, getLoggedTime);
 }
 function* getLoggedTasksForChart({ payload }) {}
 function* getLoggedPerDayForChart({ payload }) {}

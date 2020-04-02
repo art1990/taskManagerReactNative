@@ -191,8 +191,7 @@ export const generateTasksApi = async () => {
 };
 
 // charts
-export const getLoggedTimeApi = async meta => {
-  const batch = db.batch();
+export const getWeekDataApi = async meta => {
   const getDataFromDoc = doc => doc.docs[0].data();
   const { size: totalWeeks } = await weeksCol.get();
 
@@ -225,13 +224,13 @@ export const getLoggedTimeApi = async meta => {
     .orderBy("timestamp")
     .get();
 
-  const data = tasksDoc.docs.map(doc => {
-    const { id, startTaskTime, duration = 0 } = doc.data();
+  const weeksList = tasksDoc.docs.map(doc => {
+    const { id, startTaskTime, duration = 0, endTime } = doc.data();
 
-    return { id, startTaskTime, duration };
+    return { id, startTaskTime, duration, endTime };
   });
 
-  return { data, lastVisible, totalWeeks };
+  return { weeksList, lastVisible, totalWeeks };
 };
 export const getLoggedTasksApi = async () => {};
 export const getLoggedPerDayApi = async () => {};
