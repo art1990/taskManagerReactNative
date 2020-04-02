@@ -12,6 +12,8 @@ import {
   isSameDay,
   differenceInSeconds
 } from "date-fns";
+// interface
+import { IWeeksList } from "../components/LineChart";
 
 export const getUTCDate = date => {
   //const date = new Date(dateString);
@@ -59,9 +61,9 @@ export const dateNow = (date: Date | number = new Date()) => {
 };
 
 // week
-const generateDayLabel = date => lightFormat(date, "dd.MM");
+const generateDayLabel = (date: Date): string => lightFormat(date, "dd.MM");
 
-const generateDayOfWeeklist = day => {
+const generateDayOfWeeklist = (day: number): { [key: string]: number } => {
   const { date: start } = getStartWeek(day);
   const { date: end } = getEndWeek(day);
   const res = {};
@@ -72,7 +74,9 @@ const generateDayOfWeeklist = day => {
   return res;
 };
 
-export const generateWeek = (weeksList: []): {} => {
+export const generateWeekForTime = (
+  weeksList: IWeeksList["weeksList"]
+): { data: number[]; labels: string[] } => {
   const day = weeksList[0].startTaskTime;
   let weekObj = generateDayOfWeeklist(day);
 

@@ -4,28 +4,16 @@ import { LineChart as Chart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 // utils
-import { generateWeek } from "../../utils/date";
+import { generateWeekForTime } from "../../utils/date";
 
-interface ILineChart {
-  weeksList: { startTaskTime: string; duration: string; id: string }[];
+export interface IWeeksList {
+  weeksList: {
+    startTaskTime: number;
+    duration: number;
+    id: string;
+    endTime: number;
+  }[];
 }
-
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100
-      ],
-      strokeWidth: 2
-    }
-  ]
-};
 
 const chartConfig = {
   backgroundColor: "red",
@@ -44,15 +32,15 @@ const chartConfig = {
   }
 };
 
-const LineChart: React.FC<ILineChart> = ({ weeksList }) => {
-  const { labels, data: d } = weeksList && generateWeek(weeksList);
-  const datasets = [{ data: d, strokeWidth: 2 }];
+const LineChart: React.FC<IWeeksList> = ({ weeksList }) => {
+  const { labels, data } = weeksList && generateWeekForTime(weeksList);
+  const datasets = [{ data, strokeWidth: 2 }];
 
   return (
     <>
       {weeksList && (
         <Chart
-          data={{ ...data, labels, datasets }}
+          data={{ labels, datasets }}
           width={Dimensions.get("window").width}
           height={220}
           yAxisLabel=""
