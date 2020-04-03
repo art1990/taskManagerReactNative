@@ -33,7 +33,8 @@ export default ({ navigation }) => {
     onEditPress,
     onResumePress,
     onRemovePress,
-    onPausePress
+    onPausePress,
+    toFilters
   } = useTaskAction();
 
   const dispatch = useDispatch();
@@ -126,6 +127,7 @@ export default ({ navigation }) => {
         ) : (
           <GenerateListOfTask />
         ))}
+      <Button onPress={toFilters}>To filters</Button>
     </View>
   );
 };

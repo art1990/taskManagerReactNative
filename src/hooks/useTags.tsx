@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getTags, updateCurrentTags } from "../redux/task/index";
+import { getTags, updateCurrentTags, updateFilter } from "../redux/task/index";
 import { selectTags } from "../redux/task/selectors";
 
 export const useTags = (setValue?: (field: string, value: string) => void) => {
@@ -23,6 +23,10 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     navigation.goBack();
   };
 
+  const updateTagFilter = (filters = []) => {
+    dispatch(updateFilter.run(filters));
+  };
+
   useFocusEffect(
     useCallback(() => {
       dispatch(getTags.request());
@@ -33,5 +37,5 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     setValue && setValue("tags", current);
   }, [current]);
 
-  return { allTags: all, tags: current, setTags, addTags };
+  return { allTags: all, tags: current, setTags, addTags, updateTagFilter };
 };

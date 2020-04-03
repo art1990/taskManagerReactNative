@@ -16,6 +16,7 @@ interface ITaskAction {
   onResumePress: (tasksData: any) => void;
   onMarkAsCompletedPress: () => void;
   toAddTags: () => void;
+  toFilters: () => void;
   task: {};
 }
 
@@ -37,12 +38,16 @@ const useTaskAction = (): ITaskAction => {
     dispatch(remove.request({ id: id || _id, uri }));
   };
 
-  const onEditPress: (_id?: string) => void = _id => {
+  const onEditPress = (_id?: string): void => {
     navigation.navigate(Routes.EDIT_TASK, { id: id || _id });
   };
 
-  const toAddTags: () => void = () => {
+  const toAddTags = (): void => {
     navigation.navigate(Routes.ADD_TAGS);
+  };
+
+  const toFilters = (): void => {
+    navigation.navigate(Routes.FILTERS);
   };
 
   const onResumePress = taskData => {
@@ -61,6 +66,7 @@ const useTaskAction = (): ITaskAction => {
     onResumePress,
     onMarkAsCompletedPress,
     toAddTags,
+    toFilters,
     task
   };
 };

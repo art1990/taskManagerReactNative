@@ -1,25 +1,38 @@
 // react
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-// hooks
-import { useTags } from "../../hooks/useTags";
+import { View, StyleSheet } from "react-native";
 // components
-import Tag from "../../components/Tag";
+import Tag from "../../../components/Tag";
+import Button from "../../../components/Button";
 // styles
-import Styles from "../../assets/styles";
-import { Colors } from "../../assets/styles/constants";
+import Styles from "../../../assets/styles";
+import { Colors } from "../../../assets/styles/constants";
 
-interface IAddTags {
+interface ITagView {
   allTags: string[];
   initialTags: string[];
-  addTags: () => void;
+  Input?: React.FC<any>;
+  buttonText: string;
+  buttonAction: (arr: string[]) => void;
 }
 
-const AddTags: React.FC<IAddTags> = ({ allTags, initialTags, addTags }) => {
+const TagView: React.FC<ITagView> = ({
+  allTags,
+  initialTags,
+  Input,
+  buttonAction,
+  buttonText
+}) => {
+  const [text, setText] = useState("");
   const [tags, setTags] = useState(initialTags);
 
   const addLocalTag = (tag?: string) => {
     setTags([...tags, tag || text.trim()]);
+    setText("");
+  };
+
+  const onChangeText = event => {
+    setText(event);
   };
 
   const deleteTag = i => {
@@ -33,6 +46,13 @@ const AddTags: React.FC<IAddTags> = ({ allTags, initialTags, addTags }) => {
 
   return (
     <>
+      {Input && (
+        <Input
+          onChangeText={onChangeText}
+          value={text}
+          onAddPress={() => addLocalTag()}
+        />
+      )}
       <View style={[Styles.row, styles.currenTagContainer]}>
         {tags.map((el, i) => (
           <Tag
@@ -48,6 +68,7 @@ const AddTags: React.FC<IAddTags> = ({ allTags, initialTags, addTags }) => {
         {filteredAllTags.map((el, i) => (
           <Tag key={i} text={el} style={styles.tag} setTags={setTags} />
         ))}
+        <Button onPress={() => buttonAction(tags)}>{buttonText}</Button>
       </View>
     </>
   );
@@ -67,4 +88,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddTags;
+export default TagView;
