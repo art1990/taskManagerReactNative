@@ -19,9 +19,9 @@ function* getLoggedTimeForChart({ payload }) {
   yield apiHandler({ api: getWeekDataApi, argApi }, getLoggedTime);
 }
 function* getLoggedTasksForChart({ payload }) {
-  const { lastLoggedTaskSnapshot, action } = yield select(selectMeta);
+  const { lastLoggedTasksSnapshot, action } = yield select(selectMeta);
 
-  const argApi = { ...payload, lastLoggedTaskSnapshot, action };
+  const argApi = { ...payload, lastLoggedTasksSnapshot, action };
   yield apiHandler({ api: getWeekDataApi, argApi }, getLoggedTasks);
 }
 function* getLoggedPerDayForChart({ payload }) {}

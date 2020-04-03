@@ -17,16 +17,23 @@ export const getLoggedPerDay = createAction(GET_LOGGED_PER_DAY);
 export const updateMeta = actionCreator(UPDATE_META);
 
 // initial state
+type Logged = {
+  startTaskTime: number;
+  duration: number;
+  endTime: number;
+  id: string;
+}[];
+
 export interface IChartsState {
-  loggedTime: [];
-  loggedTasks: [];
-  loggedPerDay: [];
+  loggedTime: Logged;
+  loggedTasks: Logged;
+  loggedPerDay: {}[];
   meta: {
     totalWeeks: number;
     currentWeekTimeNumber: number;
     currentWeekTaskNumber: number;
     lastLoggedTimeSnapshot: any;
-    lastLoggedTaskSnapshot: any;
+    lastLoggedTasksSnapshot: any;
     lastLoggedPerTimeSnapshot: any;
     isLoadingLoggedTime: boolean;
     isLoadingLoggedTask: boolean;
@@ -45,7 +52,7 @@ const initialState: IChartsState = {
     currentWeekTimeNumber: 1,
     currentWeekTaskNumber: 1,
     lastLoggedTimeSnapshot: null,
-    lastLoggedTaskSnapshot: null,
+    lastLoggedTasksSnapshot: null,
     lastLoggedPerTimeSnapshot: null,
     isLoadingLoggedTime: false,
     isLoadingLoggedTask: false,

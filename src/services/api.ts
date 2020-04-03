@@ -199,13 +199,13 @@ export const getWeekDataApi = async meta => {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
     lastLoggedTimeSnapshot,
-    lastLoggedTaskSnapshot,
+    lastLoggedTasksSnapshot,
     action
   } = meta;
 
   const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
 
-  const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTaskSnapshot;
+  const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTasksSnapshot;
 
   const cursor = action === "next" ? "startAfter" : "startAt";
   const weekDoc =

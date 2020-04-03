@@ -36,6 +36,7 @@ const Statistic: React.FC<IStatistic> = () => {
           onPrevPress={toPrevTimeWeek}
           paginationText="hahahah"
           weekData={loggedTimeData}
+          suffixY=" H"
         />
       )}
       {!isLoadingLoggedTask && loggedTasks && (

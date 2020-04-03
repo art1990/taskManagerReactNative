@@ -11,20 +11,7 @@ import {
 } from "../redux/charts";
 import { selectMeta, selectChartsData } from "../redux/charts/selectors";
 
-interface ICharts {
-  currentWeekTimeNumber: number;
-  currentWeekTaskNumber: number;
-  loggedTime: [];
-  loggedTasks: [];
-  isLoadingLoggedTime: boolean;
-  isLoadingLoggedTask: boolean;
-  toNextTaskWeek: () => void;
-  toNextTimeWeek: () => void;
-  toPrevTimeWeek: () => void;
-  toPrevTaskWeek: () => void;
-}
-
-export const useCharts = (): ICharts => {
+export const useCharts = () => {
   const dispatch = useDispatch();
   const {
     currentWeekTimeNumber,
