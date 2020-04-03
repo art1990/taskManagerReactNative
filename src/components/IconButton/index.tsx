@@ -22,7 +22,8 @@ interface IResumeIconButton {
     | "cansel"
     | "addTag"
     | "prev"
-    | "next";
+    | "next"
+    | "filter";
   onPress: (id?) => void;
   color?: string;
   style?: {};
@@ -39,10 +40,10 @@ const MaterialIcon: React.FC<IMaterialIcon> = ({
   name,
   width,
   height,
-  color
+  color,
 }) => <MaterialIcons name={name} size={width || height} color={color} />;
 
-const Pause: React.FC<IMaterialIcon> = props => (
+const Pause: React.FC<IMaterialIcon> = (props) => (
   <MaterialIcon name="pause-circle-filled" {...props} />
 );
 
@@ -74,11 +75,16 @@ const Prev: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
   />
 );
 
+const Filter: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+  <MaterialIcon name="filter-list" color={color} {...rest} />
+);
+
 const IconButton: React.FC<IResumeIconButton> = ({
   size = 20,
   icon,
   style,
-  onPress
+  color,
+  onPress,
 }) => {
   const iconComponents = {
     resume: Resume,
@@ -88,7 +94,8 @@ const IconButton: React.FC<IResumeIconButton> = ({
     cansel: Cansel,
     addTag: AddTag,
     prev: Prev,
-    next: Next
+    next: Next,
+    filter: Filter,
   };
 
   const Icon = iconComponents[icon];
@@ -96,15 +103,15 @@ const IconButton: React.FC<IResumeIconButton> = ({
 
   return (
     <ICButton
-      icon={() => <Icon width={iconSize} heigth={iconSize} />}
+      icon={() => <Icon width={iconSize} heigth={iconSize} color={color} />}
       onPress={onPress}
       style={[
         icon === "cansel" && {
           height: iconSize,
           width: iconSize,
-          margin: 0
+          margin: 0,
         },
-        style
+        style,
       ]}
     />
   );

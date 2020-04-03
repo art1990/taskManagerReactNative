@@ -8,12 +8,13 @@ import { Colors } from "../../assets/styles/constants";
 // assets
 import Complete from "../../assets/img/icons/complete.svg";
 
-interface ITitle {
+export interface ITitle {
   text: string;
   buttonText?: string;
   buttonAction?: () => void;
   iconButtonList?: JSX.Element[];
   isCompleted?: boolean;
+  children?: any;
 }
 
 const Title: React.FC<ITitle> = ({
@@ -21,10 +22,14 @@ const Title: React.FC<ITitle> = ({
   buttonText,
   buttonAction,
   iconButtonList,
-  isCompleted
+  isCompleted,
+  children,
 }) => (
   <View style={styles.container}>
-    <Text style={styles.text}>{text}</Text>
+    <View style={styles.labaleWithButtoncontainer}>
+      <Text style={styles.text}>{text}</Text>
+      {children}
+    </View>
     {buttonText && (
       <Button mode="text" labelStyle={styles.button} onPress={buttonAction}>
         {buttonText}
@@ -43,23 +48,28 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+  },
+  labaleWithButtoncontainer: {
+    flex: 0,
+    flexDirection: "row",
+    alignItems: "center",
   },
   text: {
     fontStyle: "normal",
     fontWeight: "bold",
     fontSize: 24,
-    lineHeight: 28
+    lineHeight: 28,
   },
   button: {
     fontSize: 12,
     lineHeight: 18,
-    color: Colors.error
+    color: Colors.error,
   },
   iconButtonContainer: {
     flex: 0,
-    flexDirection: "row"
-  }
+    flexDirection: "row",
+  },
 });
 
 export default Title;

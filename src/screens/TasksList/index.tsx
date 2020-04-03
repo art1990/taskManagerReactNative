@@ -9,14 +9,14 @@ import { getIncomplete, getList } from "../../redux/task";
 import {
   selectTaskData,
   selectTasksList,
-  selectMeta
+  selectMeta,
 } from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
 import TaskSwipeableInfo from "./TaskSwipeableInfo";
 import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
-import Title from "../../components/Title";
+import TitleWithFilter from "../sections/TitleWithFilter";
 import GenerateListOfTask from "./GenerateListOfTask";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
@@ -34,7 +34,7 @@ export default ({ navigation }) => {
     onResumePress,
     onRemovePress,
     onPausePress,
-    toFilters
+    toFilters,
   } = useTaskAction();
 
   const dispatch = useDispatch();
@@ -66,13 +66,19 @@ export default ({ navigation }) => {
   const { startTime, duration, title } = taskData;
   return (
     <View style={styles.container}>
-      <Title text="Tasks" buttonText="Log out" buttonAction={onLogOut} />
+      <TitleWithFilter
+        text="Tasks"
+        buttonText="Log out"
+        buttonAction={onLogOut}
+        onPressFilter={toFilters}
+        isHasTag={!!filters}
+      />
       {!isLoading &&
         !isLoadingIncomplete &&
         (tasksList ? (
           <>
             <ScrollView>
-              {tasksList.map(el => {
+              {tasksList.map((el) => {
                 const {
                   title,
                   project,
@@ -81,7 +87,7 @@ export default ({ navigation }) => {
                   isPaused,
                   isCompleted,
                   id,
-                  file
+                  file,
                 } = el;
                 if (taskData?.id === id) {
                   const props = { title, project, startTaskTime, isPaused };
@@ -93,7 +99,7 @@ export default ({ navigation }) => {
                   project,
                   duration,
                   isPaused,
-                  isCompleted
+                  isCompleted,
                 };
                 return (
                   <TaskSwipeableInfo
@@ -127,11 +133,10 @@ export default ({ navigation }) => {
         ) : (
           <GenerateListOfTask />
         ))}
-      <Button onPress={toFilters}>To filters</Button>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 }
+  container: { flex: 1 },
 });
