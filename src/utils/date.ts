@@ -74,9 +74,13 @@ const generateDayOfWeeklist = (day: number): { [key: string]: number } => {
   return res;
 };
 
+export interface IWeekData {
+  data: number[];
+  labels: string[];
+}
 export const generateWeekForTime = (
   weeksList: IWeeksList["weeksList"]
-): { data: number[]; labels: string[] } => {
+): IWeekData => {
   const day = weeksList[0].startTaskTime;
   let weekObj = generateDayOfWeeklist(day);
 
@@ -116,4 +120,25 @@ export const generateWeekForTime = (
   return { data, labels };
 };
 
-export const generateWeekForTask = (weeksList: IWeeksList["weeksList"]) => {};
+export const generateWeekForTask = (weeksList: IWeeksList["weeksList"]) => {
+  const day = weeksList[0].startTaskTime;
+  let weekObj = generateDayOfWeeklist(day);
+
+  weeksList.forEach(({ startTaskTime, endTime, duration }) => {
+    const startDate = fromUnixTime(startTaskTime);
+    const dayLabel = generateDayLabel(startDate);
+    if (!(dayLabel in weekObj)) return;
+
+    weekObj[dayLabel] += 1;
+  });
+
+  const data = [];
+  const labels = [];
+
+  Object.entries(weekObj).forEach(([label, count]) => {
+    labels.push(label);
+    data.push(count);
+  });
+
+  return { data, labels };
+};

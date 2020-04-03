@@ -15,7 +15,9 @@ interface ICharts {
   currentWeekTimeNumber: number;
   currentWeekTaskNumber: number;
   loggedTime: [];
+  loggedTasks: [];
   isLoadingLoggedTime: boolean;
+  isLoadingLoggedTask: boolean;
   toNextTaskWeek: () => void;
   toNextTimeWeek: () => void;
   toPrevTimeWeek: () => void;
@@ -28,10 +30,11 @@ export const useCharts = (): ICharts => {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
     totalWeeks,
-    isLoadingLoggedTime
+    isLoadingLoggedTime,
+    isLoadingLoggedTask
   } = useSelector(selectMeta);
 
-  const { loggedTime } = useSelector(selectChartsData);
+  const { loggedTime, loggedTasks } = useSelector(selectChartsData);
 
   useFocusEffect(
     useCallback(() => {
@@ -77,7 +80,9 @@ export const useCharts = (): ICharts => {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
     loggedTime,
+    loggedTasks,
     isLoadingLoggedTime,
+    isLoadingLoggedTask,
     toNextTaskWeek,
     toNextTimeWeek,
     toPrevTimeWeek,

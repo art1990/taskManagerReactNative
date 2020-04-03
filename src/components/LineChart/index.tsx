@@ -4,15 +4,18 @@ import { LineChart as Chart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 // utils
-import { generateWeekForTime } from "../../utils/date";
+import { generateWeekForTime, IWeekData } from "../../utils/date";
+// interface
 
 export interface IWeeksList {
-  weeksList: {
+  weeksList?: {
     startTaskTime: number;
     duration: number;
     id: string;
     endTime: number;
   }[];
+  weekData: IWeekData;
+  suffixY?: string;
 }
 
 const chartConfig = {
@@ -32,28 +35,26 @@ const chartConfig = {
   }
 };
 
-const LineChart: React.FC<IWeeksList> = ({ weeksList }) => {
-  const { labels, data } = weeksList && generateWeekForTime(weeksList);
-  const datasets = [{ data, strokeWidth: 2 }];
-
+const LineChart: React.FC<IWeeksList> = ({ weekData, suffixY = "" }) => {
+  const { labels, data } = weekData;
+  const dataForChart = {
+    labels,
+    datasets: [{ data, strokeWidth: 2 }]
+  };
   return (
-    <>
-      {weeksList && (
-        <Chart
-          data={{ labels, datasets }}
-          width={Dimensions.get("window").width}
-          height={220}
-          yAxisLabel=""
-          yAxisSuffix=" H"
-          yAxisInterval={1}
-          chartConfig={chartConfig}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16
-          }}
-        />
-      )}
-    </>
+    <Chart
+      data={dataForChart}
+      width={Dimensions.get("window").width}
+      height={220}
+      yAxisLabel=""
+      yAxisSuffix={suffixY}
+      yAxisInterval={1}
+      chartConfig={chartConfig}
+      style={{
+        marginVertical: 8,
+        borderRadius: 16
+      }}
+    />
   );
 };
 

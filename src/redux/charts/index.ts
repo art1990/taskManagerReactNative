@@ -92,16 +92,16 @@ export default produce(
 
       case getLoggedTasks.REQUEST:
         return request("isLoadingLoggedTasks");
-      case getLoggedTime.SUCCESS:
-        return success("loggedTime", "isLoadingLoggedTasks");
-      case getLoggedTime.FAILURE:
+      case getLoggedTasks.SUCCESS:
+        return success("loggedTasks", "isLoadingLoggedTasks");
+      case getLoggedTasks.FAILURE:
         return failure("isLoadingLoggedTasks");
 
-      case getLoggedTasks.REQUEST:
+      case getLoggedPerDay.REQUEST:
         return request("isLoadingLoggedPerDay");
-      case getLoggedTime.SUCCESS:
-        return success("loggedTime", "isLoadingLoggedPerDay");
-      case getLoggedTime.FAILURE:
+      case getLoggedPerDay.SUCCESS:
+        return success("loggedPerDay", "isLoadingLoggedPerDay");
+      case getLoggedPerDay.FAILURE:
         return failure("isLoadingLoggedPerDay");
 
       case updateMeta.type:

@@ -3,10 +3,11 @@ import React from "react";
 import { View, Text } from "react-native";
 // components
 import Title from "../../components/Title";
-import LineCharts from "../../components/LineChart";
-import Paginator from "./components/Paginator";
+import WeekChart from "./components/WeekChart";
 // hooks
 import { useCharts } from "../../hooks/useCharts";
+// utils
+import { generateWeekForTime, generateWeekForTask } from "../../utils/date";
 
 interface IStatistic {}
 
@@ -14,20 +15,36 @@ const Statistic: React.FC<IStatistic> = () => {
   const {
     toNextTimeWeek,
     toPrevTimeWeek,
+    toNextTaskWeek,
+    toPrevTaskWeek,
     loggedTime,
-    isLoadingLoggedTime
+    loggedTasks,
+    isLoadingLoggedTime,
+    isLoadingLoggedTask
   } = useCharts();
+
+  const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);
+  const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
 
   return (
     <View>
       <Title text="Statistic" />
-      <Paginator
-        onNextPress={toNextTimeWeek}
-        onPrevPress={toPrevTimeWeek}
-        text="abra kadabra"
-      />
+
       {!isLoadingLoggedTime && loggedTime && (
-        <LineCharts weeksList={loggedTime} />
+        <WeekChart
+          onNextPress={toNextTimeWeek}
+          onPrevPress={toPrevTimeWeek}
+          paginationText="hahahah"
+          weekData={loggedTimeData}
+        />
+      )}
+      {!isLoadingLoggedTask && loggedTasks && (
+        <WeekChart
+          onNextPress={toNextTaskWeek}
+          onPrevPress={toPrevTaskWeek}
+          paginationText="hahahah"
+          weekData={loggedTasksData}
+        />
       )}
     </View>
   );
