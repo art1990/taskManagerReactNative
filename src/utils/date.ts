@@ -80,26 +80,31 @@ export const generateWeekForTime = (
   const day = weeksList[0].startTaskTime;
   let weekObj = generateDayOfWeeklist(day);
 
-  weeksList.forEach(({ startTaskTime, endTime, duration }) => {
+  weeksList.forEach(({ startTaskTime, endTime }) => {
     const startDate = fromUnixTime(startTaskTime);
-    const endDate = fromUnixTime(endTime);
+    const endDate = endTime ? fromUnixTime(endTime) : new Date();
     const dayLabel = generateDayLabel(startDate);
-    isSameDay(startTaskTime, endTime)
-      ? (weekObj[dayLabel] += duration)
+
+    isSameDay(startDate, endDate)
+      ? (weekObj[dayLabel] += differenceInSeconds(endDate, startDate))
       : eachDayOfInterval({ start: startDate, end: endDate }).forEach(
-          (el, i, arr) => {
-            const dayLabel = generateDayLabel(el);
+          (date, i, arr) => {
+            const dayLabel = generateDayLabel(date);
+            if (!(dayLabel in weekObj)) return;
+
+            const lastDuration = isSameDay(endDate, date)
+              ? differenceInSeconds(date, startOfDay(date))
+              : 86400;
 
             weekObj[dayLabel] +=
               i === 0
                 ? differenceInSeconds(endOfDay(startDate), startDate)
                 : i === arr.length - 1
-                ? differenceInSeconds(endDate, startOfDay(startDate))
+                ? lastDuration
                 : 86400;
           }
         );
   });
-
   const data = [];
   const labels = [];
 
@@ -107,5 +112,8 @@ export const generateWeekForTime = (
     labels.push(label);
     data.push(hour / 3600);
   });
+
   return { data, labels };
 };
+
+export const generateWeekForTask = (weeksList: IWeeksList["weeksList"]) => {};
