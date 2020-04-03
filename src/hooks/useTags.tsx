@@ -7,6 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { getTags, updateCurrentTags, updateFilter } from "../redux/task/index";
 import { selectTags } from "../redux/task/selectors";
+// routes
+import { Routes } from "../navigation/routes";
 
 export const useTags = (setValue?: (field: string, value: string) => void) => {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
 
   const updateTagFilter = (filters = []) => {
     dispatch(updateFilter.run(filters));
+    navigation.navigate(Routes.TASKS_LIST);
   };
 
   useFocusEffect(

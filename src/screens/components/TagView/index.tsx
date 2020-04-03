@@ -68,8 +68,8 @@ const TagView: React.FC<ITagView> = ({
         {filteredAllTags.map((el, i) => (
           <Tag key={i} text={el} style={styles.tag} setTags={setTags} />
         ))}
-        <Button onPress={() => buttonAction(tags)}>{buttonText}</Button>
       </View>
+      <Button onPress={() => buttonAction(tags)}>{buttonText}</Button>
     </>
   );
 };

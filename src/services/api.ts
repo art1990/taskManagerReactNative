@@ -144,10 +144,14 @@ export const getIncompleteTaskApi = async () => {
 };
 
 export const getTaskListApi = async filters => {
-  const tasksListCollection = await tasksListCol
-    .orderBy("timestamp")
-    .where("tags", "in", filters)
-    .get();
+  const orderedTasksListCol = await tasksListCol.orderBy("timestamp");
+
+  const tasksListCollection = filters
+    ? await orderedTasksListCol
+        .where("tags", "array-contains-any", filters)
+        .get()
+    : await orderedTasksListCol.get();
+
   const data = await tasksListCollection.docs.map(doc => doc.data());
 
   const tasksList = data.length > 0 ? data : null;
