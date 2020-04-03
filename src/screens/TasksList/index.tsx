@@ -24,13 +24,11 @@ import useTaskAction from "../../hooks/useTaskAction";
 // routes
 import { Routes } from "../../navigation/routes";
 
-import { getLoggedTimeApi } from "../../services/api";
-
 export default ({ navigation }) => {
   const { user } = useAuth();
   const taskData = useSelector(selectTaskData);
   const tasksList = useSelector(selectTasksList);
-  const { isLoading, isLoadingIncomplete } = useSelector(selectMeta);
+  const { isLoading, isLoadingIncomplete, filters } = useSelector(selectMeta);
   const {
     onEditPress,
     onResumePress,
@@ -48,8 +46,8 @@ export default ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getList.request());
-    }, [user])
+      dispatch(getList.request(filters));
+    }, [user, filters])
   );
 
   const onLogOut = () => {
@@ -128,7 +126,6 @@ export default ({ navigation }) => {
         ) : (
           <GenerateListOfTask />
         ))}
-      <Button onPress={() => getLoggedTimeApi()}>get logged time</Button>
     </View>
   );
 };

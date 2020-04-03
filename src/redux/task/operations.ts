@@ -107,8 +107,8 @@ function* getIncompleteTask() {
   yield apiHandler({ api: getIncompleteTaskApi }, getIncomplete);
 }
 
-function* getTasksList() {
-  yield apiHandler({ api: getTaskListApi }, getList);
+function* getTasksList({ payload }) {
+  yield apiHandler({ api: getTaskListApi, argApi: payload }, getList);
 }
 
 function* getTagsList() {

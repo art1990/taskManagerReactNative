@@ -4,6 +4,8 @@ import { db, firebaseApp, storage } from "../fireBase";
 // utils
 import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
+// interface
+import { IChartsState } from "../redux/charts";
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -141,8 +143,11 @@ export const getIncompleteTaskApi = async () => {
   return taskData;
 };
 
-export const getTaskListApi = async () => {
-  const tasksListCollection = await tasksListCol.orderBy("timestamp").get();
+export const getTaskListApi = async filters => {
+  const tasksListCollection = await tasksListCol
+    .orderBy("timestamp")
+    .where("tags", "in", filters)
+    .get();
   const data = await tasksListCollection.docs.map(doc => doc.data());
 
   const tasksList = data.length > 0 ? data : null;
@@ -191,7 +196,7 @@ export const generateTasksApi = async () => {
 };
 
 // charts
-export const getWeekDataApi = async meta => {
+export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const getDataFromDoc = doc => doc.docs[0].data();
   const { size: totalWeeks } = await weeksCol.get();
 

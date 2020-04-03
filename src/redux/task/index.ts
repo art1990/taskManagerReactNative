@@ -16,6 +16,7 @@ const CREATE = "taskManager/task/create";
 const RESUME = "taskManager/task/resume";
 const GET_TAGS = "taskManager/task/getTags";
 const UPDATE_CURRENT_TAGS = "taskManager/task/updateCurrentTags";
+const UPDATE_FILTER = "taskManager/task/updateFilter";
 
 // actions
 export const pause = createAction(PAUSE);
@@ -27,6 +28,7 @@ export const create = createAction(CREATE);
 export const resume = createAction(RESUME);
 export const getTags = createAction(GET_TAGS);
 export const updateCurrentTags = actionCreator(UPDATE_CURRENT_TAGS);
+export const updateFilter = actionCreator(UPDATE_FILTER);
 
 // initial state
 export interface ITaskState {
@@ -44,8 +46,12 @@ export interface ITaskState {
     file: null | object[];
   };
   tags: { current: string[]; all: string[] };
-  charts: { loggedTime: {}; loggedTasks: {}; loggedPerDay: {} };
-  meta: { isLoading: boolean; isLoadingIncomplete: boolean; error: null | {} };
+  meta: {
+    isLoading: boolean;
+    isLoadingIncomplete: boolean;
+    error: null | {};
+    filters: string[];
+  };
 }
 
 const initialState: ITaskState = {
@@ -63,11 +69,11 @@ const initialState: ITaskState = {
     file: null
   },
   tags: { current: [], all: [] },
-  charts: { loggedTime: null, loggedTasks: null, loggedPerDay: null },
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
-    error: null
+    error: null,
+    filters: null
   }
 };
 
@@ -167,6 +173,11 @@ export default produce(
       case updateCurrentTags.type:
         draft.tags.current = payload;
         return;
+
+      case updateFilter.type:
+        draft.meta.filters = payload;
+        return;
+
       default:
         return draft;
     }
