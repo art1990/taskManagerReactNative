@@ -7,12 +7,12 @@ import {
   update,
   getIncomplete,
   getList,
-  getTags
+  getTags,
 } from ".";
 import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
-import { takeEvery, take, select, put } from "redux-saga/effects";
+import { takeEvery, take, call, select, put } from "redux-saga/effects";
 // api
 import {
   initializeVariableToApiService,
@@ -25,7 +25,7 @@ import {
   resumeTaskApi,
   getIncompleteTaskApi,
   getTaskListApi,
-  getTagsApi
+  getTagsApi,
 } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
@@ -43,13 +43,13 @@ function* createTask({ payload: { navigation, ...payload } }) {
     if (payload.file) {
       const uri = yield apiHandler({
         api: uploadFileApi,
-        argApi: payload.file
+        argApi: payload.file,
       });
 
       file = {
         name: payload.file.name,
         size: payload.file.size,
-        uri
+        uri,
       };
     }
     const date = new Date();
@@ -61,7 +61,7 @@ function* createTask({ payload: { navigation, ...payload } }) {
       startTaskTime,
       startTime: startTaskTime,
       file,
-      date: dateNow(date)
+      date: dateNow(date),
     };
     const task = yield apiHandler({ api: addTaskApi, argApi });
     yield apiHandler({ api: updateIncompleteTaskApi, argApi: task });
@@ -78,7 +78,7 @@ function* pauseTask({ payload }) {
   const argApi = {
     ...payload,
     endTime,
-    duration
+    duration,
   };
   yield apiHandler({ api: pauseTaskApi, argApi }, pause);
 }
@@ -116,7 +116,7 @@ function* getTagsList() {
 }
 
 export default function* watchTask() {
-  yield take(initialize.type);
+  // yield take(initialize.type);
   yield takeEvery(create.REQUEST, createTask);
   yield takeEvery(pause.REQUEST, pauseTask);
   yield takeEvery(resume.REQUEST, resumeTask);

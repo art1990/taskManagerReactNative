@@ -1,22 +1,43 @@
 // redux
-import { createAction } from "redux-saga-actions";
+import { createAction } from "../utils/actionCreator";
 import actionCreator from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
 // utils
 import { updateTasksList } from "../utils/reducer";
+// interface
+import { ICreateAction } from "../../types";
 
 // action types
 const PAUSE = "taskManager/task/pause";
+type PAUSE = typeof PAUSE;
+
 const REMOVE = "taskManager/task/remove";
+type REMOVE = typeof REMOVE;
+
 const UPDATE = "taskManager/task/update";
+type UPDATE = typeof UPDATE;
+
 const GET_INCOMPLETE = "taskManager/task/getIncomplate";
+type GET_INCOMPLETE = typeof GET_INCOMPLETE;
+
 const GET_LIST = "taskManager/task/getList";
+type GET_LIST = typeof GET_LIST;
+
 const CREATE = "taskManager/task/create";
+type CREATE = typeof CREATE;
+
 const RESUME = "taskManager/task/resume";
+type RESUME = typeof RESUME;
+
 const GET_TAGS = "taskManager/task/getTags";
+type GET_TAGS = typeof GET_TAGS;
+
 const UPDATE_CURRENT_TAGS = "taskManager/task/updateCurrentTags";
+type UPDATE_CURRENT_TAGS = typeof UPDATE_CURRENT_TAGS;
+
 const UPDATE_FILTER = "taskManager/task/updateFilter";
+type UPDATE_FILTER = typeof UPDATE_FILTER;
 
 // actions
 export const pause = createAction(PAUSE);
@@ -66,15 +87,15 @@ const initialState: ITaskState = {
     duration: 0,
     isPaused: false,
     isCompleted: false,
-    file: null
+    file: null,
   },
   tags: { current: [], all: [] },
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
     error: null,
-    filters: null
-  }
+    filters: null,
+  },
 };
 
 // reducer
