@@ -4,8 +4,10 @@ import { db, firebaseApp, storage } from "../fireBase";
 // utils
 import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
-// interface
+// types
 import { IChartsState } from "../redux/charts";
+import { ITaskState } from "../redux/task";
+import { IWeekObj } from "../types/api";
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -16,7 +18,7 @@ type User = firebase.User;
 let userDoc: UserDoc, user: User, tasksListCol: any, weeksCol: any;
 export const initializeVariableToApiService: (userdata: {
   user: firebase.User;
-}) => Promise<void> = async userData => {
+}) => Promise<void> = async (userData) => {
   if (!userData.user) return;
   user = userData.user;
   userDoc = db.collection("users").doc(user.uid);
@@ -26,7 +28,7 @@ export const initializeVariableToApiService: (userdata: {
 /* END initialize user and userDoc variavle */
 const auth = firebaseApp.auth();
 
-const getDataFromUserDoc = async field => {
+const getDataFromUserDoc = async (field) => {
   const res = await userDoc.get();
 
   const { [field]: data } = res.data();
@@ -37,10 +39,7 @@ const getDataFromUserDoc = async field => {
 // user
 export const signUpApi = async ({ email, password }) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password);
-  await db
-    .collection("users")
-    .doc(user.uid)
-    .set({ email });
+  await db.collection("users").doc(user.uid).set({ email });
 };
 
 export const loginApi = async ({ email, password }) => {
@@ -54,7 +53,7 @@ export const logoutApi = () => {
 };
 
 // task
-export const uploadFileApi = async file => {
+export const uploadFileApi = async (file) => {
   const response = await fetch(file.uri);
   const blob = await response.blob();
 
@@ -68,19 +67,19 @@ export const uploadFileApi = async file => {
 
 export const updateIncompleteTaskApi = async (taskData = null) => {
   await userDoc.update({
-    taskData
+    taskData,
   });
 
   return taskData;
 };
 
-export const addTaskApi = async task => {
+export const addTaskApi = async (task) => {
   const timestamp = firebase.firestore.FieldValue.serverTimestamp();
   const { startWeek, startWeekSec } = getStartWeek();
 
   const taskData = {
     ...task,
-    timestamp
+    timestamp,
   };
 
   if (taskData.id) return updateTaskApi(taskData);
@@ -92,7 +91,7 @@ export const addTaskApi = async task => {
     {
       tasksId: firebase.firestore.FieldValue.arrayUnion(id),
       timestamp,
-      startWeek: startWeekSec
+      startWeek: startWeekSec,
     },
     { merge: true }
   );
@@ -100,13 +99,13 @@ export const addTaskApi = async task => {
   return taskData;
 };
 
-export const updateTaskApi = async task => {
+export const updateTaskApi = async (task) => {
   await tasksListCol.doc(task.id).update(task);
 
   return task;
 };
 
-export const removeFileApi = async uri => {
+export const removeFileApi = async (uri) => {
   const ref = storage.refFromURL(uri);
   await ref.delete();
 
@@ -121,7 +120,7 @@ export const removeTaskApi = async ({ id, uri }) => {
   return id;
 };
 
-export const pauseTaskApi = async task => {
+export const pauseTaskApi = async (task) => {
   await updateIncompleteTaskApi();
   const taskData = { ...task, isPaused: true };
   await updateTaskApi(taskData);
@@ -129,7 +128,7 @@ export const pauseTaskApi = async task => {
   return taskData;
 };
 
-export const resumeTaskApi = async task => {
+export const resumeTaskApi = async (task) => {
   const taskData = { ...task, isPaused: false };
   await updateIncompleteTaskApi(taskData);
   await updateTaskApi(taskData);
@@ -143,7 +142,7 @@ export const getIncompleteTaskApi = async () => {
   return taskData;
 };
 
-export const getTaskListApi = async filters => {
+export const getTaskListApi = async (filters) => {
   const orderedTasksListCol = await tasksListCol.orderBy("timestamp");
 
   const tasksListCollection = filters
@@ -152,7 +151,7 @@ export const getTaskListApi = async filters => {
         .get()
     : await orderedTasksListCol.get();
 
-  const data = await tasksListCollection.docs.map(doc => doc.data());
+  const data = await tasksListCollection.docs.map((doc) => doc.data());
 
   const tasksList = data.length > 0 ? data : null;
 
@@ -163,8 +162,8 @@ export const getTaskListApi = async filters => {
 export const getTagsApi = async () => {
   const tags = new Set();
   const tagsCol = await tasksListCol.get();
-  await tagsCol.docs.forEach(doc =>
-    doc.get("tags").forEach(el => tags.add(el))
+  await tagsCol.docs.forEach((doc) =>
+    doc.get("tags").forEach((el) => tags.add(el))
   );
 
   return Array.from(tags);
@@ -176,7 +175,7 @@ export const generateTasksApi = async () => {
 
   const { tasks, generateWeeks } = generateTasksData();
 
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     let doc = tasksListCol.doc();
     task.id = doc.id;
     const date = dateNow(task.startTaskTime);
@@ -192,7 +191,7 @@ export const generateTasksApi = async () => {
     batch.set(weekDoc, {
       tasksId,
       timestamp: startWeek,
-      startWeek: startWeekSec
+      startWeek: startWeekSec,
     });
   });
 
@@ -201,15 +200,15 @@ export const generateTasksApi = async () => {
 
 // charts
 export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
-  const getDataFromDoc = doc => doc.docs[0].data();
-  const { size: totalWeeks } = await weeksCol.get();
+  const getDataFromDoc = (doc: any): { tasksId: string } => doc.docs[0].data();
+  const { size: totalWeeks }: { size: number } = await weeksCol.get();
 
   const {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
     lastLoggedTimeSnapshot,
     lastLoggedTasksSnapshot,
-    action
+    action,
   } = meta;
 
   const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
@@ -220,9 +219,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const weekDoc =
     currentWeekNumber === 1
       ? await weeksCol.limit(1).get()
-      : await weeksCol[cursor](lastSnapshot)
-          .limit(1)
-          .get();
+      : await weeksCol[cursor](lastSnapshot).limit(1).get();
 
   const lastVisible = weekDoc.docs[weekDoc.docs.length - 1];
 
@@ -233,11 +230,13 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     .orderBy("timestamp")
     .get();
 
-  const weeksList = tasksDoc.docs.map(doc => {
-    const { id, startTaskTime, duration = 0, endTime } = doc.data();
+  const weeksList: IWeekObj[] = tasksDoc.docs.map(
+    (doc: any): IWeekObj => {
+      const { id, startTaskTime, duration = 0, endTime } = doc.data();
 
-    return { id, startTaskTime, duration, endTime };
-  });
+      return { id, startTaskTime, duration, endTime };
+    }
+  );
 
   return { weeksList, lastVisible, totalWeeks };
 };

@@ -1,6 +1,9 @@
 // react
 import React, { ReactElement } from "react";
 import { KeyboardTypeOptions } from "react-native";
+import { ITaskState } from "redux/task";
+// types
+import { ITaskState } from "../redux/task";
 
 // components
 export interface IButtonProps {
@@ -53,7 +56,7 @@ export interface IWeekData {
   labels: string[];
 }
 
-export interface IWeeksList {
+export interface IWeeksListProps {
   weeksList?: {
     startTaskTime: number;
     duration: number;
@@ -218,4 +221,20 @@ export interface ITaskViewProps {
   task: any;
   route: any;
   navigation: any;
+}
+
+// utils
+export interface ITask {
+  id: ITaskState["taskData"]["id"];
+  title: ITaskState["taskData"]["title"];
+  project: ITaskState["taskData"]["project"];
+  isCompleted: ITaskState["taskData"]["isCompleted"];
+  isPaused: ITaskState["taskData"]["isPaused"];
+  file: ITaskState["taskData"]["file"];
+  tags: ITaskState["tags"]["all"];
+  duration: ITaskState["taskData"]["duration"];
+  startTaskTime: ITaskState["taskData"]["startTaskTime"];
+  startTime: ITaskState["taskData"]["startTime"];
+  endTime: ITaskState["taskData"]["endTime"];
+  timestamp: any;
 }

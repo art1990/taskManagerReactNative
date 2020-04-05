@@ -1,12 +1,9 @@
 // redux
-import { createAction } from "../utils/actionCreator";
-import actionCreator from "../utils/actionCreator";
+import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
 // utils
 import { updateTasksList } from "../utils/reducer";
-// interface
-import { ICreateAction } from "../../types";
 
 // action types
 const PAUSE = "taskManager/task/pause";
@@ -115,7 +112,7 @@ export default produce(
     };
 
     switch (type) {
-      case remove.REQUES:
+      case remove.REQUEST:
         return request();
       case remove.SUCCESS:
         draft.meta.isLoading = false;
@@ -124,7 +121,7 @@ export default produce(
       case remove.FAILURE:
         return failure();
 
-      case update.REQUES:
+      case update.REQUEST:
         return request();
       case update.SUCCESS:
         draft.meta.isLoading = false;

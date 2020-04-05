@@ -1,6 +1,5 @@
 // redux
-import { createAction } from "redux-saga-actions";
-import actionCreator from "../utils/actionCreator";
+import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
 
@@ -30,7 +29,7 @@ const initialState: UserState = {
   user: null,
   loginning: false,
   registering: false,
-  error: null
+  error: null,
 };
 
 //reducer

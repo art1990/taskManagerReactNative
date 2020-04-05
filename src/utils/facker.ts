@@ -4,10 +4,12 @@ import faker from "faker";
 import { getUnixTime } from "date-fns";
 // utils
 import { getStartWeek } from "./date";
+// types
+import { ITask } from "../types";
 
 let date = getUnixTime(new Date());
 
-const generateTask = () => {
+const generateTask = (): ITask => {
   const { random, hacker } = faker;
 
   const id = random.uuid();
@@ -39,27 +41,29 @@ const generateTask = () => {
     startTaskTime,
     startTime,
     endTime,
-    timestamp
+    timestamp,
   };
 };
 
 export const generateTasksData = () => {
   return {
-    tasks: [...Array(10)].map(el => {
+    tasks: [...Array(10)].map((el) => {
       const task = generateTask();
       return task;
     }),
-    generateWeeks(tasks) {
+    generateWeeks(
+      tasks: ITask[]
+    ): { [key: string]: { tasksId?: ITask["id"][]; startWeekSec?: string } } {
       const weeks = {};
 
-      tasks.forEach(el => {
+      tasks.forEach((el) => {
         const { startWeek, startWeekSec } = getStartWeek(el.startTime);
         weeks[startWeek] = {
           tasksId: [...(weeks[startWeek]?.tasksId || []), el.id],
-          startWeekSec
+          startWeekSec,
         };
       });
       return weeks;
-    }
+    },
   };
 };

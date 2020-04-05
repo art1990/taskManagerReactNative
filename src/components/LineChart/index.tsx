@@ -3,10 +3,8 @@ import React from "react";
 import { LineChart as Chart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
-// utils
-import { generateWeekForTime, IWeekData } from "../../utils/date";
 // types
-import { IWeeksList } from "../../types";
+import { IWeeksListProps } from "../../types";
 
 const chartConfig = {
   backgroundColor: "red",
@@ -25,7 +23,7 @@ const chartConfig = {
   },
 };
 
-const LineChart: React.FC<IWeeksList> = ({ weekData, suffixY = "" }) => {
+const LineChart: React.FC<IWeeksListProps> = ({ weekData, suffixY = "" }) => {
   const { labels, data } = weekData;
   const dataForChart = {
     labels,

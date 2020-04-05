@@ -1,6 +1,5 @@
 // redux
-import { createAction } from "redux-saga-actions";
-import actionCreator from "../utils/actionCreator";
+import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
 
@@ -58,8 +57,8 @@ const initialState: IChartsState = {
     isLoadingLoggedTask: false,
     isLoadingLoggedPerDay: false,
     error: null,
-    action: null
-  }
+    action: null,
+  },
 };
 // reducer
 export default produce(
@@ -67,7 +66,7 @@ export default produce(
     draft: Draft<IChartsState> = initialState,
     { type, payload }: { type: string; payload?: any }
   ) => {
-    const request = isLoading => {
+    const request = (isLoading) => {
       draft.meta[isLoading] = true;
     };
 
@@ -83,7 +82,7 @@ export default produce(
       draft[section] = weeksList;
     };
 
-    const failure = isLoading => {
+    const failure = (isLoading) => {
       draft.meta[isLoading] = false;
       draft.meta.error = payload;
       draft.meta.action = null;
