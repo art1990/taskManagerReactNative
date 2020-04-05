@@ -3,17 +3,13 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 // components
 import Button from "../Button";
-
-interface INavigationMessage {
-  text: string;
-  buttonText: string;
-  goTo: () => void;
-}
+// types
+import { INavigationMessage } from "../../types";
 
 const NavigationMessage: React.FC<INavigationMessage> = ({
   text,
   buttonText,
-  goTo
+  goTo,
 }) => (
   <View style={styles.container}>
     <Text style={styles.alreadyText}>{text}</Text>
@@ -27,14 +23,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flex: 0,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   alreadyText: {
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 16,
-    lineHeight: 20
-  }
+    lineHeight: 20,
+  },
 });
 
 export default NavigationMessage;

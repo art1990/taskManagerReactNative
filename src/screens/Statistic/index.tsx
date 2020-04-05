@@ -9,9 +9,7 @@ import { useCharts } from "../../hooks/useCharts";
 // utils
 import { generateWeekForTime, generateWeekForTask } from "../../utils/date";
 
-interface IStatistic {}
-
-const Statistic: React.FC<IStatistic> = () => {
+const Statistic: React.FC = () => {
   const {
     toNextTimeWeek,
     toPrevTimeWeek,
@@ -20,7 +18,7 @@ const Statistic: React.FC<IStatistic> = () => {
     loggedTime,
     loggedTasks,
     isLoadingLoggedTime,
-    isLoadingLoggedTask
+    isLoadingLoggedTask,
   } = useCharts();
 
   const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);

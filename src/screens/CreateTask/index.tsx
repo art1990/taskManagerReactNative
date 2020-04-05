@@ -7,19 +7,17 @@ import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
+// types
+import { ICreateTaskProps } from "../../types";
 
-interface ICreateTask {
-  navigation: any;
-}
-
-const CreateTask: React.FC<ICreateTask> = ({ navigation }) => {
+const CreateTask: React.FC<ICreateTaskProps> = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const onStartTask = data => {
+  const onStartTask = (data) => {
     dispatch(
       create.request({
         ...data,
-        navigation
+        navigation,
       })
     );
   };

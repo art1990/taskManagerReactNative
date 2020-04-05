@@ -10,20 +10,10 @@ import Styles from "../../assets/styles";
 // assets
 import Completed from "../../assets/img/icons/complete.svg";
 import Resume from "../../assets/img/icons/resume.svg";
+// types
+import { ITaskInfoProps } from "../../types";
 
-export interface ITaskInfo {
-  title: string;
-  project: string;
-  isPaused: boolean;
-  duration?: number;
-  startTaskTime?: number;
-  isCompleted?: boolean;
-  onResumePress?: () => void;
-  toView?: () => void;
-  style?: {};
-}
-
-const TaskInfo: React.FC<ITaskInfo> = ({
+const TaskInfo: React.FC<ITaskInfoProps> = ({
   title,
   project,
   startTaskTime,
@@ -32,7 +22,7 @@ const TaskInfo: React.FC<ITaskInfo> = ({
   isPaused,
   onResumePress,
   toView,
-  style
+  style,
 }) => {
   const size = 22;
   const timeText = isPaused
@@ -64,12 +54,12 @@ const TaskInfo: React.FC<ITaskInfo> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   iconContainer: {
     flexDirection: "row",
-    flex: 0
-  }
+    flex: 0,
+  },
 });
 
 export default TaskInfo;

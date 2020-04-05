@@ -5,13 +5,10 @@ import { Text, StyleSheet } from "react-native";
 import { getUnixTime } from "date-fns";
 // utils
 import { formatToUTCTime } from "../../utils/date";
+// types
+import { ITimerProps } from "../../types";
 
-interface Timer {
-  startTime: number;
-  duration: number;
-}
-
-const Timer: React.FC<Timer> = ({ startTime, duration }) => {
+const Timer: React.FC<ITimerProps> = ({ startTime, duration }) => {
   const [currentTime, setCurrentTime] = useState<number>(
     getUnixTime(new Date())
   );
@@ -47,8 +44,8 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "normal",
     fontSize: 14,
-    lineHeight: 21
-  }
+    lineHeight: 21,
+  },
 });
 
 export default Timer;

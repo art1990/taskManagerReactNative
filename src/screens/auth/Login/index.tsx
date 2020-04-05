@@ -10,15 +10,13 @@ import Title from "../../../components/Title";
 import NavigationMessage from "../../../components/NavigationMessage";
 // constants
 import { Routes } from "../../../navigation/routes";
+// types
+import { ILoginProps } from "../../../types";
 
-interface ILogin {
-  navigation: any;
-}
-
-const Login: React.FC<ILogin> = ({ navigation }) => {
+const Login: React.FC<ILoginProps> = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const onLoginPress = data => {
+  const onLoginPress = (data) => {
     dispatch(login.request(data));
   };
 
@@ -40,7 +38,7 @@ const Login: React.FC<ILogin> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });
 
 export default Login;

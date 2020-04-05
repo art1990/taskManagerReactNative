@@ -4,21 +4,16 @@ import { View, Text } from "react-native";
 // components
 import TaskField from "../../../screens/components/TaskField";
 import IconButton from "../../../components/IconButton";
-// expo icons
-import { MaterialIcons } from "@expo/vector-icons";
 // styles
 import Styles from "../../../assets/styles";
 // constants
 import { Colors } from "../../../assets/styles/constants";
-
-interface IInfoAndRemoveFile {
-  name: string;
-  onRemovePress: () => void;
-}
+// type
+import { IInfoAndRemoveFile } from "../../../types";
 
 const InfoAndRemoveFile: React.FC<IInfoAndRemoveFile> = ({
   name,
-  onRemovePress
+  onRemovePress,
 }) => {
   const size = 20;
 

@@ -13,31 +13,20 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 import { useTags } from "../../../hooks/useTags";
 // validation
 import { LoginSchema } from "../../../utils/validation";
-
-interface ITaskForm {
-  onSubmit: any;
-  isEditing?: boolean;
-  formData?: FormData;
-  style?: {};
-  children?: ReactElement;
-}
-
-type FormData = {
-  file: {};
-  defaultValues: {};
-};
+// types
+import { ITaskForm } from "../../../types";
 
 const TaskForm: React.FC<ITaskForm> = ({
   isEditing,
   formData,
   style,
   onSubmit,
-  children
+  children,
 }) => {
   const defaultValues = formData?.defaultValues;
 
   const methods = useForm({
-    defaultValues
+    defaultValues,
   });
   const {
     control,
@@ -45,7 +34,7 @@ const TaskForm: React.FC<ITaskForm> = ({
     register,
     unregister,
     setValue,
-    watch
+    watch,
   } = methods;
 
   const { tags, setTags } = useTags(setValue);
@@ -69,14 +58,14 @@ const TaskForm: React.FC<ITaskForm> = ({
     defaultValues?.tags && setTags([...defaultValues.tags, ...tags]);
   }, []);
 
-  const onChange = args => args[0].nativeEvent.text;
+  const onChange = (args) => args[0].nativeEvent.text;
 
   const handleUserSubmit = ({ file, ...data }) => {
     const values = file ? { file, ...data } : data;
     onSubmit(values);
   };
 
-  const fileHandleChange = data => {
+  const fileHandleChange = (data) => {
     setValue("file", data);
   };
 
@@ -125,8 +114,8 @@ const TaskForm: React.FC<ITaskForm> = ({
 
 const styles = StyleSheet.create({
   ipnut: {
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 });
 
 export default TaskForm;

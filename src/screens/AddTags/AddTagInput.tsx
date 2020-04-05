@@ -4,17 +4,13 @@ import { View, StyleSheet } from "react-native";
 // components
 import Input from "../../components/Input";
 import IconButton from "../../components/IconButton";
+// types
+import { IAddTagInputProps } from "../../types";
 
-interface IAddTagInput {
-  value: string;
-  onChangeText: (event: any) => void;
-  onAddPress: () => void;
-}
-
-const AddTagInput: React.FC<IAddTagInput> = ({
+const AddTagInput: React.FC<IAddTagInputProps> = ({
   onChangeText,
   value,
-  onAddPress
+  onAddPress,
 }) => {
   return (
     <View style={styles.container}>
@@ -32,17 +28,17 @@ const AddTagInput: React.FC<IAddTagInput> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    position: "relative"
+    position: "relative",
   },
   input: {
-    zIndex: 0
+    zIndex: 0,
   },
   icon: {
     position: "absolute",
     right: 10,
     top: "20%",
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 });
 
 export default AddTagInput;

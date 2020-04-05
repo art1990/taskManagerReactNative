@@ -10,11 +10,7 @@ import AddTagInput from "./AddTagInput";
 // styles
 import { Colors } from "../../assets/styles/constants";
 
-interface IAddTags {
-  value: string[];
-}
-
-const AddTags: React.FC<IAddTags> = () => {
+const AddTags: React.FC = () => {
   const { allTags, tags: initialTags, addTags } = useTags();
 
   return (
@@ -33,16 +29,16 @@ const AddTags: React.FC<IAddTags> = () => {
 
 const styles = StyleSheet.create({
   currenTagContainer: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   line: {
     borderBottomColor: Colors.line,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   tag: {
     marginHorizontal: 7,
-    marginVertical: 18
-  }
+    marginVertical: 18,
+  },
 });
 
 export default AddTags;

@@ -10,12 +10,12 @@ import {
   startOfDay,
   endOfDay,
   isSameDay,
-  differenceInSeconds
+  differenceInSeconds,
 } from "date-fns";
-// interface
-import { IWeeksList } from "../components/LineChart";
+// types
+import { IWeeksList, IWeekData } from "../types";
 
-export const getUTCDate = date => {
+export const getUTCDate = (date) => {
   //const date = new Date(dateString);
 
   return new Date(
@@ -28,7 +28,7 @@ export const getUTCDate = date => {
   );
 };
 
-export const formatToUTCTime = seconds => {
+export const formatToUTCTime = (seconds) => {
   const date = fromUnixTime(+seconds);
   return lightFormat(getUTCDate(date), "HH:mm:ss");
 };
@@ -44,7 +44,7 @@ const getStartOrEndWeek = (func: (date: Date) => Date) => (
   return {
     [week]: formatISO(weekDate),
     [weekSec]: getUnixTime(weekDate),
-    date: weekDate
+    date: weekDate,
   };
 };
 
@@ -68,16 +68,12 @@ const generateDayOfWeeklist = (day: number): { [key: string]: number } => {
   const { date: end } = getEndWeek(day);
   const res = {};
   eachDayOfInterval({ start, end }).forEach(
-    el => (res[generateDayLabel(el)] = 0)
+    (el) => (res[generateDayLabel(el)] = 0)
   );
 
   return res;
 };
 
-export interface IWeekData {
-  data: number[];
-  labels: string[];
-}
 export const generateWeekForTime = (
   weeksList: IWeeksList["weeksList"]
 ): IWeekData => {

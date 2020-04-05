@@ -5,14 +5,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { formatToUTCTime } from "../../../utils/date";
 // constanst
 import { Colors } from "../../../assets/styles/constants";
+// types
+import { ITaskFieldProps } from "../../../types";
 
-interface ITaskField {
-  title: string;
-  text: string | number;
-  isTime?: boolean;
-}
-
-const TaskField: React.FC<ITaskField> = ({ title, text, isTime }) => (
+const TaskField: React.FC<ITaskFieldProps> = ({ title, text, isTime }) => (
   <View style={styles.container}>
     <Text style={styles.title}>{title}</Text>
     <Text style={styles.text}>{isTime ? formatToUTCTime(text) : text}</Text>
@@ -24,17 +20,17 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: "column",
     justifyContent: "flex-start",
-    marginVertical: 15
+    marginVertical: 15,
   },
   title: {
     fontSize: 12,
     lineHeight: 18,
-    color: Colors.placeholder
+    color: Colors.placeholder,
   },
   text: {
     fontSize: 14,
-    lineHeight: 21
-  }
+    lineHeight: 21,
+  },
 });
 
 export default TaskField;

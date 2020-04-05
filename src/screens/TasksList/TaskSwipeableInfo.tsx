@@ -7,23 +7,17 @@ import { IconButton } from "react-native-paper";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 // compoents
 import TaskInfo from "../../components/TaskInfo";
-// iterface
-import { ITaskInfo } from "../../components/TaskInfo";
 // assets
 import TrashIcon from "../../assets/img/icons/trash.svg";
 import PencilIcon from "../../assets/img/icons/pencil.svg";
-
-interface ITaskSwipeableInfo extends ITaskInfo {
-  onRemovePress: () => void;
-  onEditPress: () => void;
-  onResumePress: () => void;
-}
+// types
+import { ITaskSwipeableInfoProps } from "../../types";
 
 const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   const scale = dragX.interpolate({
     inputRange: [-100, 0],
     outputRange: [1, 0],
-    extrapolate: "clamp"
+    extrapolate: "clamp",
   });
   const size = 20;
 
@@ -43,7 +37,7 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   );
 };
 
-const TaskSwipeableInfo: React.FC<ITaskSwipeableInfo> = ({
+const TaskSwipeableInfo: React.FC<ITaskSwipeableInfoProps> = ({
   title,
   project,
   duration,
@@ -52,7 +46,7 @@ const TaskSwipeableInfo: React.FC<ITaskSwipeableInfo> = ({
   onRemovePress,
   onEditPress,
   onResumePress,
-  toView
+  toView,
 }) => (
   <Swipeable
     renderRightActions={(progress, dragX) => (
@@ -78,16 +72,16 @@ const TaskSwipeableInfo: React.FC<ITaskSwipeableInfo> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   iconContainer: {
     flexDirection: "row",
     flex: 0,
-    alignItems: "center"
+    alignItems: "center",
   },
   swipe: {
-    backgroundColor: "red"
-  }
+    backgroundColor: "red",
+  },
 });
 
 export default TaskSwipeableInfo;

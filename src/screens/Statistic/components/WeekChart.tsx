@@ -4,21 +4,15 @@ import { View, Text } from "react-native";
 // components
 import LineCharts from "../../../components/LineChart";
 import Paginator from "./Paginator";
+// types
+import { IWeekChartProps } from "../../../types";
 
-interface IWeekChart {
-  onNextPress: () => void;
-  onPrevPress: () => void;
-  paginationText: string;
-  suffixY?: string;
-  weekData: { data: number[]; labels: string[] };
-}
-
-const WeekChart: React.FC<IWeekChart> = ({
+const WeekChart: React.FC<IWeekChartProps> = ({
   onNextPress,
   onPrevPress,
   paginationText,
   weekData,
-  suffixY
+  suffixY,
 }) => (
   <>
     <Paginator

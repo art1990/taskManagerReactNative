@@ -4,20 +4,14 @@ import { StyleSheet, KeyboardTypeOptions, View, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
 // components
 import Input from "../Input";
-// interface
-import { IInputProps } from "../Input";
 // icons
 import { Feather } from "@expo/vector-icons";
 // constants
 import { Colors } from "../../assets/styles/constants";
+// types
+import { IPasswordInputProps } from "../../types";
 
-interface IPasswordInputProps extends IInputProps {
-  iconSize?: number;
-  isError?: boolean;
-  style?: {};
-}
-
-const PasswordInput: React.FC<IPasswordInputProps> = props => {
+const PasswordInput: React.FC<IPasswordInputProps> = (props) => {
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
   const { iconSize, isError, style } = props;
 
@@ -37,7 +31,7 @@ const PasswordInput: React.FC<IPasswordInputProps> = props => {
       <Feather
         style={[
           styles.eyeContainer,
-          { transform: [{ translateY: -size / 1.5 }] }
+          { transform: [{ translateY: -size / 1.5 }] },
         ]}
         name={name}
         size={size}
@@ -50,13 +44,13 @@ const PasswordInput: React.FC<IPasswordInputProps> = props => {
 
 const styles = StyleSheet.create({
   input: {
-    position: "relative"
+    position: "relative",
   },
   eyeContainer: {
     position: "absolute",
     top: "50%",
-    right: 15
-  }
+    right: 15,
+  },
 });
 
 export default PasswordInput;

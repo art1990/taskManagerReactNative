@@ -9,11 +9,8 @@ import Button from "../../Button";
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { SignUpSchema } from "../../../utils/validation";
-
-interface ISignUpForm {
-  onSubmit: any;
-  style?: {};
-}
+// types
+import { IAuthForm, ISignUpFormData } from "../../../types";
 
 type FormData = {
   email: string;
@@ -21,12 +18,12 @@ type FormData = {
   passwordConfirm: string;
 };
 
-const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
-  const methods = useForm<FormData>({
-    validationSchema: SignUpSchema
+const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
+  const methods = useForm<ISignUpFormData>({
+    validationSchema: SignUpSchema,
   });
   const { control, handleSubmit } = methods;
-  const handleUserSubmit = data => {
+  const handleUserSubmit = (data) => {
     onSubmit(data);
   };
 
@@ -39,7 +36,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
           label="Email"
           control={control}
           name="email"
-          onChange={args => args[0].nativeEvent.text}
+          onChange={(args) => args[0].nativeEvent.text}
           rules={{ required: true }}
           defaultValue=""
         />
@@ -49,7 +46,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
           label="Password"
           control={control}
           name="password"
-          onChange={args => args[0].nativeEvent.text}
+          onChange={(args) => args[0].nativeEvent.text}
           defaultValue=""
         />
         <Controller
@@ -58,7 +55,7 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
           label="Repeat password"
           control={control}
           name="passwordConfirm"
-          onChange={args => args[0].nativeEvent.text}
+          onChange={(args) => args[0].nativeEvent.text}
           defaultValue=""
         />
 
@@ -70,8 +67,8 @@ const SignUpForm: React.FC<ISignUpForm> = ({ onSubmit, style }) => {
 
 const styles = StyleSheet.create({
   ipnut: {
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 });
 
 export default SignUpForm;

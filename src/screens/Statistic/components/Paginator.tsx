@@ -5,17 +5,13 @@ import { View, Text, StyleSheet } from "react-native";
 import IconButton from "../../../components/IconButton";
 // styles
 import Styles from "../../../assets/styles";
+// types
+import { IPaginatorProps } from "../../../types";
 
-interface IPaginator {
-  text: string;
-  onNextPress: () => void;
-  onPrevPress: () => void;
-}
-
-const Paginator: React.FC<IPaginator> = ({
+const Paginator: React.FC<IPaginatorProps> = ({
   text,
   onNextPress,
-  onPrevPress
+  onPrevPress,
 }) => (
   <View style={Styles.rowSpaceBetween}>
     <IconButton icon="prev" onPress={onPrevPress} />
@@ -25,7 +21,7 @@ const Paginator: React.FC<IPaginator> = ({
 );
 
 const styles = StyleSheet.create({
-  constainer: {}
+  constainer: {},
 });
 
 export default Paginator;

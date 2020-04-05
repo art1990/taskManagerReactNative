@@ -7,16 +7,10 @@ import Button from "../../../components/Button";
 // styles
 import Styles from "../../../assets/styles";
 import { Colors } from "../../../assets/styles/constants";
+// types
+import { ITagViewProps } from "../../../types";
 
-interface ITagView {
-  allTags: string[];
-  initialTags: string[];
-  Input?: React.FC<any>;
-  buttonText: string;
-  buttonAction: (arr: string[]) => void;
-}
-
-const TagView: React.FC<ITagView> = ({
+const TagView: React.FC<ITagViewProps> = ({
   allTags,
   initialTags,
   Input,

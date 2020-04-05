@@ -11,19 +11,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../../assets/styles/constants";
 // styles
 import Styles from "../../assets/styles";
+// types
+import { IWorkingTaskInfoProps } from "../../types";
 
-interface IWorkingTaskInfo {
-  title: string;
-  startTime: number;
-  duration: number;
-  onCreateTask: () => void;
-}
-
-const WorkingTaskInfo: React.FC<IWorkingTaskInfo> = ({
+const WorkingTaskInfo: React.FC<IWorkingTaskInfoProps> = ({
   title,
   startTime,
   duration,
-  onCreateTask
+  onCreateTask,
 }) => (
   <View style={[Styles.rowSpaceBetween, styles.container]}>
     <Text style={styles.title}>{title}</Text>
@@ -39,13 +34,13 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
 
-    backgroundColor: Colors.taskInfoBGColor
+    backgroundColor: Colors.taskInfoBGColor,
   },
   title: {
     fontWeight: "normal",
     fontSize: 14,
-    lineHeight: 21
-  }
+    lineHeight: 21,
+  },
 });
 
 export default WorkingTaskInfo;

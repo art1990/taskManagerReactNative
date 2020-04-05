@@ -11,11 +11,13 @@ import NavigationMessage from "../../../components/NavigationMessage";
 import { Routes } from "../../../navigation/routes";
 // styles
 import { StyleSheet, View } from "react-native";
+// types
+import { ILoginProps } from "../../../types";
 
-const SignUp: React.FC = ({ navigation }) => {
+const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const onSignUpPress = data => {
+  const onSignUpPress = (data) => {
     dispatch(register.request(data));
   };
 
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 24,
-    lineHeight: 28
-  }
+    lineHeight: 28,
+  },
 });
 
 export default SignUp;

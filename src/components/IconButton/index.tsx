@@ -11,47 +11,25 @@ import Edit from "../../assets/img/icons/pencil.svg";
 import Remove from "../../assets/img/icons/trash.svg";
 // constants
 import { Colors } from "../../assets/styles/constants";
+// types
+import { IMaterialIconProps, IIconButtonProps } from "../../types";
 
-interface IResumeIconButton {
-  size?: number;
-  icon:
-    | "edit"
-    | "resume"
-    | "remove"
-    | "pause"
-    | "cansel"
-    | "addTag"
-    | "prev"
-    | "next"
-    | "filter";
-  onPress: (id?) => void;
-  color?: string;
-  style?: {};
-}
-
-interface IMaterialIcon {
-  name: string;
-  color?: string;
-  width: number;
-  height: number;
-}
-
-const MaterialIcon: React.FC<IMaterialIcon> = ({
+const MaterialIcon: React.FC<IMaterialIconProps> = ({
   name,
   width,
   height,
   color,
 }) => <MaterialIcons name={name} size={width || height} color={color} />;
 
-const Pause: React.FC<IMaterialIcon> = (props) => (
+const Pause: React.FC<IMaterialIconProps> = (props) => (
   <MaterialIcon name="pause-circle-filled" {...props} />
 );
 
-const Cansel: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+const Cansel: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcons name="cancel" color={color || Colors.canselIcon} {...rest} />
 );
 
-const AddTag: React.FC<IMaterialIcon> = ({ width, height, color }) => (
+const AddTag: React.FC<IMaterialIconProps> = ({ width, height, color }) => (
   <MaterialCommunityIcons
     name="tag-plus"
     size={width || height}
@@ -59,7 +37,7 @@ const AddTag: React.FC<IMaterialIcon> = ({ width, height, color }) => (
   />
 );
 
-const Next: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+const Next: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon
     name="navigate-next"
     color={color || Colors.canselIcon}
@@ -67,7 +45,7 @@ const Next: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
   />
 );
 
-const Prev: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+const Prev: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon
     name="navigate-before"
     color={color || Colors.chartsNav}
@@ -75,11 +53,11 @@ const Prev: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
   />
 );
 
-const Filter: React.FC<IMaterialIcon> = ({ color, ...rest }) => (
+const Filter: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon name="filter-list" color={color} {...rest} />
 );
 
-const IconButton: React.FC<IResumeIconButton> = ({
+const IconButton: React.FC<IIconButtonProps> = ({
   size = 20,
   icon,
   style,

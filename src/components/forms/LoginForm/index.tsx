@@ -9,24 +9,15 @@ import Button from "../../Button";
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { LoginSchema } from "../../../utils/validation";
+// types
+import { IAuthForm, ILoginFormData } from "../../../types";
 
-interface ISignUpForm {
-  onSubmit: any;
-  style?: {};
-}
-
-type FormData = {
-  email: string;
-  password: string;
-  passwordConfirm: string;
-};
-
-const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
-  const methods = useForm<FormData>({
-    validationSchema: LoginSchema
+const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
+  const methods = useForm<ILoginFormData>({
+    validationSchema: LoginSchema,
   });
   const { control, handleSubmit } = methods;
-  const handleUserSubmit = data => {
+  const handleUserSubmit = (data) => {
     onSubmit(data);
   };
 
@@ -39,7 +30,7 @@ const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
           label="Email"
           control={control}
           name="email"
-          onChange={args => args[0].nativeEvent.text}
+          onChange={(args) => args[0].nativeEvent.text}
           rules={{ required: true }}
           defaultValue=""
         />
@@ -49,7 +40,7 @@ const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
           label="Password"
           control={control}
           name="password"
-          onChange={args => args[0].nativeEvent.text}
+          onChange={(args) => args[0].nativeEvent.text}
           defaultValue=""
         />
         <Button onPress={handleSubmit(handleUserSubmit)}>Login</Button>
@@ -60,8 +51,8 @@ const LoginForm: React.FC<ISignUpForm> = ({ style, onSubmit }) => {
 
 const styles = StyleSheet.create({
   ipnut: {
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 });
 
 export default LoginForm;

@@ -16,19 +16,15 @@ import Time from "../sections/Time";
 import { Colors } from "../../assets/styles/constants";
 // hooks
 import useTaskAction from "../../hooks/useTaskAction";
+// types
+import { ITaskViewProps } from "../../types";
 
-interface ITaskView {
-  task: any;
-  route: any;
-  navigation: any;
-}
-
-const ViewTask: React.FC<ITaskView> = ({ route }) => {
+const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { id } = route?.params;
   const {
     onEditPress,
     onResumePress,
-    onMarkAsCompletedPress
+    onMarkAsCompletedPress,
   } = useTaskAction();
 
   const task: any = useSelector(selectCurrentTaskData(id));
@@ -52,7 +48,7 @@ const ViewTask: React.FC<ITaskView> = ({ route }) => {
     endTime,
     duration,
     file,
-    isCompleted
+    isCompleted,
   } = task;
   return (
     <View style={styles.container}>
@@ -87,16 +83,16 @@ const ViewTask: React.FC<ITaskView> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   buttonContainer: {
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
   },
   buttonLabel: {
     fontSize: 12,
     lineHeight: 18,
-    color: Colors.error
-  }
+    color: Colors.error,
+  },
 });
 
 export default ViewTask;

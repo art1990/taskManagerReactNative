@@ -24,25 +24,20 @@ type FAILURE = typeof FAILURE;
 
 const statuses = [REQUEST, SUCCESS, FAILURE];
 
-export function createAction(
-  action: string,
-  payloadCreator = identity
-): {
+interface IAction {
   REQUEST?: string;
   SUCCESS?: string;
   FAILURE?: string;
-  request?: (payload?: any) => void;
-  success?: (payload?: any) => void;
-  failure?: (payload?: any) => void;
-} {
-  const actionMethods: {
-    REQUEST?: string;
-    SUCCESS?: string;
-    FAILURE?: string;
-    request?: () => void;
-    success?: () => void;
-    failure?: () => void;
-  } = {};
+  request?: (payload?: any) => { type: string; payload: any };
+  success?: (payload?: any) => { type: string; payload: any };
+  failure?: (payload?: any) => { type: string; payload: any };
+}
+
+export function createAction(
+  action: string,
+  payloadCreator = identity
+): IAction {
+  const actionMethods: IAction = {};
 
   // Allow a type prefix to be passed in
   statuses.map((status: REQUEST | SUCCESS | FAILURE): ((

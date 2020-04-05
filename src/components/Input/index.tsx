@@ -2,19 +2,8 @@
 import React from "react";
 import { StyleSheet, KeyboardTypeOptions, View, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
-// icons
-
-export interface IInputProps {
-  style?: {};
-  name: string;
-  value: string;
-  onChangeText?: (text: string) => void;
-  secureTextEntry?: boolean;
-  label?: string;
-  placeholder?: string;
-  placeholderColor?: string;
-  keyboardType?: KeyboardTypeOptions;
-}
+// types
+import { IInputProps } from "../../types";
 
 const Input: React.FC<IInputProps> = (
   {
@@ -48,8 +37,8 @@ const Input: React.FC<IInputProps> = (
         colors: {
           primary: "#979797",
           placeholder: placeholderColor || "rgba(0, 0, 0, 0.16)",
-          disabled: placeholderColor || "rgba(0, 0, 0, 0.16)"
-        }
+          disabled: placeholderColor || "rgba(0, 0, 0, 0.16)",
+        },
       }}
     />
   );
@@ -61,8 +50,8 @@ const styles = StyleSheet.create({
     height: 50,
     color: "#333",
     fontSize: 18,
-    fontWeight: "700"
-  }
+    fontWeight: "700",
+  },
 });
 
 export default React.forwardRef(Input);

@@ -5,15 +5,10 @@ import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
 // colors
 import { Colors } from "../../assets/styles/constants";
-// interface
-import { ITitle } from "../../components/Title/index";
+// types
+import { ITitleWithFilterProps } from "../../types";
 
-interface ITitleWithFilter extends ITitle {
-  onPressFilter?: () => void;
-  isHasTag: boolean;
-}
-
-const TitleWithFilter: React.FC<ITitleWithFilter> = ({
+const TitleWithFilter: React.FC<ITitleWithFilterProps> = ({
   onPressFilter,
   isHasTag,
   ...rest

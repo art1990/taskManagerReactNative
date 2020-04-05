@@ -5,17 +5,12 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import IconButton from "../IconButton";
 // constants
 import { Colors } from "../../assets/styles/constants";
+// types
+import { ITagProps } from "../../types";
 
-interface ITag {
-  text: string;
-  onDeletePress?: () => void;
-  style?: {};
-  setTags?: any;
-}
-
-const Tag: React.FC<ITag> = ({ text, onDeletePress, style, setTags }) => {
+const Tag: React.FC<ITagProps> = ({ text, onDeletePress, style, setTags }) => {
   const onAddThisTag = () => {
-    setTags(prevTags => [...prevTags, text]);
+    setTags((prevTags) => [...prevTags, text]);
   };
 
   return (
@@ -43,15 +38,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.taskInfoBGColor,
-    borderRadius: 15
+    borderRadius: 15,
   },
   text: {
     fontSize: 14,
-    lineHeight: 21
+    lineHeight: 21,
   },
   icon: {
-    marginLeft: 12
-  }
+    marginLeft: 12,
+  },
 });
 
 export default Tag;

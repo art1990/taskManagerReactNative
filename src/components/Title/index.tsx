@@ -7,17 +7,10 @@ import Button from "../Button";
 import { Colors } from "../../assets/styles/constants";
 // assets
 import Complete from "../../assets/img/icons/complete.svg";
+// types
+import { ITitleProps } from "../../types";
 
-export interface ITitle {
-  text: string;
-  buttonText?: string;
-  buttonAction?: () => void;
-  iconButtonList?: JSX.Element[];
-  isCompleted?: boolean;
-  children?: any;
-}
-
-const Title: React.FC<ITitle> = ({
+const Title: React.FC<ITitleProps> = ({
   text,
   buttonText,
   buttonAction,

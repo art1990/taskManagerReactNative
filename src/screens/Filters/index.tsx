@@ -12,11 +12,7 @@ import TagView from "../components/TagView";
 // styles
 import { Colors } from "../../assets/styles/constants";
 
-interface IFilters {
-  value: string[];
-}
-
-const Filters: React.FC<IFilters> = () => {
+const Filters: React.FC = () => {
   const { allTags, updateTagFilter } = useTags();
   const { filters, isLoading } = useSelector(selectMeta);
 

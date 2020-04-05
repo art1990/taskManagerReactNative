@@ -5,17 +5,10 @@ import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 // contsnts
 import { Colors } from "../../assets/styles/constants";
+// interfaces
+import { IButtonProps } from "../../types";
 
-interface ButtonProps {
-  onPress: () => void;
-  children: string;
-  color?: string;
-  labelStyle?: {};
-  style?: {};
-  mode?: any;
-}
-
-const CustomButton: React.FC<ButtonProps> = ({
+const CustomButton: React.FC<IButtonProps> = ({
   onPress,
   children,
   mode,
@@ -47,7 +40,7 @@ const CustomButton: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: "center"
+    alignSelf: "center",
   },
   text: {
     marginVertical: 22,
@@ -56,13 +49,13 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     fontSize: 16,
     lineHeight: 20,
-    color: Colors.white
+    color: Colors.white,
   },
   modeText: {
     marginVertical: 0,
     marginHorizontal: 0,
-    color: Colors.black
-  }
+    color: Colors.black,
+  },
 });
 
 export default CustomButton;

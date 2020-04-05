@@ -3,17 +3,13 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 // components
 import TaskField from "../../screens/components/TaskField";
+// types
+import { ITimeSectionProps } from "../../types";
 
-interface ITimeSection {
-  startTaskTime: number;
-  endTime: number;
-  duration: number;
-}
-
-const TimeSection: React.FC<ITimeSection> = ({
+const TimeSection: React.FC<ITimeSectionProps> = ({
   startTaskTime,
   endTime,
-  duration
+  duration,
 }) => (
   <>
     <View style={styles.timeSection}>
@@ -28,8 +24,8 @@ const styles = StyleSheet.create({
   timeSection: {
     flexDirection: "row",
     flex: 0,
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+  },
 });
 
 export default TimeSection;

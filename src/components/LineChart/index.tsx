@@ -5,18 +5,8 @@ import { Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window").width;
 // utils
 import { generateWeekForTime, IWeekData } from "../../utils/date";
-// interface
-
-export interface IWeeksList {
-  weeksList?: {
-    startTaskTime: number;
-    duration: number;
-    id: string;
-    endTime: number;
-  }[];
-  weekData: IWeekData;
-  suffixY?: string;
-}
+// types
+import { IWeeksList } from "../../types";
 
 const chartConfig = {
   backgroundColor: "red",
@@ -26,20 +16,20 @@ const chartConfig = {
   color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, 0.4)`,
   style: {
-    borderRadius: 0
+    borderRadius: 0,
   },
   propsForDots: {
     r: "6",
     strokeWidth: "2",
-    stroke: "rgba(0, 0, 0, .4)"
-  }
+    stroke: "rgba(0, 0, 0, .4)",
+  },
 };
 
 const LineChart: React.FC<IWeeksList> = ({ weekData, suffixY = "" }) => {
   const { labels, data } = weekData;
   const dataForChart = {
     labels,
-    datasets: [{ data, strokeWidth: 2 }]
+    datasets: [{ data, strokeWidth: 2 }],
   };
   return (
     <Chart
@@ -52,7 +42,7 @@ const LineChart: React.FC<IWeeksList> = ({ weekData, suffixY = "" }) => {
       chartConfig={chartConfig}
       style={{
         marginVertical: 8,
-        borderRadius: 16
+        borderRadius: 16,
       }}
     />
   );
