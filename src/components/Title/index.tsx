@@ -12,13 +12,14 @@ import { ITitleProps } from "../../types";
 
 const Title: React.FC<ITitleProps> = ({
   text,
+  style,
   buttonText,
   buttonAction,
   iconButtonList,
   isCompleted,
   children,
 }) => (
-  <View style={styles.container}>
+  <View style={[styles.container, style]}>
     <View style={styles.labaleWithButtoncontainer}>
       <Text style={styles.text}>{text}</Text>
       {children}
@@ -38,6 +39,7 @@ const Title: React.FC<ITitleProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 16,
     flex: 0,
     flexDirection: "row",
     justifyContent: "space-between",

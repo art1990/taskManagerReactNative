@@ -30,35 +30,72 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
     : "start: " + formatToUTCTime(startTaskTime);
 
   return (
-    <TouchableOpacity onPress={toView}>
+    <TouchableOpacity
+      onPress={toView}
+      style={{ marginLeft: -50, overflow: "visible" }}
+    >
       <View style={[Styles.rowSpaceBetween, styles.container, style]}>
-        <View style={Styles.rowSpaceBetween}>
+        <View style={styles.background} />
+        <View style={[Styles.rowSpaceBetween, styles.titleWithProjectSection]}>
           <Text>title: {title} </Text>
           <Text>project: {project}</Text>
         </View>
-        <Text> {timeText}</Text>
-        {isCompleted ? (
-          <Completed width={size} height={size} />
-        ) : (
-          isPaused && (
-            <IconButton
-              icon={() => <Resume width={size} heigth={size} />}
-              onPress={onResumePress}
-            />
-          )
-        )}
+        <View style={styles.durationWithIconSection}>
+          <Text> {timeText}</Text>
+          {isCompleted ? (
+            <Completed width={size} height={size} />
+          ) : (
+            isPaused && (
+              <IconButton
+                icon={() => <Resume width={size} heigth={size} />}
+                onPress={onResumePress}
+                style={styles.button}
+              />
+            )
+          )}
+        </View>
       </View>
+      <View
+        style={{
+          left: 0,
+          height: 50,
+          width: "100%",
+          paddingHorizontal: 0,
+          paddingVertical: 0,
+          backgroundColor: "red",
+        }}
+      ></View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15,
+    height: 50,
+    backgroundColor: "grey",
+  },
+  button: {
+    position: "absolute",
+    right: -13,
   },
   iconContainer: {
     flexDirection: "row",
     flex: 0,
+  },
+  durationWithIconSection: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  titleWithProjectSection: {
+    width: "60%",
+    overflow: "hidden",
+  },
+
+  background: {
+    backgroundColor: "black",
+    height: 50,
   },
 });
 

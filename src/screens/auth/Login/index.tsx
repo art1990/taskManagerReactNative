@@ -12,6 +12,8 @@ import NavigationMessage from "../../../components/NavigationMessage";
 import { Routes } from "../../../navigation/routes";
 // types
 import { ILoginProps } from "../../../types";
+// styles
+import Styles from "../../../assets/styles";
 
 const Login: React.FC<ILoginProps> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -25,7 +27,7 @@ const Login: React.FC<ILoginProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[Styles.authWrapper, Styles.authContainer]}>
       <Title text="Sign in" />
       <LoginForm onSubmit={onLoginPress} />
       <NavigationMessage
@@ -36,9 +38,5 @@ const Login: React.FC<ILoginProps> = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 export default Login;

@@ -23,6 +23,8 @@ import { useAuth } from "../../hooks/useAuth";
 import useTaskAction from "../../hooks/useTaskAction";
 // routes
 import { Routes } from "../../navigation/routes";
+// styles
+import Styles from "../../assets/styles";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -65,7 +67,13 @@ export default ({ navigation }) => {
 
   const { startTime, duration, title } = taskData;
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        Styles.wrapper,
+        styles.container,
+        !tasksList && Styles.columnSpaceBetween,
+      ]}
+    >
       <TitleWithFilter
         text="Tasks"
         buttonText="Log out"
@@ -125,13 +133,14 @@ export default ({ navigation }) => {
                 onCreateTask={onPausePress}
               />
             ) : (
-              <>
-                <Button onPress={toAddTask}>Add task</Button>
-              </>
+              <Button onPress={toAddTask}>Add task</Button>
             )}
           </>
         ) : (
-          <GenerateListOfTask />
+          <>
+            <GenerateListOfTask />
+            <Button onPress={toAddTask}>Add task</Button>
+          </>
         ))}
     </View>
   );

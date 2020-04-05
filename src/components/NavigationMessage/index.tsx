@@ -21,6 +21,7 @@ const NavigationMessage: React.FC<INavigationMessage> = ({
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 44,
     flexDirection: "row",
     flex: 0,
     justifyContent: "center",

@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import { StyleSheet, View } from "react-native";
 // redux
 import { useDispatch } from "react-redux";
 import { register } from "../../../redux/user/index";
@@ -10,7 +11,7 @@ import NavigationMessage from "../../../components/NavigationMessage";
 // navigate
 import { Routes } from "../../../navigation/routes";
 // styles
-import { StyleSheet, View } from "react-native";
+import Styles from "../../../assets/styles";
 // types
 import { ILoginProps } from "../../../types";
 
@@ -26,7 +27,7 @@ const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[Styles.authWrapper, Styles.authContainer]}>
       <Title text="Sign-up" />
       <SignUpForm onSubmit={onSignUpPress} />
       <NavigationMessage
@@ -39,7 +40,6 @@ const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
   title: {
     fontWeight: "bold",
     fontSize: 24,

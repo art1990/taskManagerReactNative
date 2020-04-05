@@ -11,6 +11,8 @@ import AddTags from "../screens/AddTags";
 import Filters from "../screens/Filters";
 // constants
 import { Routes } from "./routes";
+// styles
+import { headerStyle } from "./styles";
 
 const TaskStack = createStackNavigator();
 
@@ -18,7 +20,8 @@ const TaskStackScreen = () => (
   <TaskStack.Navigator
     initialRouteName={Routes.TASKS_LIST}
     screenOptions={{
-      gestureEnabled: true
+      headerStyle,
+      gestureEnabled: true,
     }}
   >
     <TaskStack.Screen name={Routes.TASKS_LIST} component={TasksList} />

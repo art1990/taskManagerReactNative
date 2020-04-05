@@ -8,11 +8,16 @@ import Login from "../screens/auth/Login";
 import SignUp from "../screens/auth/SignUp";
 // constants
 import { Routes } from "./routes";
+// styles
+import { headerStyle } from "./styles";
 
 const AuthStack = createStackNavigator();
 
 const AuthStackScreen = () => (
-  <AuthStack.Navigator initialRouteName={Routes.LOGIN}>
+  <AuthStack.Navigator
+    initialRouteName={Routes.LOGIN}
+    screenOptions={{ headerStyle }}
+  >
     <AuthStack.Screen name={Routes.LOGIN} component={Login} />
     <AuthStack.Screen name={Routes.SIGNUP} component={SignUp} />
   </AuthStack.Navigator>
