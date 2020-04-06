@@ -65,7 +65,9 @@ const TagView: React.FC<ITagViewProps> = ({
           <Tag key={i} text={el} style={styles.tag} setTags={setTags} />
         ))}
       </View>
-      <Button onPress={() => buttonAction(tags)}>{buttonText}</Button>
+      <Button style={styles.button} onPress={() => buttonAction(tags)}>
+        {buttonText}
+      </Button>
     </>
   );
 };
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
   tag: {
     marginHorizontal: 7,
     marginVertical: 18,
+  },
+  button: {
+    marginTop: "auto",
   },
 });
 

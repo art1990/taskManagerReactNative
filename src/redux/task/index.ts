@@ -155,16 +155,16 @@ export default produce(
         return failure();
 
       case getList.REQUEST:
-        draft.meta.isLoadingTaskList = true;
+        draft.meta.isLoading = true;
         return;
       case getList.SUCCESS:
         draft.tasksList = payload.tasksList;
-        draft.meta.isLoadingTaskList = false;
+        draft.meta.isLoading = false;
         draft.meta.lastVisible = payload.lastVisible;
         draft.meta.tasksCount = payload.tasksCount;
         return;
       case getList.FAILURE:
-        draft.meta.isLoadingTaskList = false;
+        draft.meta.isLoading = false;
         draft.meta.error = payload;
         return;
 

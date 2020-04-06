@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
+// styles
+import Styles from "../../assets/styles";
 // types
 import { ICreateTaskProps } from "../../types";
 
@@ -23,7 +25,7 @@ const CreateTask: React.FC<ICreateTaskProps> = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={[Styles.wrapper]}>
       <Title text="New Task" />
       <TaskForm onSubmit={onStartTask} />
     </View>

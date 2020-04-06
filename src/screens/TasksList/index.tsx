@@ -90,7 +90,7 @@ export default ({ navigation }) => {
     return <Spinner />;
   };
 
-  const isLoader = isLoadingTaskList || isLoadingIncomplete || !isMounted;
+  const isLoader = isLoading|| isLoadingIncomplete || !isMounted;
   const { startTime, duration, title } = taskData;
   return (
     <View
@@ -116,7 +116,7 @@ export default ({ navigation }) => {
             data={tasksList}
             keyExtractor={(item) => item.id}
             onEndReached={loadMore}
-            onEndReachedThreshold={0.01}
+            onEndReachedThreshold={0.001}
             ListFooterComponent={renderFooter}
             renderItem={(el: { item: ITaskState["taskData"] }) => {
               const {

@@ -12,10 +12,11 @@ import Button from "../../components/Button";
 import Dialog from "../../components/Dialog";
 // sections
 import Time from "../sections/Time";
-// constants
-import { Colors } from "../../assets/styles/constants";
 // hooks
 import useTaskAction from "../../hooks/useTaskAction";
+// assets
+import Styles from "../../assets/styles";
+import { Colors } from "../../assets/styles/constants";
 // types
 import { ITaskViewProps } from "../../types";
 
@@ -51,28 +52,37 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
     isCompleted,
   } = task;
   return (
-    <View style={styles.container}>
-      <Title
-        text="Task"
-        iconButtonList={iconButtonList}
-        isCompleted={isCompleted}
-      />
-      <TaskField title="Title" text={title} />
-      <TaskField title="Project" text={project} />
-      <Time
-        startTaskTime={startTaskTime}
-        endTime={endTime}
-        duration={duration}
-      />
-      {file && <TaskField title="Added file" text={file.name} />}
-      <Button
-        mode="text"
-        style={styles.buttonContainer}
-        labelStyle={styles.buttonLabel}
-        onPress={onRemovePress}
-      >
-        Delete task
-      </Button>
+    <View
+      style={[
+        Styles.wrapper,
+        styles.container,
+        !isCompleted && styles.spaceBetween,
+      ]}
+    >
+      <View>
+        <Title
+          text="Task"
+          iconButtonList={iconButtonList}
+          isCompleted={isCompleted}
+        />
+
+        <TaskField title="Title" text={title} />
+        <TaskField title="Project" text={project} />
+        <Time
+          startTaskTime={startTaskTime}
+          endTime={endTime}
+          duration={duration}
+        />
+        {file && <TaskField title="Added file" text={file.name} />}
+        <Button
+          mode="text"
+          style={styles.buttonContainer}
+          labelStyle={styles.buttonLabel}
+          onPress={onRemovePress}
+        >
+          Delete task
+        </Button>
+      </View>
       {!isCompleted && (
         <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>
       )}
@@ -84,6 +94,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+    backgroundColor: Colors.white,
+  },
+  spaceBetween: {
+    justifyContent: "space-between",
   },
   buttonContainer: {
     alignSelf: "flex-start",

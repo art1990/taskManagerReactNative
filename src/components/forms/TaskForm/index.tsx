@@ -74,47 +74,66 @@ const TaskForm: React.FC<ITaskForm> = ({
   };
   const buttonText = `${isEditing ? "Update" : "Start"} task`;
   return (
-    <View style={style}>
+    <View style={[styles.container, style]}>
       <FormContext {...methods}>
-        <Controller
-          as={FormInput}
-          style={styles.ipnut}
-          label="Title"
-          name="title"
-          onChange={onChange}
-          rules={{ required: true }}
-        />
-        <Controller
-          as={FormInput}
-          style={styles.ipnut}
-          label="Project"
-          control={control}
-          name="project"
-          onChange={onChange}
-          rules={{ required: true }}
-        />
-        {children || null}
-        {!name ? (
-          <FileUploaderInput
-            style={styles.ipnut}
-            label="Add file"
-            name="file"
-            onBlur={fileHandleChange}
+        <View>
+          <Controller
+            as={FormInput}
+            style={styles.input}
+            label="Title"
+            name="title"
+            onChange={onChange}
+            rules={{ required: true }}
           />
-        ) : (
-          <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
-        )}
-        <Controller as={TagInput} name="tags" tags={tags} />
-
-        <Button onPress={handleSubmit(handleUserSubmit)}>{buttonText}</Button>
+          <Controller
+            as={FormInput}
+            style={styles.input}
+            label="Project"
+            control={control}
+            name="project"
+            onChange={onChange}
+            rules={{ required: true }}
+          />
+          {children || null}
+          <Controller
+            as={TagInput}
+            style={styles.input}
+            name="tags"
+            tags={tags}
+          />
+          {!name ? (
+            <FileUploaderInput
+              style={[styles.input, styles.fileLoader]}
+              label="Add file"
+              name="file"
+              onBlur={fileHandleChange}
+            />
+          ) : (
+            <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
+          )}
+        </View>
+        <Button style={styles.button} onPress={handleSubmit(handleUserSubmit)}>
+          {buttonText}
+        </Button>
       </FormContext>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  ipnut: {
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  input: {
     marginBottom: 20,
+  },
+  fileLoader: {
+    marginTop: 15,
+  },
+  button: {
+    marginTop: "auto",
   },
 });
 

@@ -5,7 +5,7 @@ import { View, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectTaskFormData,
-  selectCurrentTaskData
+  selectCurrentTaskData,
 } from "../../redux/task/selectors";
 import { update, remove } from "../../redux/task";
 // components
@@ -15,6 +15,9 @@ import TaskForm from "../../components/forms/TaskForm";
 import Time from "../sections/Time";
 // routes
 import { Routes } from "../../navigation/routes";
+// styles
+import Styles from "../../assets/styles";
+import styles from "../../assets/styles";
 
 export default ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -26,10 +29,10 @@ export default ({ route, navigation }) => {
     endTime,
     duration,
     isCompleted,
-    isPaused
+    isPaused,
   } = useSelector(selectCurrentTaskData(id));
 
-  const onUpdateTask = data => {
+  const onUpdateTask = (data) => {
     dispatch(update.request({ ...data, id }));
     navigation.navigate(Routes.TASKS_LIST);
   };
@@ -42,17 +45,17 @@ export default ({ route, navigation }) => {
   const timeProps = { startTaskTime, endTime, duration };
 
   return (
-    <ScrollView>
-      <View>
-        <Title
-          text="Edit task"
-          buttonText="Delete task"
-          buttonAction={removeTaskAndNavigate}
-        />
+    <View style={styles.wrapper}>
+      <Title
+        text="Edit task"
+        buttonText="Delete task"
+        buttonAction={removeTaskAndNavigate}
+      />
+      <ScrollView>
         <TaskForm isEditing formData={formData} onSubmit={onUpdateTask}>
           <Time {...timeProps} />
         </TaskForm>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };

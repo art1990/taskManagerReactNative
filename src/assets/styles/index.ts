@@ -17,7 +17,6 @@ export default StyleSheet.create({
 
   wrapper: {
     position: "relative",
-    overflow: "visible",
     paddingBottom: 25,
     flex: 1,
     flexDirection: "column",

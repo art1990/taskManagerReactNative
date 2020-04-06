@@ -19,10 +19,14 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     dispatch(updateCurrentTags.run(tags));
   };
 
-  const addTags = tagsData => {
+  const addTags = (tagsData) => {
     setTags(tagsData);
 
     navigation.goBack();
+  };
+
+  const removeTag = (index) => {
+    setTags(current.filter((_, i) => index !== i));
   };
 
   const updateTagFilter = (filters = []) => {
@@ -40,5 +44,12 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     setValue && setValue("tags", current);
   }, [current]);
 
-  return { allTags: all, tags: current, setTags, addTags, updateTagFilter };
+  return {
+    allTags: all,
+    tags: current,
+    setTags,
+    addTags,
+    removeTag,
+    updateTagFilter,
+  };
 };

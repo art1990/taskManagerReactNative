@@ -156,6 +156,7 @@ export interface IInfoAndRemoveFile {
 
 export interface ITagInput {
   tags?: string[];
+  style?: {};
 }
 
 // screens

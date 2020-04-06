@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "flex-start",
     paddingHorizontal: 8,
+    marginHorizontal: 8,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.taskInfoBGColor,

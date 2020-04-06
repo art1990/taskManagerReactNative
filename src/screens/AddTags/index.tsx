@@ -9,12 +9,16 @@ import TagView from "../components/TagView";
 import AddTagInput from "./AddTagInput";
 // styles
 import { Colors } from "../../assets/styles/constants";
+import Styles from "../../assets/styles";
 
 const AddTags: React.FC = () => {
   const { allTags, tags: initialTags, addTags } = useTags();
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={[Styles.wrapper, styles.container]}
+      contentContainerStyle={{ flex: 1 }}
+    >
       <Title text="Add tags" />
       <TagView
         allTags={allTags}
@@ -28,16 +32,9 @@ const AddTags: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  currenTagContainer: {
-    marginBottom: 10,
-  },
-  line: {
-    borderBottomColor: Colors.line,
-    borderBottomWidth: 1,
-  },
-  tag: {
-    marginHorizontal: 7,
-    marginVertical: 18,
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
   },
 });
 

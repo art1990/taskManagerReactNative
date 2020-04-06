@@ -21,7 +21,7 @@ const CustomButton: React.FC<IButtonProps> = ({
 
   const textStyle = [styles.text, isText && styles.modeText, labelStyle];
 
-  const containerStyle = [isText && styles.container];
+  const containerStyle = [isText && styles.container, style];
 
   return (
     <Button
