@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout, initialize } from "../../redux/user";
-import { getIncomplete, getList } from "../../redux/task";
+import { getIncomplete, getList, getMoreList } from "../../redux/task";
 import {
   selectTaskData,
   selectTasksList,
@@ -18,9 +18,11 @@ import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import TitleWithFilter from "../sections/TitleWithFilter";
 import GenerateListOfTask from "./GenerateListOfTask";
+import Spinner from "../../components/Spinner";
 // hooks
 import { useAuth } from "../../hooks/useAuth";
 import useTaskAction from "../../hooks/useTaskAction";
+import useIsMounted from "../../hooks/useIsMounted";
 // routes
 import { Routes } from "../../navigation/routes";
 // styles
@@ -33,7 +35,15 @@ export default ({ navigation }) => {
   const { user } = useAuth();
   const taskData = useSelector(selectTaskData);
   const tasksList = useSelector(selectTasksList);
-  const { isLoading, isLoadingIncomplete, filters } = useSelector(selectMeta);
+  const {
+    isLoading,
+    isLoadingIncomplete,
+    filters,
+    lastVisible,
+    isLoadingTaskList,
+    limit,
+    tasksCount,
+  } = useSelector(selectMeta);
   const {
     onEditPress,
     onResumePress,
@@ -41,6 +51,7 @@ export default ({ navigation }) => {
     onPausePress,
     toFilters,
   } = useTaskAction();
+  const isMounted = useIsMounted();
 
   const dispatch = useDispatch();
 
@@ -52,7 +63,7 @@ export default ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getList.request(filters));
+      dispatch(getList.request({ filters, limit }));
     }, [user, filters])
   );
 
@@ -68,6 +79,18 @@ export default ({ navigation }) => {
     navigation.navigate(Routes.VIEW_TASK, { id });
   };
 
+  const loadMore = () => {
+    tasksList.length < tasksCount &&
+      dispatch(getMoreList.request({ filters, lastVisible, limit }));
+  };
+
+  const renderFooter = () => {
+    if (!isLoadingTaskList) return null;
+
+    return <Spinner />;
+  };
+
+  const isLoader = isLoadingTaskList || isLoadingIncomplete || !isMounted;
   const { startTime, duration, title } = taskData;
   return (
     <View
@@ -84,78 +107,82 @@ export default ({ navigation }) => {
         onPressFilter={toFilters}
         isHasTag={!!filters}
       />
-      {!isLoading &&
-        !isLoadingIncomplete &&
-        (tasksList ? (
-          <>
-            <FlatList
-              style={Styles.fullScreen}
-              data={tasksList}
-              renderItem={(el: { item: ITaskState["taskData"] }) => {
-                const {
-                  title,
-                  project,
-                  duration,
-                  startTaskTime,
-                  isPaused,
-                  isCompleted,
-                  id,
-                  file,
-                } = el.item;
+      {isLoader ? (
+        <Spinner />
+      ) : tasksList ? (
+        <>
+          <FlatList
+            style={Styles.fullScreen}
+            data={tasksList}
+            keyExtractor={(item) => item.id}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.01}
+            ListFooterComponent={renderFooter}
+            renderItem={(el: { item: ITaskState["taskData"] }) => {
+              const {
+                title,
+                project,
+                duration,
+                startTaskTime,
+                isPaused,
+                isCompleted,
+                id,
+                file,
+              } = el.item;
 
-                if (taskData?.id === el.item.id) {
-                  const props = {
-                    title,
-                    project,
-                    startTaskTime,
-                    isPaused,
-                    style: { backgroundColor: Colors.taskInfoBGColorActive },
-                  };
-                  return <TaskInfo {...props} />;
-                }
-
+              if (taskData?.id === id) {
                 const props = {
                   title,
                   project,
-                  duration,
+                  startTaskTime,
                   isPaused,
-                  isCompleted,
+                  style: { backgroundColor: Colors.taskInfoBGColorActive },
                 };
+                return <TaskInfo {...props} />;
+              }
 
-                return (
-                  <TaskSwipeableInfo
-                    key={id}
-                    {...props}
-                    onRemovePress={() => {
-                      onRemovePress(id, file?.uri);
-                    }}
-                    onEditPress={() => {
-                      onEditPress(id);
-                    }}
-                    onResumePress={() => onResumePress(el.item)}
-                    toView={() => toView(el.item)}
-                  />
-                );
-              }}
+              const props = {
+                title,
+                project,
+                duration,
+                isPaused,
+                isCompleted,
+              };
+
+              return (
+                <TaskSwipeableInfo
+                  key={id}
+                  {...props}
+                  onRemovePress={() => {
+                    onRemovePress(id, file?.uri);
+                  }}
+                  onEditPress={() => {
+                    onEditPress(id);
+                  }}
+                  onResumePress={() => onResumePress(el.item)}
+                  toView={() => toView(el.item)}
+                />
+              );
+            }}
+          />
+
+          {startTime ? (
+            <WorkingTaskInfo
+              title={title}
+              startTime={startTime}
+              duration={duration}
+              onCreateTask={onPausePress}
             />
-
-            {startTime ? (
-              <WorkingTaskInfo
-                title={title}
-                startTime={startTime}
-                duration={duration}
-                onCreateTask={onPausePress}
-              />
-            ) : (
-              <Button onPress={toAddTask}>Add task</Button>
-            )}
-          </>
-        ) : (
-          <>
-            <GenerateListOfTask />
+          ) : (
             <Button onPress={toAddTask}>Add task</Button>
-          </>
-        ))}
+          )}
+        </>
+      ) : (
+        <>
+          <GenerateListOfTask />
+          <Button onPress={toAddTask}>Add task</Button>
+        </>
+      )}
     </View>
   );
 };

@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
     backgroundColor: Colors.taskInfoBGColor,
-    position: "absolute",
-    bottom: 0,
-    width: vw(100),
     paddingHorizontal,
+    position: "relative",
+    marginBottom: -25,
+    marginHorizontal: -paddingHorizontal,
   },
   button: {
     marginRight: -5,

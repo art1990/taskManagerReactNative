@@ -7,12 +7,20 @@ import {
   update,
   getIncomplete,
   getList,
+  getMoreList,
   getTags,
 } from ".";
 import { selectUser } from "../user/selectors";
 import { initialize } from "../user";
 // saga
-import { takeEvery, take, call, select, put } from "redux-saga/effects";
+import {
+  takeEvery,
+  takeLatest,
+  take,
+  call,
+  select,
+  put,
+} from "redux-saga/effects";
 // api
 import {
   initializeVariableToApiService,
@@ -26,6 +34,7 @@ import {
   getIncompleteTaskApi,
   getTaskListApi,
   getTagsApi,
+  getMoreTasksListApi,
 } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
@@ -111,6 +120,10 @@ function* getTasksList({ payload }) {
   yield apiHandler({ api: getTaskListApi, argApi: payload }, getList);
 }
 
+function* getMoreTasksList({ payload }) {
+  yield apiHandler({ api: getMoreTasksListApi, argApi: payload }, getMoreList);
+}
+
 function* getTagsList() {
   yield apiHandler({ api: getTagsApi }, getTags);
 }
@@ -124,5 +137,6 @@ export default function* watchTask() {
   yield takeEvery(update.REQUEST, updateTask);
   yield takeEvery(getIncomplete.REQUEST, getIncompleteTask);
   yield takeEvery(getList.REQUEST, getTasksList);
+  yield takeLatest(getMoreList.REQUEST, getMoreTasksList);
   yield takeEvery(getTags.REQUEST, getTagsList);
 }

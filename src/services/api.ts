@@ -142,21 +142,32 @@ export const getIncompleteTaskApi = async () => {
   return taskData;
 };
 
-export const getTaskListApi = async (filters) => {
+export const getTaskListApi = async ({ filters, lastVisible, limit }) => {
   const orderedTasksListCol = await tasksListCol.orderBy("timestamp");
-
+  const { size } = await tasksListCol.get();
   const tasksListCollection = filters
     ? await orderedTasksListCol
         .where("tags", "array-contains-any", filters)
+        .startAfter(lastVisible || true)
+        .limit(limit)
         .get()
-    : await orderedTasksListCol.get();
+    : await orderedTasksListCol
+        .startAfter(lastVisible || true)
+        .limit(limit)
+        .get();
+
+  const snapshot =
+    tasksListCollection.docs[tasksListCollection.docs.length - 1];
 
   const data = await tasksListCollection.docs.map((doc) => doc.data());
 
   const tasksList = data.length > 0 ? data : null;
 
-  return tasksList;
+  return { tasksList, lastVisible: snapshot, tasksCount: size };
 };
+
+export const getMoreTasksListApi = async ({ filters, lastVisible, limit }) =>
+  await getTaskListApi({ filters, lastVisible, limit });
 
 // tags
 export const getTagsApi = async () => {

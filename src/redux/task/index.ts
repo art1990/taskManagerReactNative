@@ -4,6 +4,7 @@ import actionCreator, { createAction } from "../utils/actionCreator";
 import produce, { Draft } from "immer";
 // utils
 import { updateTasksList } from "../utils/reducer";
+import { TabRouter } from "@react-navigation/native";
 
 // action types
 const PAUSE = "taskManager/task/pause";
@@ -20,6 +21,9 @@ type GET_INCOMPLETE = typeof GET_INCOMPLETE;
 
 const GET_LIST = "taskManager/task/getList";
 type GET_LIST = typeof GET_LIST;
+
+const GET_MORE_LIST = "taskManager/task/getMoreList";
+type GET_MORE_LIST = typeof GET_MORE_LIST;
 
 const CREATE = "taskManager/task/create";
 type CREATE = typeof CREATE;
@@ -42,6 +46,7 @@ export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
 export const getIncomplete = createAction(GET_INCOMPLETE);
 export const getList = createAction(GET_LIST);
+export const getMoreList = createAction(GET_MORE_LIST);
 export const create = createAction(CREATE);
 export const resume = createAction(RESUME);
 export const getTags = createAction(GET_TAGS);
@@ -67,8 +72,12 @@ export interface ITaskState {
   meta: {
     isLoading: boolean;
     isLoadingIncomplete: boolean;
+    isLoadingTaskList: boolean;
     error: null | {};
     filters: string[];
+    lastVisible: any;
+    limit: number;
+    tasksCount: number;
   };
 }
 
@@ -90,8 +99,12 @@ const initialState: ITaskState = {
   meta: {
     isLoading: false,
     isLoadingIncomplete: false,
+    isLoadingTaskList: false,
     error: null,
     filters: null,
+    lastVisible: null,
+    limit: 7,
+    tasksCount: null,
   },
 };
 
@@ -142,13 +155,30 @@ export default produce(
         return failure();
 
       case getList.REQUEST:
-        return request();
+        draft.meta.isLoadingTaskList = true;
+        return;
       case getList.SUCCESS:
-        draft.tasksList = payload;
-        draft.meta.isLoading = false;
+        draft.tasksList = payload.tasksList;
+        draft.meta.isLoadingTaskList = false;
+        draft.meta.lastVisible = payload.lastVisible;
+        draft.meta.tasksCount = payload.tasksCount;
         return;
       case getList.FAILURE:
-        return failure();
+        draft.meta.isLoadingTaskList = false;
+        draft.meta.error = payload;
+        return;
+
+      case getMoreList.REQUEST:
+        draft.meta.isLoadingTaskList = true;
+        return;
+      case getMoreList.SUCCESS:
+        draft.meta.isLoading = false;
+        draft.meta.lastVisible = payload.lastVisible;
+        draft.tasksList = [...draft.tasksList, ...payload.tasksList];
+      case getMoreList.FAILURE:
+        draft.meta.isLoadingTaskList = false;
+        draft.meta.error = payload;
+        return;
 
       case create.REQUEST:
         return request();
