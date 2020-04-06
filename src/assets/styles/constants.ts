@@ -12,9 +12,10 @@ export enum Colors {
   button = "#979797",
   canselIcon = "#000000",
 
+  taskInfoBGColorActive = "#E9E5E5",
   taskInfoBGColor = "#E9E5E5",
 
   line = "#D8D8D8",
 
-  chartsNav = "rgba(0, 0, 0, 0.4)"
+  chartsNav = "rgba(0, 0, 0, 0.4)",
 }

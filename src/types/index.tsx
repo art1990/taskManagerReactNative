@@ -118,6 +118,7 @@ export interface IWorkingTaskInfoProps {
   startTime: number;
   duration: number;
   onCreateTask: () => void;
+  style?: {};
 }
 
 // forms

@@ -1,6 +1,6 @@
 // react
 import React, { useCallback, useEffect } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +25,9 @@ import useTaskAction from "../../hooks/useTaskAction";
 import { Routes } from "../../navigation/routes";
 // styles
 import Styles from "../../assets/styles";
+import { Colors } from "../../assets/styles/constants";
+// types
+import { ITaskState } from "../../redux/task";
 
 export default ({ navigation }) => {
   const { user } = useAuth();
@@ -85,8 +88,10 @@ export default ({ navigation }) => {
         !isLoadingIncomplete &&
         (tasksList ? (
           <>
-            <ScrollView>
-              {tasksList.map((el) => {
+            <FlatList
+              style={Styles.fullScreen}
+              data={tasksList}
+              renderItem={(el: { item: ITaskState["taskData"] }) => {
                 const {
                   title,
                   project,
@@ -96,10 +101,17 @@ export default ({ navigation }) => {
                   isCompleted,
                   id,
                   file,
-                } = el;
-                if (taskData?.id === id) {
-                  const props = { title, project, startTaskTime, isPaused };
-                  return <TaskInfo key={id} {...props} />;
+                } = el.item;
+
+                if (taskData?.id === el.item.id) {
+                  const props = {
+                    title,
+                    project,
+                    startTaskTime,
+                    isPaused,
+                    style: { backgroundColor: Colors.taskInfoBGColorActive },
+                  };
+                  return <TaskInfo {...props} />;
                 }
 
                 const props = {
@@ -109,6 +121,7 @@ export default ({ navigation }) => {
                   isPaused,
                   isCompleted,
                 };
+
                 return (
                   <TaskSwipeableInfo
                     key={id}
@@ -119,12 +132,13 @@ export default ({ navigation }) => {
                     onEditPress={() => {
                       onEditPress(id);
                     }}
-                    onResumePress={() => onResumePress(el)}
-                    toView={() => toView(el)}
+                    onResumePress={() => onResumePress(el.item)}
+                    toView={() => toView(el.item)}
                   />
                 );
-              })}
-            </ScrollView>
+              }}
+            />
+
             {startTime ? (
               <WorkingTaskInfo
                 title={title}

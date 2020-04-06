@@ -5,9 +5,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 // utils
 import { formatToUTCTime } from "../../utils/date";
-// styles
-import Styles from "../../assets/styles";
 // assets
+import Styles, { paddingHorizontal } from "../../assets/styles";
 import Completed from "../../assets/img/icons/complete.svg";
 import Resume from "../../assets/img/icons/resume.svg";
 // types
@@ -30,12 +29,8 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
     : "start: " + formatToUTCTime(startTaskTime);
 
   return (
-    <TouchableOpacity
-      onPress={toView}
-      style={{ marginLeft: -50, overflow: "visible" }}
-    >
+    <TouchableOpacity onPress={toView}>
       <View style={[Styles.rowSpaceBetween, styles.container, style]}>
-        <View style={styles.background} />
         <View style={[Styles.rowSpaceBetween, styles.titleWithProjectSection]}>
           <Text>title: {title} </Text>
           <Text>project: {project}</Text>
@@ -55,16 +50,6 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
           )}
         </View>
       </View>
-      <View
-        style={{
-          left: 0,
-          height: 50,
-          width: "100%",
-          paddingHorizontal: 0,
-          paddingVertical: 0,
-          backgroundColor: "red",
-        }}
-      ></View>
     </TouchableOpacity>
   );
 };
@@ -72,7 +57,7 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    backgroundColor: "grey",
+    paddingHorizontal,
   },
   button: {
     position: "absolute",
@@ -91,11 +76,7 @@ const styles = StyleSheet.create({
   titleWithProjectSection: {
     width: "60%",
     overflow: "hidden",
-  },
-
-  background: {
-    backgroundColor: "black",
-    height: 50,
+    justifyContent: "flex-start",
   },
 });
 

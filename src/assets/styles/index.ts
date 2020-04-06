@@ -2,6 +2,10 @@
 import { StyleSheet } from "react-native";
 // colors
 import { Colors } from "../styles/constants";
+// utils
+import { vw } from "react-native-expo-viewport-units";
+
+export const paddingHorizontal = 24;
 
 export default StyleSheet.create({
   authWrapper: {
@@ -17,7 +21,7 @@ export default StyleSheet.create({
     paddingBottom: 25,
     flex: 1,
     flexDirection: "column",
-    paddingHorizontal: 24,
+    paddingHorizontal,
     backgroundColor: Colors.white,
   },
 
@@ -41,5 +45,15 @@ export default StyleSheet.create({
   row: {
     flex: 0,
     flexDirection: "row",
+  },
+
+  fullScreen: {
+    position: "relative",
+    left: "50%",
+    right: "50%",
+    marginLeft: vw(-50),
+    marginRight: vw(-50),
+    width: vw(100),
+    // paddingHorizontal,
   },
 });

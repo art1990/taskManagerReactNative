@@ -39,6 +39,7 @@ const CalendarStackScreen = () => (
 
 // tabs stack
 const Tabs = createBottomTabNavigator();
+const size = 26;
 
 const TabsScreen = () => (
   <Tabs.Navigator
@@ -52,11 +53,11 @@ const TabsScreen = () => (
         const color = focused ? Colors.activeTab : Colors.tab;
         switch (route.name) {
           case Routes.TASK_TAB:
-            return <AlarmIcon width={22} height={22} fill={color} />;
+            return <AlarmIcon width={size} height={size} fill={color} />;
           case Routes.STATISTIC_TAB:
-            return <StatisticIcon width={22} height={22} fill={color} />;
+            return <StatisticIcon width={size} height={size} fill={color} />;
           case Routes.CALENDAR_TAB:
-            return <CalendarIcon width={22} height={22} fill={color} />;
+            return <CalendarIcon width={size} height={size} fill={color} />;
         }
       },
     })}
@@ -70,6 +71,7 @@ const TabsScreen = () => (
 const styles = StyleSheet.create({
   taBarContainer: {
     backgroundColor: Colors.tabBarBGColor,
+    height: 70,
   },
 });
 export default TabsScreen;
