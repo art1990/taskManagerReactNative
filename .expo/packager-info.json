@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 14003,
+  "expoServerNgrokUrl": "https://gk-gxx.anonymous.taskmanagerreactnative.exp.direct",
+  "packagerNgrokUrl": "https://packager.gk-gxx.anonymous.taskmanagerreactnative.exp.direct",
+  "ngrokPid": 14037,
   "webpackServerPort": null
 }

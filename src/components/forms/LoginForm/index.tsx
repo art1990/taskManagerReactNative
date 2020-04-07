@@ -5,6 +5,7 @@ import { View, StyleSheet } from "react-native";
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
 import Button from "../../Button";
+import KeyboardView from "../../KeyboardView";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -23,28 +24,30 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
 
   return (
     <View style={style}>
-      <FormContext {...methods}>
-        <Controller
-          as={FormInput}
-          style={styles.ipnut}
-          label="Email"
-          control={control}
-          name="email"
-          onChange={(args) => args[0].nativeEvent.text}
-          rules={{ required: true }}
-          defaultValue=""
-        />
-        <Controller
-          as={FormPasswordInput}
-          style={styles.ipnut}
-          label="Password"
-          control={control}
-          name="password"
-          onChange={(args) => args[0].nativeEvent.text}
-          defaultValue=""
-        />
-        <Button onPress={handleSubmit(handleUserSubmit)}>Login</Button>
-      </FormContext>
+      <KeyboardView>
+        <FormContext {...methods}>
+          <Controller
+            as={FormInput}
+            style={styles.ipnut}
+            label="Email"
+            control={control}
+            name="email"
+            onChange={(args) => args[0].nativeEvent.text}
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          <Controller
+            as={FormPasswordInput}
+            style={styles.ipnut}
+            label="Password"
+            control={control}
+            name="password"
+            onChange={(args) => args[0].nativeEvent.text}
+            defaultValue=""
+          />
+          <Button onPress={handleSubmit(handleUserSubmit)}>Login</Button>
+        </FormContext>
+      </KeyboardView>
     </View>
   );
 };

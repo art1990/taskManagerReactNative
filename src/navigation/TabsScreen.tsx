@@ -46,6 +46,7 @@ const TabsScreen = () => (
     tabBarOptions={{
       showLabel: false,
       style: styles.taBarContainer,
+      keyboardHidesTabBar: true,
     }}
     screenOptions={({ route }) => ({
       gestureEnabled: true,

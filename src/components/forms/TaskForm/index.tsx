@@ -7,6 +7,7 @@ import InfoAndRemoveFile from "./InfoAndRemoveFile";
 import Button from "../../Button";
 import FileUploaderInput from "../../FileUploaderInput";
 import TagInput from "./TagInput";
+import KeyboardView from "../../KeyboardView";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // hooks
@@ -76,7 +77,7 @@ const TaskForm: React.FC<ITaskForm> = ({
   return (
     <View style={[styles.container, style]}>
       <FormContext {...methods}>
-        <View>
+        <KeyboardView>
           <Controller
             as={FormInput}
             style={styles.input}
@@ -111,7 +112,7 @@ const TaskForm: React.FC<ITaskForm> = ({
           ) : (
             <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
           )}
-        </View>
+        </KeyboardView>
         <Button style={styles.button} onPress={handleSubmit(handleUserSubmit)}>
           {buttonText}
         </Button>
@@ -132,9 +133,7 @@ const styles = StyleSheet.create({
   fileLoader: {
     marginTop: 15,
   },
-  button: {
-    marginTop: "auto",
-  },
+  button: {},
 });
 
 export default TaskForm;

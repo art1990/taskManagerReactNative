@@ -5,7 +5,8 @@ import { View, StyleSheet } from "react-native";
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
 import Button from "../../Button";
-import KeyBoardView from "../../KeyboardView";
+import KeyboardView from "../../KeyboardView";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -29,8 +30,8 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
   };
 
   return (
-    <View style={[styles.container, style]}>
-      <KeyBoardView>
+    <View>
+      <KeyboardView>
         <FormContext {...methods}>
           <Controller
             as={FormInput}
@@ -60,17 +61,14 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
             onChange={(args) => args[0].nativeEvent.text}
             defaultValue=""
           />
+          <Button onPress={handleSubmit(handleUserSubmit)}>Submit</Button>
         </FormContext>
-        <Button onPress={handleSubmit(handleUserSubmit)}>Submit</Button>
-      </KeyBoardView>
+      </KeyboardView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-  },
   input: {
     marginBottom: 15,
   },

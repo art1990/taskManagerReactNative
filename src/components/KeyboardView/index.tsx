@@ -5,32 +5,35 @@ import {
   KeyboardAvoidingViewProps,
   Platform,
   StyleSheet,
+  ScrollView,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 // utils
 import { useHeaderHeight } from "@react-navigation/stack";
 
 const KeyboardView: React.FC<KeyboardAvoidingViewProps> = ({
   children,
   style,
+  ...rest
 }) => {
   const headerHeight = useHeaderHeight();
   return (
-    <KeyboardAvoidingView
-      style={[styles.container, style]}
-      behavior="padding"
-      keyboardVerticalOffset={headerHeight}
-      enabled={Platform.select({
-        ios: true,
-        android: true,
-      })}
+    <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+      enableOnAndroid
+      {...rest}
     >
       {children}
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
+    justifyContent: "center",
   },
 });
 

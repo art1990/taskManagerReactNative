@@ -1,7 +1,6 @@
 // react
 import React, { ReactElement } from "react";
 import { KeyboardTypeOptions } from "react-native";
-import { ITaskState } from "redux/task";
 // types
 import { ITaskState } from "../redux/task";
 
