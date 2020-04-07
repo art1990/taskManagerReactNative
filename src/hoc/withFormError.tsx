@@ -25,7 +25,12 @@ function withFormError<T>(Component: React.ComponentType<T>) {
   });
 }
 const styles = StyleSheet.create({
+  container: {
+    position: "relative",
+  },
   text: {
+    position: "absolute",
+    bottom: -2,
     color: Colors.error,
   },
 });

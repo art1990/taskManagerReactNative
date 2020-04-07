@@ -1,7 +1,9 @@
 // react
 import react, { useState, useEffect } from "react";
+// redux
 // firebase
 import firebase from "firebase";
+import { useSelector } from "react-redux";
 
 interface IAuth {
   initializing: boolean;
@@ -14,7 +16,7 @@ export const useAuth = (): IAuth => {
     return { initializing: !user, user };
   });
 
-  const onChange = user => {
+  const onChange = (user) => {
     setAuth({ initializing: false, user });
   };
 

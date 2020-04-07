@@ -18,14 +18,14 @@ export const logout = actionCreator(LOGOUT);
 export const updateUserPassword = createAction(UPDATE_PASSWORD);
 
 //initial state
-interface UserState {
+export interface IUserState {
   user: null | {};
   loginning: boolean;
   registering: boolean;
   error: string;
 }
 
-const initialState: UserState = {
+const initialState: IUserState = {
   user: null,
   loginning: false,
   registering: false,
@@ -35,7 +35,7 @@ const initialState: UserState = {
 //reducer
 export default produce(
   (
-    draft: Draft<UserState> = initialState,
+    draft: Draft<IUserState> = initialState,
     { type, payload }: { type: string; payload?: any }
   ) => {
     switch (type) {

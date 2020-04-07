@@ -90,7 +90,7 @@ export default ({ navigation }) => {
     return <Spinner />;
   };
 
-  const isLoader = isLoading|| isLoadingIncomplete || !isMounted;
+  const isLoader = isLoading || isLoadingIncomplete || !isMounted;
   const { startTime, duration, title } = taskData;
   return (
     <View

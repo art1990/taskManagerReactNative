@@ -61,7 +61,12 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
             onChange={(args) => args[0].nativeEvent.text}
             defaultValue=""
           />
-          <Button onPress={handleSubmit(handleUserSubmit)}>Submit</Button>
+          <Button
+            style={styles.button}
+            onPress={handleSubmit(handleUserSubmit)}
+          >
+            Submit
+          </Button>
         </FormContext>
       </KeyboardView>
     </View>
@@ -70,7 +75,10 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
 
 const styles = StyleSheet.create({
   input: {
-    marginBottom: 15,
+    marginBottom: 18,
+  },
+  button: {
+    marginTop: 6,
   },
 });
 

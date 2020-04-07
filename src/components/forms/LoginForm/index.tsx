@@ -28,7 +28,7 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
         <FormContext {...methods}>
           <Controller
             as={FormInput}
-            style={styles.ipnut}
+            style={styles.input}
             label="Email"
             control={control}
             name="email"
@@ -38,14 +38,19 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
           />
           <Controller
             as={FormPasswordInput}
-            style={styles.ipnut}
+            style={styles.input}
             label="Password"
             control={control}
             name="password"
             onChange={(args) => args[0].nativeEvent.text}
             defaultValue=""
           />
-          <Button onPress={handleSubmit(handleUserSubmit)}>Login</Button>
+          <Button
+            style={styles.button}
+            onPress={handleSubmit(handleUserSubmit)}
+          >
+            Login
+          </Button>
         </FormContext>
       </KeyboardView>
     </View>
@@ -53,8 +58,11 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
 };
 
 const styles = StyleSheet.create({
-  ipnut: {
-    marginBottom: 15,
+  input: {
+    marginBottom: 18,
+  },
+  button: {
+    marginTop: 6,
   },
 });
 

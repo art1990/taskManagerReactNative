@@ -22,7 +22,12 @@ const TagInput: React.FC<ITagInput> = (props) => {
       </TouchableOpacity>
       <View style={styles.tagsContainer}>
         {tags.map((el, i) => (
-          <Tag key={el} text={el} onDeletePress={() => removeTag(i)} />
+          <Tag
+            key={el}
+            style={styles.tags}
+            text={el}
+            onDeletePress={() => removeTag(i)}
+          />
         ))}
       </View>
     </>
@@ -32,6 +37,9 @@ const TagInput: React.FC<ITagInput> = (props) => {
 const styles = StyleSheet.create({
   tagsContainer: {
     flexDirection: "row",
+  },
+  tags: {
+    marginBottom: 0,
   },
 });
 

@@ -32,8 +32,8 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
     <TouchableOpacity onPress={toView}>
       <View style={[Styles.rowSpaceBetween, styles.container, style]}>
         <View style={[Styles.rowSpaceBetween, styles.titleWithProjectSection]}>
-          <Text>title: {title} </Text>
-          <Text>project: {project}</Text>
+          <Text>tit# {title} </Text>
+          <Text>proj# {project}</Text>
         </View>
         <View style={styles.durationWithIconSection}>
           <Text> {timeText}</Text>

@@ -96,12 +96,7 @@ const TaskForm: React.FC<ITaskForm> = ({
             rules={{ required: true }}
           />
           {children || null}
-          <Controller
-            as={TagInput}
-            style={styles.input}
-            name="tags"
-            tags={tags}
-          />
+          <Controller as={TagInput} name="tags" tags={tags} />
           {!name ? (
             <FileUploaderInput
               style={[styles.input, styles.fileLoader]}
@@ -126,6 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+    marginTop: 10,
   },
   input: {
     marginBottom: 20,
