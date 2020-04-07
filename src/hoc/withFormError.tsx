@@ -12,7 +12,7 @@ function withFormError<T>(Component: React.ComponentType<T>) {
     const error = context?.errors[props.name];
 
     return (
-      <View>
+      <View style={styles.container}>
         <Component
           {...props}
           ref={ref}
@@ -26,8 +26,8 @@ function withFormError<T>(Component: React.ComponentType<T>) {
 }
 const styles = StyleSheet.create({
   text: {
-    color: Colors.error
-  }
+    color: Colors.error,
+  },
 });
 
 export default withFormError;

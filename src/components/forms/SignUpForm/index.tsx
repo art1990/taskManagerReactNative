@@ -5,6 +5,7 @@ import { View, StyleSheet } from "react-native";
 import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
 import Button from "../../Button";
+import KeyBoardView from "../../KeyboardView";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
@@ -28,45 +29,49 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
   };
 
   return (
-    <View style={style}>
-      <FormContext {...methods}>
-        <Controller
-          as={FormInput}
-          style={styles.ipnut}
-          label="Email"
-          control={control}
-          name="email"
-          onChange={(args) => args[0].nativeEvent.text}
-          rules={{ required: true }}
-          defaultValue=""
-        />
-        <Controller
-          as={FormPasswordInput}
-          style={styles.ipnut}
-          label="Password"
-          control={control}
-          name="password"
-          onChange={(args) => args[0].nativeEvent.text}
-          defaultValue=""
-        />
-        <Controller
-          as={FormPasswordInput}
-          style={styles.ipnut}
-          label="Repeat password"
-          control={control}
-          name="passwordConfirm"
-          onChange={(args) => args[0].nativeEvent.text}
-          defaultValue=""
-        />
-
+    <View style={[styles.container, style]}>
+      <KeyBoardView>
+        <FormContext {...methods}>
+          <Controller
+            as={FormInput}
+            style={styles.input}
+            label="Email"
+            control={control}
+            name="email"
+            onChange={(args) => args[0].nativeEvent.text}
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          <Controller
+            as={FormPasswordInput}
+            style={styles.input}
+            label="Password"
+            control={control}
+            name="password"
+            onChange={(args) => args[0].nativeEvent.text}
+            defaultValue=""
+          />
+          <Controller
+            as={FormPasswordInput}
+            style={styles.input}
+            label="Repeat password"
+            control={control}
+            name="passwordConfirm"
+            onChange={(args) => args[0].nativeEvent.text}
+            defaultValue=""
+          />
+        </FormContext>
         <Button onPress={handleSubmit(handleUserSubmit)}>Submit</Button>
-      </FormContext>
+      </KeyBoardView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  ipnut: {
+  container: {
+    flex: 0,
+  },
+  input: {
     marginBottom: 15,
   },
 });

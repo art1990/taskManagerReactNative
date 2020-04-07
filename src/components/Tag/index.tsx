@@ -10,7 +10,7 @@ import { ITagProps } from "../../types";
 
 const Tag: React.FC<ITagProps> = ({ text, onDeletePress, style, setTags }) => {
   const onAddThisTag = () => {
-    setTags((prevTags) => [...prevTags, text]);
+    setTags((prevTags) => [...(prevTags || []), text]);
   };
 
   return (
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingHorizontal: 8,
     marginHorizontal: 8,
+    marginVertical: 18,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.taskInfoBGColor,

@@ -1,6 +1,6 @@
 // react
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 // components
 import Tag from "../../../components/Tag";
 import Button from "../../../components/Button";
@@ -21,7 +21,7 @@ const TagView: React.FC<ITagViewProps> = ({
   const [tags, setTags] = useState(initialTags || []);
 
   const addLocalTag = (tag?: string) => {
-    setTags([...tags, tag || text.trim()]);
+    setTags([...(tags || []), tag || text.trim()]);
     setText("");
   };
 
@@ -49,22 +49,19 @@ const TagView: React.FC<ITagViewProps> = ({
           onAddPress={() => addLocalTag()}
         />
       )}
-      <View style={[Styles.row, styles.currenTagContainer]}>
-        {tags?.map((el, i) => (
-          <Tag
-            key={i}
-            text={el}
-            onDeletePress={() => deleteTag(i)}
-            style={styles.tag}
-          />
-        ))}
-      </View>
-      <View style={styles.line} />
-      <View style={Styles.row}>
-        {filteredAllTags.map((el, i) => (
-          <Tag key={i} text={el} style={styles.tag} setTags={setTags} />
-        ))}
-      </View>
+      <ScrollView>
+        <View style={[Styles.row, styles.currenTagContainer]}>
+          {tags?.map((el, i) => (
+            <Tag key={i} text={el} onDeletePress={() => deleteTag(i)} />
+          ))}
+        </View>
+        <View style={styles.line} />
+        <View style={Styles.row}>
+          {filteredAllTags.map((el, i) => (
+            <Tag key={i} text={el} setTags={setTags} />
+          ))}
+        </View>
+      </ScrollView>
       <Button style={styles.button} onPress={() => buttonAction(tags)}>
         {buttonText}
       </Button>
@@ -75,15 +72,13 @@ const TagView: React.FC<ITagViewProps> = ({
 const styles = StyleSheet.create({
   currenTagContainer: {
     marginBottom: 10,
+    minHeight: 50,
   },
   line: {
     borderBottomColor: Colors.line,
     borderBottomWidth: 1,
   },
-  tag: {
-    marginHorizontal: 7,
-    marginVertical: 18,
-  },
+
   button: {
     marginTop: "auto",
   },

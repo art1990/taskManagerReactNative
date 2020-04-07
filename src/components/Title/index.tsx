@@ -39,12 +39,10 @@ const Title: React.FC<ITitleProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
     flex: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: 30
   },
   labaleWithButtoncontainer: {
     flex: 0,

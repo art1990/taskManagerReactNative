@@ -1,16 +1,17 @@
+// react
 import React from "react";
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
   Platform,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 // utils
 import { useHeaderHeight } from "@react-navigation/stack";
 
 const KeyboardView: React.FC<KeyboardAvoidingViewProps> = ({
   children,
-  style
+  style,
 }) => {
   const headerHeight = useHeaderHeight();
   return (
@@ -20,7 +21,7 @@ const KeyboardView: React.FC<KeyboardAvoidingViewProps> = ({
       keyboardVerticalOffset={headerHeight}
       enabled={Platform.select({
         ios: true,
-        android: false
+        android: true,
       })}
     >
       {children}
@@ -29,7 +30,8 @@ const KeyboardView: React.FC<KeyboardAvoidingViewProps> = ({
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
+
 export default KeyboardView;

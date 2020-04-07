@@ -26,7 +26,7 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
   };
 
   const removeTag = (index) => {
-    setTags(current.filter((_, i) => index !== i));
+    setTags(current.filter((_, i) => index !== i) || []);
   };
 
   const updateTagFilter = (filters = []) => {

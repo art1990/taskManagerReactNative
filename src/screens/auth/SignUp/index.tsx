@@ -27,7 +27,7 @@ const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={[Styles.authWrapper, Styles.authContainer]}>
+    <View style={[Styles.authWrapper, Styles.authContainer, styles.container]}>
       <Title text="Sign-up" />
       <SignUpForm onSubmit={onSignUpPress} />
       <NavigationMessage
@@ -40,6 +40,11 @@ const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
+  },
   title: {
     fontWeight: "bold",
     fontSize: 24,

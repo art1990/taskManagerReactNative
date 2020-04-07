@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { StyleSheet, KeyboardTypeOptions, View, Alert } from "react-native";
+import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 // types
 import { IInputProps } from "../../types";
