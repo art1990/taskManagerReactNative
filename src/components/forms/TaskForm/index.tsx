@@ -13,7 +13,7 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 // hooks
 import { useTags } from "../../../hooks/useTags";
 // validation
-import { LoginSchema } from "../../../utils/validation";
+import { CreateTaskSchema } from "../../../utils/validation";
 // types
 import { ITaskForm } from "../../../types";
 
@@ -28,6 +28,7 @@ const TaskForm: React.FC<ITaskForm> = ({
 
   const methods = useForm({
     defaultValues,
+    validationSchema: CreateTaskSchema,
   });
   const {
     control,

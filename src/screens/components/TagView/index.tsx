@@ -21,6 +21,7 @@ const TagView: React.FC<ITagViewProps> = ({
   const [tags, setTags] = useState(initialTags || []);
 
   const addLocalTag = (tag?: string) => {
+    if (!text) return;
     setTags([...(tags || []), tag || text.trim()]);
     setText("");
   };
