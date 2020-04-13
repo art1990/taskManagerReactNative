@@ -13,7 +13,7 @@ import {
   differenceInSeconds,
 } from "date-fns";
 // types
-import { IWeeksList, IWeekData } from "../types";
+import { IWeeksListProps, IWeekData } from "../types";
 
 export const getUTCDate = (date) => {
   //const date = new Date(dateString);
@@ -63,7 +63,11 @@ export const dateNow = (date: Date | number = new Date()) => {
 // week
 const generateDayLabel = (date: Date): string => lightFormat(date, "dd.MM");
 
-const generateDayOfWeeklist = (day: number): { [key: string]: number } => {
+const generateDayOfWeeklist = (
+  day: number
+): {
+  [key: string]: number;
+} => {
   const { date: start } = getStartWeek(day);
   const { date: end } = getEndWeek(day);
   const res = {};
@@ -75,12 +79,13 @@ const generateDayOfWeeklist = (day: number): { [key: string]: number } => {
 };
 
 export const generateWeekForTime = (
-  weeksList: IWeeksList["weeksList"]
+  weeksList: IWeeksListProps["weeksList"]
 ): IWeekData => {
   const day = weeksList[0].startTaskTime;
   let weekObj = generateDayOfWeeklist(day);
+  console.log(weeksList);
 
-  weeksList.forEach(({ startTaskTime, endTime }) => {
+  weeksList.forEach(({ startTaskTime, endTime, timeInterval }) => {
     const startDate = fromUnixTime(startTaskTime);
     const endDate = endTime ? fromUnixTime(endTime) : new Date();
     const dayLabel = generateDayLabel(startDate);
@@ -116,7 +121,9 @@ export const generateWeekForTime = (
   return { data, labels };
 };
 
-export const generateWeekForTask = (weeksList: IWeeksList["weeksList"]) => {
+export const generateWeekForTask = (
+  weeksList: IWeeksListProps["weeksList"]
+) => {
   const day = weeksList[0].startTaskTime;
   let weekObj = generateDayOfWeeklist(day);
 

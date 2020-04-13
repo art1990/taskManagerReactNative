@@ -69,6 +69,7 @@ function* createTask({ payload: { navigation, ...payload } }) {
       ...payload,
       startTaskTime,
       startTime: startTaskTime,
+      timeInterval: [{ startTaskTime }],
       file,
       date: dateNow(date),
     };
@@ -84,8 +85,13 @@ function* createTask({ payload: { navigation, ...payload } }) {
 function* pauseTask({ payload }) {
   const endTime = getUnixTime(new Date());
   const duration = endTime - payload.startTime + payload.duration;
+  const timeInterval = payload.timeInterval.map((el, i, arr) => {
+    if (i === arr.length - 1) return { ...el, endTime };
+    return el;
+  });
   const argApi = {
     ...payload,
+    timeInterval,
     endTime,
     duration,
   };
@@ -95,7 +101,9 @@ function* pauseTask({ payload }) {
 function* resumeTask({ payload: { navigation, ...payload } }) {
   const startTime = getUnixTime(new Date());
 
-  const argApi = { ...payload, startTime };
+  const timeInterval = [...payload.timeInterval, { startTime }];
+
+  const argApi = { ...payload, timeInterval, startTime };
   yield apiHandler({ api: resumeTaskApi, argApi }, resume);
   if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
 }

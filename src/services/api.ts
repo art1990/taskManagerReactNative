@@ -130,6 +130,13 @@ export const pauseTaskApi = async (task) => {
 
 export const resumeTaskApi = async (task) => {
   const taskData = { ...task, isPaused: false };
+  const { startWeek } = getStartWeek(task.startTime);
+  await weeksCol.doc(startWeek).set(
+    {
+      tasksId: firebase.firestore.FieldValue.arrayUnion(task.id),
+    },
+    { merge: true }
+  );
   await updateIncompleteTaskApi(taskData);
   await updateTaskApi(taskData);
 
@@ -243,9 +250,15 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
 
   const weeksList: IWeekObj[] = tasksDoc.docs.map(
     (doc: any): IWeekObj => {
-      const { id, startTaskTime, duration = 0, endTime } = doc.data();
+      const {
+        id,
+        startTaskTime,
+        duration = 0,
+        endTime,
+        timeInterval,
+      } = doc.data();
 
-      return { id, startTaskTime, duration, endTime };
+      return { id, startTaskTime, duration, endTime, timeInterval };
     }
   );
 

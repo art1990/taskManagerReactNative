@@ -7,4 +7,5 @@ export interface IWeekObj {
   startTaskTime: ITaskState["taskData"]["startTaskTime"];
   duration: ITaskState["taskData"]["duration"];
   endTime: ITaskState["taskData"]["endTime"];
+  timeInterval: ITaskState["taskData"]["timeInterval"];
 }

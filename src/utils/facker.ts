@@ -25,6 +25,16 @@ const generateTask = (): ITask => {
   const startTaskTime = +date;
   const startTime = startTaskTime;
   const endTime = startTime + duration;
+  const arr = new Array(random.number({ min: 1, max: 10 })).fill(1);
+  const timeInterval = arr.map((_, i, arr) => {
+    const max = duration / arr.length;
+    const delta = duration * (i + 1);
+
+    return {
+      startTime: delta,
+      endTime: delta + random.number({ min: 1, max: max }),
+    };
+  });
 
   const timestamp = startTaskTime;
   date = (+date + duration).toString();
@@ -41,6 +51,7 @@ const generateTask = (): ITask => {
     startTaskTime,
     startTime,
     endTime,
+    timeInterval,
     timestamp,
   };
 };

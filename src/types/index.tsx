@@ -61,6 +61,7 @@ export interface IWeeksListProps {
     duration: number;
     id: string;
     endTime: number;
+    timeInterval: { startTime: number; endTime: number }[];
   }[];
   weekData: IWeekData;
   suffixY?: string;
@@ -238,5 +239,6 @@ export interface ITask {
   startTaskTime: ITaskState["taskData"]["startTaskTime"];
   startTime: ITaskState["taskData"]["startTime"];
   endTime: ITaskState["taskData"]["endTime"];
+  timeInterval: ITaskState["taskData"]["timeInterval"];
   timestamp: any;
 }

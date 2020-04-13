@@ -63,6 +63,7 @@ export interface ITaskState {
     startTime?: number;
     endTime?: number;
     startTaskTime?: number;
+    timeInterval: { startTime: number; endTime: number }[];
     duration?: number;
     isPaused: boolean;
     isCompleted: boolean;
@@ -90,6 +91,7 @@ const initialState: ITaskState = {
     startTime: null,
     endTime: null,
     startTaskTime: null,
+    timeInterval: [],
     duration: 0,
     isPaused: false,
     isCompleted: false,
