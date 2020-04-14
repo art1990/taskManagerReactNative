@@ -218,7 +218,8 @@ export const generateTasksApi = async () => {
 
 // charts
 export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
-  const getDataFromDoc = (doc: any): { tasksId: string } => doc.docs[0].data();
+  const getDataFromDoc = (doc: any): { tasksId: string; startWeek: number } =>
+    doc.docs[0].data();
   const { size: totalWeeks }: { size: number } = await weeksCol.get();
 
   const {
@@ -241,7 +242,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
 
   const lastVisible = weekDoc.docs[weekDoc.docs.length - 1];
 
-  const { tasksId } = getDataFromDoc(weekDoc);
+  const { tasksId, startWeek } = getDataFromDoc(weekDoc);
 
   const tasksDoc = await tasksListCol
     .where("id", "in", tasksId)
@@ -262,7 +263,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     }
   );
 
-  return { weeksList, lastVisible, totalWeeks };
+  return { weeksList, lastVisible, totalWeeks, startWeek };
 };
 export const getLoggedTasksApi = async () => {};
 export const getLoggedPerDayApi = async () => {};

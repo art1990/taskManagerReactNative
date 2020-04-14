@@ -26,13 +26,16 @@ const generateTask = (): ITask => {
   const startTime = startTaskTime;
   const endTime = startTime + duration;
   const arr = new Array(random.number({ min: 1, max: 10 })).fill(1);
-  const timeInterval = arr.map((_, i, arr) => {
-    const max = duration / arr.length;
-    const delta = duration * (i + 1);
+  const timeInterval = arr.map((_, i, { length }) => {
+    const max = Math.floor(duration / length);
+
+    const start = startTime + max * i;
+    const end =
+      i === length - 1 ? endTime : start + random.number({ min: 1, max });
 
     return {
-      startTime: delta,
-      endTime: delta + random.number({ min: 1, max: max }),
+      startTime: start,
+      endTime: end,
     };
   });
 

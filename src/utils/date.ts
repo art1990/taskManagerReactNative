@@ -14,6 +14,7 @@ import {
 } from "date-fns";
 // types
 import { IWeeksListProps, IWeekData } from "../types";
+import { IChartsState } from "../redux/charts/index";
 
 export const getUTCDate = (date) => {
   //const date = new Date(dateString);
@@ -34,12 +35,16 @@ export const formatToUTCTime = (seconds) => {
 };
 
 // utils for week func
-const getStartOrEndWeek = (func: (date: Date) => Date) => (
+const getStartOrEndWeek = (
+  func: (date: Date, options?: { weekStartsOn?: number }) => Date
+) => (
   week: string,
   weekSec: string,
   time?: string | number
 ): { [x: string]: any } => {
-  const weekDate = func(time ? fromUnixTime(+time) : new Date());
+  const weekDate = func(time ? fromUnixTime(+time) : new Date(), {
+    weekStartsOn: 1,
+  });
 
   return {
     [week]: formatISO(weekDate),
@@ -66,50 +71,68 @@ const generateDayLabel = (date: Date): string => lightFormat(date, "dd.MM");
 const generateDayOfWeeklist = (
   day: number
 ): {
-  [key: string]: number;
+  weekObj: {
+    [key: string]: number;
+  };
+  startWeek: Date;
+  endWeek: Date;
 } => {
-  const { date: start } = getStartWeek(day);
-  const { date: end } = getEndWeek(day);
-  const res = {};
-  eachDayOfInterval({ start, end }).forEach(
-    (el) => (res[generateDayLabel(el)] = 0)
+  const { date: startWeek } = getStartWeek(day);
+  const { date: endWeek } = getEndWeek(day);
+  const weekObj = {};
+  eachDayOfInterval({ start: startWeek, end: endWeek }).forEach(
+    (el) => (weekObj[generateDayLabel(el)] = 0)
   );
 
-  return res;
+  console.log(startWeek);
+
+  return {
+    weekObj,
+    startWeek: startOfDay(startWeek),
+    endWeek: endOfDay(endWeek),
+  };
 };
 
-export const generateWeekForTime = (
-  weeksList: IWeeksListProps["weeksList"]
-): IWeekData => {
-  const day = weeksList[0].startTaskTime;
-  let weekObj = generateDayOfWeeklist(day);
-  console.log(weeksList);
+export const generateWeekForTime = ({
+  startWeek: day,
+  weeksList,
+}: {
+  startWeek: IChartsState["loggedTime"]["startWeek"];
+  weeksList: IWeeksListProps["weeksList"];
+}): IWeekData => {
+  let { weekObj, startWeek, endWeek } = generateDayOfWeeklist(day);
 
-  weeksList.forEach(({ startTaskTime, endTime, timeInterval }) => {
-    const startDate = fromUnixTime(startTaskTime);
-    const endDate = endTime ? fromUnixTime(endTime) : new Date();
-    const dayLabel = generateDayLabel(startDate);
+  weeksList.forEach(({ timeInterval }) =>
+    timeInterval.forEach(({ startTime, endTime }) => {
+      let startDate = fromUnixTime(startTime);
+      let endDate = fromUnixTime(endTime);
+      const dayLabel = generateDayLabel(startDate);
+      const dayLabelEndDate = generateDayLabel(endDate);
 
-    isSameDay(startDate, endDate)
-      ? (weekObj[dayLabel] += differenceInSeconds(endDate, startDate))
-      : eachDayOfInterval({ start: startDate, end: endDate }).forEach(
-          (date, i, arr) => {
-            const dayLabel = generateDayLabel(date);
-            if (!(dayLabel in weekObj)) return;
+      startDate = dayLabel in weekObj ? startDate : startWeek;
+      endDate = dayLabelEndDate in weekObj && endDate ? endDate : endWeek;
 
-            const lastDuration = isSameDay(endDate, date)
-              ? differenceInSeconds(date, startOfDay(date))
-              : 86400;
+      isSameDay(startDate, endDate)
+        ? (weekObj[dayLabel] += differenceInSeconds(endDate, startDate))
+        : eachDayOfInterval({ start: startDate, end: endDate }).forEach(
+            (date, i, arr) => {
+              const dayLabel = generateDayLabel(date);
+              // if (!(dayLabel in weekObj)) return;
 
-            weekObj[dayLabel] +=
-              i === 0
-                ? differenceInSeconds(endOfDay(startDate), startDate)
-                : i === arr.length - 1
-                ? lastDuration
+              const lastDuration = isSameDay(endDate, date)
+                ? differenceInSeconds(date, startOfDay(date))
                 : 86400;
-          }
-        );
-  });
+
+              weekObj[dayLabel] +=
+                i === 0
+                  ? differenceInSeconds(endOfDay(startDate), startDate)
+                  : i === arr.length - 1
+                  ? lastDuration
+                  : 86400;
+            }
+          );
+    })
+  );
   const data = [];
   const labels = [];
 
@@ -121,11 +144,14 @@ export const generateWeekForTime = (
   return { data, labels };
 };
 
-export const generateWeekForTask = (
-  weeksList: IWeeksListProps["weeksList"]
-) => {
-  const day = weeksList[0].startTaskTime;
-  let weekObj = generateDayOfWeeklist(day);
+export const generateWeekForTask = ({
+  startWeek,
+  weeksList,
+}: {
+  startWeek: IChartsState["loggedTasks"]["startWeek"];
+  weeksList: IWeeksListProps["weeksList"];
+}) => {
+  let weekObj = generateDayOfWeeklist(startWeek);
 
   weeksList.forEach(({ startTaskTime, endTime, duration }) => {
     const startDate = fromUnixTime(startTaskTime);

@@ -22,7 +22,7 @@ const Statistic: React.FC = () => {
   } = useCharts();
 
   const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);
-  const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
+  // const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
 
   return (
     <View>
@@ -37,14 +37,14 @@ const Statistic: React.FC = () => {
           suffixY=" H"
         />
       )}
-      {!isLoadingLoggedTask && loggedTasks && (
+      {/* {!isLoadingLoggedTask && loggedTasks && (
         <WeekChart
           onNextPress={toNextTaskWeek}
           onPrevPress={toPrevTaskWeek}
           paginationText="hahahah"
           weekData={loggedTasksData}
         />
-      )}
+      )} */}
     </View>
   );
 };
