@@ -4,6 +4,7 @@ import { db, firebaseApp, storage } from "../fireBase";
 // utils
 import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
+import { isSameWeek, addWeeks } from "date-fns";
 // types
 import { IChartsState } from "../redux/charts";
 import { ITaskState } from "../redux/task";
@@ -121,9 +122,29 @@ export const removeTaskApi = async ({ id, uri }) => {
 };
 
 export const pauseTaskApi = async (task) => {
+  const batch = db.batch();
+
   await updateIncompleteTaskApi();
   const taskData = { ...task, isPaused: true };
   await updateTaskApi(taskData);
+
+  let startTime = task.startTime;
+  while (!isSameWeek(startTime, task.endTime, { weekStartsOn: 1 })) {
+    const { startWeek } = getStartWeek(startTime);
+    const weekDoc = weeksCol.doc(startWeek);
+
+    batch.set(
+      weekDoc,
+      {
+        tasksId: firebase.firestore.FieldValue.arrayUnion(task.id),
+      },
+      { merge: true }
+    );
+
+    startTime = addWeeks(startWeek, 1);
+  }
+
+  batch.commit();
 
   return taskData;
 };
