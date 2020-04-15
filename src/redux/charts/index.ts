@@ -35,9 +35,9 @@ export interface IChartsState {
     totalWeeks: number;
     currentWeekTimeNumber: number;
     currentWeekTaskNumber: number;
+    currentPerDay: number;
     lastLoggedTimeSnapshot: any;
     lastLoggedTasksSnapshot: any;
-    lastLoggedPerTimeSnapshot: any;
     isLoadingLoggedTime: boolean;
     isLoadingLoggedTask: boolean;
     isLoadingLoggedPerDay: boolean;
@@ -54,9 +54,9 @@ const initialState: IChartsState = {
     totalWeeks: null,
     currentWeekTimeNumber: 1,
     currentWeekTaskNumber: 1,
+    currentPerDay: null,
     lastLoggedTimeSnapshot: null,
     lastLoggedTasksSnapshot: null,
-    lastLoggedPerTimeSnapshot: null,
     isLoadingLoggedTime: false,
     isLoadingLoggedTask: false,
     isLoadingLoggedPerDay: false,
@@ -78,11 +78,14 @@ export default produce(
       const { lastVisible, weeksList, totalWeeks, startWeek } = payload;
 
       draft.meta[isLoading] = false;
-      draft.meta.totalWeeks = totalWeeks;
-      draft.meta.action = null;
-      draft.meta[
-        `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
-      ] = lastVisible;
+
+      if (section !== "loggedPerDay") {
+        draft.meta.totalWeeks = totalWeeks;
+        draft.meta.action = null;
+        draft.meta[
+          `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
+        ] = lastVisible;
+      }
       draft[section] = { startWeek, weeksList };
     };
 

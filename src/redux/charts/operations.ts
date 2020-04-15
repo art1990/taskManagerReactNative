@@ -3,10 +3,14 @@ import { getLoggedTime, getLoggedTasks, getLoggedPerDay } from ".";
 import { selectMeta } from "./selectors";
 // saga
 import { takeEvery, select } from "redux-saga/effects";
+// date-fns
+import { formatISO } from "date-fns";
 // api
 import { getWeekDataApi } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
+// utils
+import { convertResponseToPerDay } from "../../utils/date";
 
 function* getLoggedTimeForChart({ payload }) {
   const { lastLoggedTimeSnapshot, action } = yield select(selectMeta);
@@ -20,7 +24,16 @@ function* getLoggedTasksForChart({ payload }) {
   const argApi = { ...payload, lastLoggedTasksSnapshot, action };
   yield apiHandler({ api: getWeekDataApi, argApi }, getLoggedTasks);
 }
-function* getLoggedPerDayForChart({ payload }) {}
+function* getLoggedPerDayForChart({ payload }) {
+  const { currentPerDay } = yield select(selectMeta);
+
+  const argApi = { currentPerDay: formatISO(currentPerDay || new Date()) };
+  yield apiHandler(
+    { api: getWeekDataApi, argApi },
+    getLoggedPerDay,
+    convertResponseToPerDay
+  );
+}
 
 export default function* watchCharts() {
   yield takeEvery(getLoggedTime.REQUEST, getLoggedTimeForChart);

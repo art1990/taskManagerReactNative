@@ -7,7 +7,7 @@ import {
   getLoggedTime,
   getLoggedTasks,
   getLoggedPerDay,
-  updateMeta
+  updateMeta,
 } from "../redux/charts";
 import { selectMeta, selectChartsData } from "../redux/charts/selectors";
 
@@ -16,9 +16,10 @@ export const useCharts = () => {
   const {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
+    currentPerDay,
     totalWeeks,
     isLoadingLoggedTime,
-    isLoadingLoggedTask
+    isLoadingLoggedTask,
   } = useSelector(selectMeta);
 
   const { loggedTime, loggedTasks } = useSelector(selectChartsData);
@@ -33,6 +34,12 @@ export const useCharts = () => {
     useCallback(() => {
       dispatch(getLoggedTasks.request({ currentWeekTaskNumber }));
     }, [getLoggedTasks, currentWeekTaskNumber])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getLoggedPerDay.request({ currentPerDay }));
+    }, [getLoggedPerDay, currentPerDay])
   );
 
   const toNextTimeWeek = () => {
@@ -63,6 +70,10 @@ export const useCharts = () => {
     dispatch(updateMeta.run({ ...weekNumber, action: "prev" }));
   };
 
+  const updatePerDay = (day) => {
+    dispatch(updateMeta.run({ currentPerDay: day }));
+  };
+
   return {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
@@ -73,6 +84,7 @@ export const useCharts = () => {
     toNextTaskWeek,
     toNextTimeWeek,
     toPrevTimeWeek,
-    toPrevTaskWeek
+    toPrevTaskWeek,
+    updatePerDay,
   };
 };

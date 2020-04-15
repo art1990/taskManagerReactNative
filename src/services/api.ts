@@ -247,6 +247,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     currentWeekTaskNumber,
     lastLoggedTimeSnapshot,
     lastLoggedTasksSnapshot,
+    currentPerDay,
     action,
   } = meta;
 
@@ -255,10 +256,11 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTasksSnapshot;
 
   const cursor = action === "next" ? "startAfter" : "startAt";
-  const weekDoc =
-    currentWeekNumber === 1
-      ? await weeksCol.limit(1).get()
-      : await weeksCol[cursor](lastSnapshot).limit(1).get();
+  const weekDoc = currentPerDay
+    ? await weeksCol.doc(currentPerDay).get()
+    : currentWeekNumber === 1
+    ? await weeksCol.limit(1).get()
+    : await weeksCol[cursor](lastSnapshot).limit(1).get();
 
   const lastVisible = weekDoc.docs[weekDoc.docs.length - 1];
 
@@ -283,7 +285,8 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     }
   );
 
-  return { weeksList, lastVisible, totalWeeks, startWeek };
+  return { weeksList, lastVisible, totalWeeks, startWeek, currentPerDay };
 };
+
 export const getLoggedTasksApi = async () => {};
 export const getLoggedPerDayApi = async () => {};
