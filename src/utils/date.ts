@@ -84,8 +84,6 @@ const generateDayOfWeeklist = (
     (el) => (weekObj[generateDayLabel(el)] = 0)
   );
 
-  console.log(startWeek);
-
   return {
     weekObj,
     startWeek: startOfDay(startWeek),
@@ -115,20 +113,14 @@ export const generateWeekForTime = ({
       isSameDay(startDate, endDate)
         ? (weekObj[dayLabel] += differenceInSeconds(endDate, startDate))
         : eachDayOfInterval({ start: startDate, end: endDate }).forEach(
-            (date, i, arr) => {
+            (date) => {
               const dayLabel = generateDayLabel(date);
-              // if (!(dayLabel in weekObj)) return;
 
-              const lastDuration = isSameDay(endDate, date)
-                ? differenceInSeconds(date, startOfDay(date))
+              weekObj[dayLabel] += isSameDay(startDate, date)
+                ? differenceInSeconds(endOfDay(startDate), startDate)
+                : isSameDay(endDate, date)
+                ? differenceInSeconds(endDate, startOfDay(endDate))
                 : 86400;
-
-              weekObj[dayLabel] +=
-                i === 0
-                  ? differenceInSeconds(endOfDay(startDate), startDate)
-                  : i === arr.length - 1
-                  ? lastDuration
-                  : 86400;
             }
           );
     })
@@ -136,9 +128,9 @@ export const generateWeekForTime = ({
   const data = [];
   const labels = [];
 
-  Object.entries(weekObj).forEach(([label, hour]) => {
+  Object.entries(weekObj).forEach(([label, seconds]) => {
     labels.push(label);
-    data.push(hour / 3600);
+    data.push(seconds / 3600);
   });
 
   return { data, labels };
@@ -151,15 +143,18 @@ export const generateWeekForTask = ({
   startWeek: IChartsState["loggedTasks"]["startWeek"];
   weeksList: IWeeksListProps["weeksList"];
 }) => {
-  let weekObj = generateDayOfWeeklist(startWeek);
+  let { weekObj } = generateDayOfWeeklist(startWeek);
+  let tasksId = [];
 
-  weeksList.forEach(({ startTaskTime, endTime, duration }) => {
-    const startDate = fromUnixTime(startTaskTime);
-    const dayLabel = generateDayLabel(startDate);
-    if (!(dayLabel in weekObj)) return;
+  weeksList.forEach(({ timeInterval, id }) =>
+    timeInterval.forEach(({ startTime }) => {
+      const startDate = fromUnixTime(startTime);
+      const dayLabel = generateDayLabel(startDate);
+      if (!(dayLabel in weekObj) || tasksId.includes(id)) return;
 
-    weekObj[dayLabel] += 1;
-  });
+      weekObj[dayLabel] += 1;
+    })
+  );
 
   const data = [];
   const labels = [];

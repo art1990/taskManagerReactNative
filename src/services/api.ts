@@ -7,7 +7,6 @@ import { generateTasksData } from "../utils/facker";
 import { isSameWeek, addWeeks } from "date-fns";
 // types
 import { IChartsState } from "../redux/charts";
-import { ITaskState } from "../redux/task";
 import { IWeekObj } from "../types/api";
 
 /* START initialize user and userDoc variavle */

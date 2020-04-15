@@ -33,6 +33,7 @@ const LineChart: React.FC<IWeeksListProps> = ({ weekData, suffixY = "" }) => {
     <Chart
       data={dataForChart}
       width={Dimensions.get("window").width}
+      withInnerLines={false}
       height={220}
       yAxisLabel=""
       yAxisSuffix={suffixY}

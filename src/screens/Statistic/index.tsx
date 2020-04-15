@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 // components
 import Title from "../../components/Title";
 import WeekChart from "./components/WeekChart";
@@ -22,10 +22,10 @@ const Statistic: React.FC = () => {
   } = useCharts();
 
   const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);
-  // const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
+  const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
 
   return (
-    <View>
+    <ScrollView>
       <Title text="Statistic" />
 
       {!isLoadingLoggedTime && loggedTime && (
@@ -37,15 +37,15 @@ const Statistic: React.FC = () => {
           suffixY=" H"
         />
       )}
-      {/* {!isLoadingLoggedTask && loggedTasks && (
+      {!isLoadingLoggedTask && loggedTasks && (
         <WeekChart
           onNextPress={toNextTaskWeek}
           onPrevPress={toPrevTaskWeek}
           paginationText="hahahah"
           weekData={loggedTasksData}
         />
-      )} */}
-    </View>
+      )}
+    </ScrollView>
   );
 };
 
