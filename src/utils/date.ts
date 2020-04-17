@@ -173,19 +173,17 @@ export const generateWeekForTask = ({
 export const convertResponseToPerDay = (data) => {
   const { weeksList, currentPerDay } = data;
 
-  const filterTimeInterval = (task) => {
-    const timeInterval = task.timeInterval.filter((el) =>
-      isSameDay(currentPerDay, el.startTime)
-    );
+  const tasksList = weeksList
+    .filter((task) =>
+      task.timeInterval.find((el) => isSameDay(currentPerDay, el.startTime))
+    )
+    .map((task) => {
+      const timeInterval = task.timeInterval.filter((el) =>
+        isSameDay(currentPerDay, el.startTime)
+      );
 
-    return { ...task, timeInterval };
-  };
-
-  const isSameDayInTimeInerval = (task) =>
-    task.timeInterval.find((el) => isSameDay(currentPerDay, el.startTime));
-
-  const xf = comp(map(filterTimeInterval), filter(isSameDayInTimeInerval));
-  const tasksList = into([], xf, weeksList);
+      return { ...task, timeInterval };
+    });
 
   return { tasksList };
 };
