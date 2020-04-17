@@ -93,6 +93,7 @@ export default produce(
       draft.meta[isLoading] = false;
       draft.meta.error = payload;
       draft.meta.action = null;
+      console.log(payload);
     };
 
     switch (type) {

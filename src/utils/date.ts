@@ -12,6 +12,8 @@ import {
   isSameDay,
   differenceInSeconds,
 } from "date-fns";
+// utils
+import { map, filter, comp, into } from "transducers-js";
 // types
 import { IWeeksListProps, IWeekData } from "../types";
 import { IChartsState } from "../redux/charts/index";
@@ -171,13 +173,19 @@ export const generateWeekForTask = ({
 export const convertResponseToPerDay = (data) => {
   const { weeksList, currentPerDay } = data;
 
-  const tasksList = weeksList.filter((task) => {
-    const res = task.timeInterval.forEach((el) => {
-      isSameDay(currentPerDay, el.startTime);
-    });
+  const filterTimeInterval = (task) => {
+    const timeInterval = task.timeInterval.filter((el) =>
+      isSameDay(currentPerDay, el.startTime)
+    );
 
-    return res.length > 0;
-  });
+    return { ...task, timeInterval };
+  };
+
+  const isSameDayInTimeInerval = (task) =>
+    task.timeInterval.find((el) => isSameDay(currentPerDay, el.startTime));
+
+  const xf = comp(map(filterTimeInterval), filter(isSameDayInTimeInerval));
+  const tasksList = into([], xf, weeksList);
 
   return { tasksList };
 };

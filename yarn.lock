@@ -2178,6 +2178,11 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
+"@types/transducers-js@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@types/transducers-js/-/transducers-js-0.4.4.tgz#50161496335e05810ac442c9f0a08788e4e82cec"
+  integrity sha512-/ulMxNKluA0OzMpEvxT28nAhGXLt3S69Ryd5zd4zMi4AoSZjILdeIJify+NiH+UdscAPHmgeH8k9ERx8Ouz3DQ==
+
 "@types/uuid-js@^0.7.1":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@types/uuid-js/-/uuid-js-0.7.2.tgz#5b5552fcbaaf4acf026fb6dc66f7e5bd6b4be92f"
@@ -8132,6 +8137,11 @@ tr46@^1.0.1:
   integrity sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=
   dependencies:
     punycode "^2.1.0"
+
+transducers-js@^0.4.174:
+  version "0.4.174"
+  resolved "https://registry.yarnpkg.com/transducers-js/-/transducers-js-0.4.174.tgz#d5862c10eff4be3d3322abf6bb742e30f1bb6fc4"
+  integrity sha1-1YYsEO/0vj0zIqv2u3QuMPG7b8Q=
 
 tslib@1.10.0:
   version "1.10.0"

@@ -4,6 +4,7 @@ import { View, Text, ScrollView } from "react-native";
 // components
 import Title from "../../components/Title";
 import WeekChart from "./components/WeekChart";
+import PerDayChart from "./components/PerDayChart";
 // hooks
 import { useCharts } from "../../hooks/useCharts";
 // utils
@@ -45,6 +46,7 @@ const Statistic: React.FC = () => {
           weekData={loggedTasksData}
         />
       )}
+      <PerDayChart />
     </ScrollView>
   );
 };
