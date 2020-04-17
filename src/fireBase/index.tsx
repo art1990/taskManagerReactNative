@@ -1,16 +1,27 @@
 // firebase
 import * as firebase from "firebase";
 import "firebase/firestore";
+// env
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGINING_SENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID,
+} from "react-native-dotenv";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAG1lI3IFb1rBbyrXQxua8mna7eFNqfdHQ",
-  authDomain: "task-manager-react-native.firebaseapp.com",
-  databaseURL: "https://task-manager-react-native.firebaseio.com",
-  projectId: "task-manager-react-native",
-  storageBucket: "task-manager-react-native.appspot.com",
-  messagingSenderId: "483865679280",
-  appId: "1:483865679280:web:20a38acb175ae6709e3275",
-  measurementId: "G-VBJR9K6969"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGINING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID,
 };
 
 const firebaseApp = !firebase.apps.length

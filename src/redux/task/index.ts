@@ -4,7 +4,6 @@ import actionCreator, { createAction } from "../utils/actionCreator";
 import produce, { Draft } from "immer";
 // utils
 import { updateTasksList } from "../utils/reducer";
-import { TabRouter } from "@react-navigation/native";
 
 // action types
 const PAUSE = "taskManager/task/pause";
