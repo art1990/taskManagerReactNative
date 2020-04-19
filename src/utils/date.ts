@@ -11,9 +11,12 @@ import {
   endOfDay,
   isSameDay,
   differenceInSeconds,
+  getHours,
+  endOfHour,
+  startOfHour,
 } from "date-fns";
 // utils
-import { map, filter, comp, into } from "transducers-js";
+import { randomColor } from "randomcolor";
 // types
 import { IWeeksListProps, IWeekData } from "../types";
 import { IChartsState } from "../redux/charts/index";
@@ -169,17 +172,71 @@ export const generateWeekForTask = ({
   return { data, labels };
 };
 
-// per day
+export const generateForDay = ({ tasksList: tasks }) => {
+  const tasksColorsList = randomColor({
+    count: tasks.length,
+    hue: "monochrome",
+  });
+
+  const tasksList = tasks.map(({ timeInterval }, i) => ({
+    timeInterval,
+    color: tasksColorsList[i],
+  }));
+
+  const dayWithHoursObj = {};
+  [...new Array(24).keys()].forEach(
+    (el) => (dayWithHoursObj[el] = { data: [], colors: [] })
+  );
+
+  tasksList.forEach((el) => {
+    el.timeInterval.forEach(({ startTime, endTime }) => {
+      const startDate = fromUnixTime(startTime);
+      const endDate = fromUnixTime(endTime);
+      const startHour = getHours(startDate);
+      const endHour = getHours(endDate);
+
+      for (let i = startHour; i <= endHour; i++) {
+        const hour = dayWithHoursObj[i];
+        const duration =
+          startHour === endHour
+            ? endTime - startTime
+            : i === startHour
+            ? differenceInSeconds(endOfHour(startDate), startDate)
+            : i === endHour
+            ? differenceInSeconds(endDate, startOfHour(endDate))
+            : 3600;
+        console.log("start", startHour, "end", endHour, duration / 60);
+        hour.data.push(duration / 60);
+        hour.colors.push(el.color);
+      }
+    });
+  });
+
+  const hourArr = Object.entries(dayWithHoursObj).sort((a, b) => +a[0] - +b[0]);
+  const data = [];
+  const barColors = [];
+  hourArr.forEach(([_, el]) => {
+    data.push(el.data);
+    barColors.push(el.colors);
+  });
+
+  // console.log(hourArr);
+  return { data, barColors };
+};
+
+// convert per day
 export const convertResponseToPerDay = (data) => {
   const { weeksList, currentPerDay } = data;
-
+  // const currentPerDay = getUnixTime(new Date(2020, 3, 17));
   const tasksList = weeksList
     .filter((task) =>
-      task.timeInterval.find((el) => isSameDay(currentPerDay, el.startTime))
+      task.timeInterval.find((el) =>
+        isSameDay(fromUnixTime(currentPerDay), fromUnixTime(el.startTime))
+      )
     )
     .map((task) => {
       const timeInterval = task.timeInterval.filter((el) =>
-        isSameDay(currentPerDay, el.startTime)
+        isSameDay(fromUnixTime(currentPerDay), fromUnixTime(el.startTime))
       );
 
       return { ...task, timeInterval };

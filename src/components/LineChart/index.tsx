@@ -16,10 +16,15 @@ const chartConfig = {
   style: {
     borderRadius: 0,
   },
+
   propsForDots: {
     r: "6",
     strokeWidth: "2",
     stroke: "rgba(0, 0, 0, .4)",
+  },
+
+  propsForBackgroundLines: {
+    strokeDasharray: false,
   },
 };
 

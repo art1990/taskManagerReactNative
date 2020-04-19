@@ -121,6 +121,43 @@ export interface IWorkingTaskInfoProps {
   style?: {};
 }
 
+export interface ITitleWithFilterProps extends ITitleProps {
+  onPressFilter?: () => void;
+  isHasTag: boolean;
+}
+
+export interface IPaginatorProps {
+  text: string;
+  onNextPress: () => void;
+  onPrevPress: () => void;
+}
+
+export interface IWeekChartProps {
+  onNextPress: () => void;
+  onPrevPress: () => void;
+  paginationText: string;
+  suffixY?: string;
+  weekData: { data: number[]; labels: string[] };
+}
+
+export interface IDayChartProps {
+  dayData: { labels?: string[]; data: string | number[]; barColors: string[] };
+  updateDate: (date: Date | string) => void;
+  currentDate: Date | string | number;
+}
+
+export interface ITaskSwipeableInfoProps extends ITaskInfoProps {
+  onRemovePress: () => void;
+  onEditPress: () => void;
+  onResumePress: () => void;
+}
+
+export interface ITaskViewProps {
+  task: any;
+  route: any;
+  navigation: any;
+}
+
 // forms
 export interface IAuthForm {
   onSubmit: any;
@@ -193,37 +230,6 @@ export interface ITimeSectionProps {
   startTaskTime: number;
   endTime: number;
   duration: number;
-}
-
-export interface ITitleWithFilterProps extends ITitleProps {
-  onPressFilter?: () => void;
-  isHasTag: boolean;
-}
-
-export interface IPaginatorProps {
-  text: string;
-  onNextPress: () => void;
-  onPrevPress: () => void;
-}
-
-export interface IWeekChartProps {
-  onNextPress: () => void;
-  onPrevPress: () => void;
-  paginationText: string;
-  suffixY?: string;
-  weekData: { data: number[]; labels: string[] };
-}
-
-export interface ITaskSwipeableInfoProps extends ITaskInfoProps {
-  onRemovePress: () => void;
-  onEditPress: () => void;
-  onResumePress: () => void;
-}
-
-export interface ITaskViewProps {
-  task: any;
-  route: any;
-  navigation: any;
 }
 
 // utils

@@ -296,6 +296,3 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     currentPerDay: currentPerDay || weeksList[0].startTaskTime,
   };
 };
-
-export const getLoggedTasksApi = async () => {};
-export const getLoggedPerDayApi = async () => {};

@@ -8,7 +8,11 @@ import PerDayChart from "./components/PerDayChart";
 // hooks
 import { useCharts } from "../../hooks/useCharts";
 // utils
-import { generateWeekForTime, generateWeekForTask } from "../../utils/date";
+import {
+  generateWeekForTime,
+  generateWeekForTask,
+  generateForDay,
+} from "../../utils/date";
 
 const Statistic: React.FC = () => {
   const {
@@ -16,14 +20,19 @@ const Statistic: React.FC = () => {
     toPrevTimeWeek,
     toNextTaskWeek,
     toPrevTaskWeek,
+    updatePerDay,
+    currentPerDay,
     loggedTime,
     loggedTasks,
+    loggedPerDay,
     isLoadingLoggedTime,
     isLoadingLoggedTask,
+    isLoadingLoggedPerDay,
   } = useCharts();
 
   const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);
   const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
+  const loggedPerDayData = loggedPerDay && generateForDay(loggedPerDay);
 
   return (
     <ScrollView>
@@ -46,7 +55,13 @@ const Statistic: React.FC = () => {
           weekData={loggedTasksData}
         />
       )}
-      <PerDayChart />
+      {!isLoadingLoggedPerDay && loggedPerDay && (
+        <PerDayChart
+          dayData={loggedPerDayData}
+          updateDate={updatePerDay}
+          currentDate={currentPerDay}
+        />
+      )}
     </ScrollView>
   );
 };

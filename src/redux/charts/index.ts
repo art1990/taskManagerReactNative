@@ -30,7 +30,7 @@ type Logged = {
 export interface IChartsState {
   loggedTime: Logged;
   loggedTasks: Logged;
-  loggedPerDay: {}[];
+  loggedPerDay: { tasksList: Logged["weeksList"] };
   meta: {
     totalWeeks: number;
     currentWeekTimeNumber: number;
@@ -85,6 +85,9 @@ export default produce(
         draft.meta[
           `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
         ] = lastVisible;
+      } else {
+        draft[section] = payload;
+        return;
       }
       draft[section] = { startWeek, weeksList };
     };
@@ -93,7 +96,6 @@ export default produce(
       draft.meta[isLoading] = false;
       draft.meta.error = payload;
       draft.meta.action = null;
-      console.log(payload);
     };
 
     switch (type) {

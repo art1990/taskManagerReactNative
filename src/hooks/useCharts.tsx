@@ -10,6 +10,8 @@ import {
   updateMeta,
 } from "../redux/charts";
 import { selectMeta, selectChartsData } from "../redux/charts/selectors";
+// utils
+import { getUnixTime } from "date-fns";
 
 export const useCharts = () => {
   const dispatch = useDispatch();
@@ -20,9 +22,12 @@ export const useCharts = () => {
     totalWeeks,
     isLoadingLoggedTime,
     isLoadingLoggedTask,
+    isLoadingLoggedPerDay,
   } = useSelector(selectMeta);
 
-  const { loggedTime, loggedTasks } = useSelector(selectChartsData);
+  const { loggedTime, loggedTasks, loggedPerDay } = useSelector(
+    selectChartsData
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -70,17 +75,22 @@ export const useCharts = () => {
     dispatch(updateMeta.run({ ...weekNumber, action: "prev" }));
   };
 
-  const updatePerDay = (day) => {
+  const updatePerDay = (data) => {
+    const day = getUnixTime(new Date(data));
+
     dispatch(updateMeta.run({ currentPerDay: day }));
   };
 
   return {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
+    currentPerDay,
     loggedTime,
     loggedTasks,
+    loggedPerDay,
     isLoadingLoggedTime,
     isLoadingLoggedTask,
+    isLoadingLoggedPerDay,
     toNextTaskWeek,
     toNextTimeWeek,
     toPrevTimeWeek,
