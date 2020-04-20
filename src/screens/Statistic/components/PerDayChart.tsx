@@ -1,33 +1,40 @@
 // react
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { StyleSheet } from "react-native";
 // components
 import BarChart from "../../../components/BarChart";
-import Button from "../../../components/Button";
 import DatePicker from "@react-native-community/datetimepicker";
 import InputWithIcon from "../../../components/InputWithIcon";
 // utils
-import { fromUnixTime, format, getUnixTime } from "date-fns";
+import { fromUnixTime, format } from "date-fns";
 // types
 import { IDayChartProps } from "../../../types/index";
+// assets
+import Styles from "../../../assets/styles";
 
 const PerDayChart: React.FC<IDayChartProps> = ({
   dayData,
   updateDate,
   currentDate,
+  inputStyle,
 }) => {
   const [show, setShow] = useState(false);
   const date = fromUnixTime(currentDate);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(false);
-    updateDate(currentDate);
-  };
+  const onChange = useCallback(
+    (event, selectedDate) => {
+      const currentDate = selectedDate || date;
+      setShow(false);
+      updateDate(currentDate);
+    },
+    [date, setShow, updateDate]
+  );
 
   return (
     <>
-      <BarChart dayData={dayData} />
+      <BarChart dayData={dayData} yLabel="min" xLabelsList={["am", "pm"]} />
       <InputWithIcon
+        inputStyle={inputStyle}
         icon="calendar"
         disabled
         onPress={() => setShow(true)}

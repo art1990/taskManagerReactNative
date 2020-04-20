@@ -1,6 +1,6 @@
 // react
 import React, { useMemo } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 // components
 import Title from "../../components/Title";
 import WeekChart from "./components/WeekChart";
@@ -15,6 +15,7 @@ import {
 } from "../../utils/date";
 // assets
 import Styles from "../../assets/styles";
+import { Colors } from "../../assets/styles/constants";
 
 const Statistic: React.FC = () => {
   const {
@@ -46,39 +47,48 @@ const Statistic: React.FC = () => {
   );
 
   return (
-    <ScrollView style={[Styles.wrapper]}>
-      <Title text="Statistic" />
+    <View style={[styles.container]}>
+      <ScrollView>
+        <Title text="Statistic" />
 
-      {!isLoadingLoggedTime && loggedTime && (
-        <WeekChart
-          onNextPress={toNextTimeWeek}
-          onPrevPress={toPrevTimeWeek}
-          weekData={loggedTimeData}
-          suffixY=" H"
-          chartName="Logged time"
-        />
-      )}
-      {!isLoadingLoggedTask && loggedTasks && (
-        <WeekChart
-          onNextPress={toNextTaskWeek}
-          onPrevPress={toPrevTaskWeek}
-          weekData={loggedTasksData}
-          chartName="Logged tasks"
-        />
-      )}
-      {!isLoadingLoggedPerDay && loggedPerDay && (
-        <PerDayChart
-          dayData={loggedPerDayData}
-          updateDate={updatePerDay}
-          currentDate={currentPerDay}
-        />
-      )}
-    </ScrollView>
+        {!isLoadingLoggedTime && loggedTime && (
+          <WeekChart
+            onNextPress={toNextTimeWeek}
+            onPrevPress={toPrevTimeWeek}
+            weekData={loggedTimeData}
+            suffixY=" H"
+            chartName="Logged time"
+          />
+        )}
+        {!isLoadingLoggedTask && loggedTasks && (
+          <WeekChart
+            onNextPress={toNextTaskWeek}
+            onPrevPress={toPrevTaskWeek}
+            weekData={loggedTasksData}
+            chartName="Logged tasks"
+          />
+        )}
+        {!isLoadingLoggedPerDay && loggedPerDay && (
+          <PerDayChart
+            inputStyle={styles.input}
+            dayData={loggedPerDayData}
+            updateDate={updatePerDay}
+            currentDate={currentPerDay}
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingBottom: 30,
+    backgroundColor: Colors.white,
+    paddingLeft: 8,
+    paddingRight: 30,
+  },
+  input: { marginLeft: 26 },
 });
 
 export default Statistic;

@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 // react-native-chart
 import StackedBarChart from "./StackedBarChart";
 import { Dimensions } from "react-native";
@@ -27,22 +28,53 @@ const chartConfig = {
   },
 };
 
-const BarChart: React.FC<IDayChartProps> = ({ dayData }) => {
+const BarChart: React.FC<IDayChartProps> = ({
+  dayData,
+  xLabelsList,
+  yLabel,
+}) => {
   const data = {
     labels: [2, 4, 6, 8, 10, 12, 2, 4, 6, 8, 10, 12],
     data: dayData.data,
     barColors: dayData.barColors,
   };
 
+  const height = 220;
+
   return (
-    <StackedBarChart
-      data={data}
-      height={220}
-      width={screenWidth}
-      chartConfig={chartConfig}
-      decimalPlaces={0}
-    />
+    <>
+      <Text style={styles.text}>{yLabel}</Text>
+      <View style={{ height: height - 22 }}>
+        <StackedBarChart
+          data={data}
+          height={height}
+          width={screenWidth}
+          chartConfig={chartConfig}
+          decimalPlaces={0}
+        />
+      </View>
+      <View style={styles.xLabelSection}>
+        {xLabelsList.map((el, i) => (
+          <Text key={i} style={styles.text}>
+            {el}
+          </Text>
+        ))}
+      </View>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  xLabelSection: {
+    flex: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "92%",
+    alignSelf: "flex-end",
+  },
+  text: {
+    color: Colors.chartLabelColor,
+  },
+});
 
 export default BarChart;

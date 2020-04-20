@@ -13,6 +13,7 @@ const InputWithIcon: React.FC<IInputWithIconProps> = ({
   onPress,
   label,
   style,
+  inputStyle,
   icon,
   iconSize = 20,
   ...rest
@@ -39,7 +40,7 @@ const InputWithIcon: React.FC<IInputWithIconProps> = ({
   );
 
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container, inputStyle]}>
       <IconButton
         icon={icon}
         onPress={onPress}
@@ -51,7 +52,7 @@ const InputWithIcon: React.FC<IInputWithIconProps> = ({
         label={label}
         onChangeText={onChangeText}
         value={value}
-        style={styles.input}
+        style={[styles.input]}
       />
     </View>
   );

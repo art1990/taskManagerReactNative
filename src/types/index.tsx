@@ -53,6 +53,7 @@ export interface IInputProps {
 
 export interface IInputWithIconProps extends IInputProps {
   style?: string;
+  inputStyle?: string | [] | {};
   onPress: (data?) => void;
   icon: IIconButtonProps["icon"];
   iconSize: IIconButtonProps["size"];
@@ -152,6 +153,9 @@ export interface IWeekChartProps {
 }
 
 export interface IDayChartProps {
+  xLabelsList?: string[];
+  yLabel?: string;
+  inputStyle?: IInputWithIconProps["inputStyle"];
   dayData: { labels?: string[]; data: string | number[]; barColors: string[] };
   updateDate?: (date: Date | string) => void;
   currentDate?: Date | string | number;
