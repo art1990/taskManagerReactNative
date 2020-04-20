@@ -153,12 +153,13 @@ export interface IWeekChartProps {
 }
 
 export interface IDayChartProps {
-  xLabelsList?: string[];
-  yLabel?: string;
-  inputStyle?: IInputWithIconProps["inputStyle"];
+  chartName: string;
   dayData: { labels?: string[]; data: string | number[]; barColors: string[] };
   updateDate?: (date: Date | string) => void;
   currentDate?: Date | string | number;
+  inputStyle?: IInputWithIconProps["inputStyle"];
+  yLabel?: string;
+  xLabelsList?: string[];
 }
 
 export interface ITaskSwipeableInfoProps extends ITaskInfoProps {

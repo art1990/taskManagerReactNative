@@ -74,6 +74,7 @@ const Statistic: React.FC = () => {
             dayData={loggedPerDayData}
             updateDate={updatePerDay}
             currentDate={currentPerDay}
+            chartName="Logged per day"
           />
         )}
       </ScrollView>

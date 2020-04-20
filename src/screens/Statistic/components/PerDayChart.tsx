@@ -1,6 +1,6 @@
 // react
 import React, { useState, useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 // components
 import BarChart from "../../../components/BarChart";
 import DatePicker from "@react-native-community/datetimepicker";
@@ -11,12 +11,14 @@ import { fromUnixTime, format } from "date-fns";
 import { IDayChartProps } from "../../../types/index";
 // assets
 import Styles from "../../../assets/styles";
+import { Colors } from "../../../assets/styles/constants";
 
 const PerDayChart: React.FC<IDayChartProps> = ({
   dayData,
   updateDate,
   currentDate,
   inputStyle,
+  chartName,
 }) => {
   const [show, setShow] = useState(false);
   const date = fromUnixTime(currentDate);
@@ -31,7 +33,8 @@ const PerDayChart: React.FC<IDayChartProps> = ({
   );
 
   return (
-    <>
+    <View style={styles.container}>
+      <Text style={styles.text}>{chartName}</Text>
       <BarChart dayData={dayData} yLabel="min" xLabelsList={["am", "pm"]} />
       <InputWithIcon
         inputStyle={inputStyle}
@@ -49,8 +52,23 @@ const PerDayChart: React.FC<IDayChartProps> = ({
           onChange={onChange}
         />
       )}
-    </>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: "relative",
+  },
+  text: {
+    position: "absolute",
+    zIndex: 1,
+    top: 8,
+    right: 0,
+    fontSize: 12,
+    lineHeight: 18,
+    color: Colors.chartLabelColor,
+  },
+});
 
 export default PerDayChart;
