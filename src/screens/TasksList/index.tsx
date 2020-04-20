@@ -67,22 +67,33 @@ export default ({ navigation }) => {
     }, [user, filters])
   );
 
-  const onLogOut = () => {
+  const onLogOut = useCallback(() => {
     dispatch(logout.run());
-  };
+  }, [dispatch, logout]);
 
-  const toAddTask = () => {
+  const toAddTask = useCallback(() => {
     navigation.navigate(Routes.CREATE_TASK);
-  };
+  }, [navigation]);
 
-  const toView = ({ id }) => {
-    navigation.navigate(Routes.VIEW_TASK, { id });
-  };
+  const toView = useCallback(
+    ({ id }) => {
+      navigation.navigate(Routes.VIEW_TASK, { id });
+    },
+    [navigation]
+  );
 
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     tasksList.length < tasksCount &&
       dispatch(getMoreList.request({ filters, lastVisible, limit }));
-  };
+  }, [
+    tasksList,
+    tasksCount,
+    dispatch,
+    getMoreList,
+    filters,
+    lastVisible,
+    limit,
+  ]);
 
   const renderFooter = () => {
     if (!isLoadingTaskList) return null;
