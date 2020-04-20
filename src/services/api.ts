@@ -252,20 +252,26 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   } = meta;
 
   const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
+  let currentDay = currentPerDay;
 
   const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTasksSnapshot;
 
   const cursor = action === "next" ? "startAfter" : "startAt";
 
-  const weekDoc = currentPerDay
-    ? await weeksCol.doc(currentPerDay).get()
-    : currentWeekNumber === 1 || currentPerDay === null
+  const { startWeek: start, startWeekSec } = getStartWeek(currentPerDay);
+
+  let weekDoc = currentPerDay
+    ? await weeksCol.doc(start).get()
+    : currentWeekNumber === 1
     ? await weeksCol.limit(1).get()
     : await weeksCol[cursor](lastSnapshot).limit(1).get();
 
-  const lastVisible =
-    (!currentPerDay || currentPerDay !== null) &&
-    weekDoc.docs[weekDoc.docs.length - 1];
+  const lastVisible = !currentPerDay && weekDoc.docs[weekDoc.docs.length - 1];
+  if (currentPerDay) console.log(weekDoc.exists);
+  if (!weekDoc.exists && !!currentPerDay) {
+    weekDoc = await weeksCol.limit(1).get();
+    currentDay = startWeekSec;
+  }
 
   const { tasksId, startWeek } = getDataFromDoc(weekDoc);
 
@@ -293,6 +299,6 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     lastVisible,
     totalWeeks,
     startWeek,
-    currentPerDay: currentPerDay || weeksList[0].startTaskTime,
+    currentPerDay: currentDay,
   };
 };

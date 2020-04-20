@@ -2,6 +2,8 @@
 import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
+// utils
+import { getUnixTime } from "date-fns";
 
 // action types
 const GET_LOGGED_TIME = "taskManager/charts/getLoggedTime";
@@ -54,7 +56,7 @@ const initialState: IChartsState = {
     totalWeeks: null,
     currentWeekTimeNumber: 1,
     currentWeekTaskNumber: 1,
-    currentPerDay: null,
+    currentPerDay: getUnixTime(new Date()),
     lastLoggedTimeSnapshot: null,
     lastLoggedTasksSnapshot: null,
     isLoadingLoggedTime: false,
