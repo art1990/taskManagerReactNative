@@ -1,6 +1,6 @@
 // react
-import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import React, { useMemo } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 // components
 import Title from "../../components/Title";
 import WeekChart from "./components/WeekChart";
@@ -32,9 +32,18 @@ const Statistic: React.FC = () => {
     isLoadingLoggedPerDay,
   } = useCharts();
 
-  const loggedTimeData = loggedTime && generateWeekForTime(loggedTime);
-  const loggedTasksData = loggedTasks && generateWeekForTask(loggedTasks);
-  const loggedPerDayData = loggedPerDay && generateForDay(loggedPerDay);
+  const loggedTimeData = useMemo(
+    () => loggedTime && generateWeekForTime(loggedTime),
+    [loggedTime, generateWeekForTime]
+  );
+  const loggedTasksData = useMemo(
+    () => loggedTasks && generateWeekForTask(loggedTasks),
+    [loggedTasks, generateWeekForTask]
+  );
+  const loggedPerDayData = useMemo(
+    () => loggedPerDay && generateForDay(loggedPerDay),
+    [loggedPerDay, generateForDay]
+  );
 
   return (
     <ScrollView style={[Styles.wrapper]}>
