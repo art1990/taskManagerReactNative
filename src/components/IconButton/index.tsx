@@ -40,7 +40,7 @@ const AddTag: React.FC<IMaterialIconProps> = ({ width, height, color }) => (
 const Next: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon
     name="navigate-next"
-    color={color || Colors.canselIcon}
+    color={color || Colors.chartsNav}
     {...rest}
   />
 );
@@ -57,12 +57,21 @@ const Filter: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon name="filter-list" color={color} {...rest} />
 );
 
+const Calendar: React.FC<IMaterialIconProps> = ({ width, height, color }) => (
+  <MaterialCommunityIcons
+    name="calendar-text"
+    size={width || height}
+    color={color || Colors.black}
+  />
+);
+
 const IconButton: React.FC<IIconButtonProps> = ({
   size = 20,
   icon,
   style,
   color,
   onPress,
+  ...rest
 }) => {
   const iconComponents = {
     resume: Resume,
@@ -74,6 +83,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
     prev: Prev,
     next: Next,
     filter: Filter,
+    calendar: Calendar,
   };
 
   const Icon = iconComponents[icon];
@@ -81,10 +91,11 @@ const IconButton: React.FC<IIconButtonProps> = ({
 
   return (
     <ICButton
+      {...rest}
       icon={() => <Icon width={iconSize} heigth={iconSize} color={color} />}
       onPress={onPress}
       style={[
-        icon === "cansel" && {
+        ["cansel", "prev", "next"].indexOf(icon) !== -1 && {
           height: iconSize,
           width: iconSize,
           margin: 0,

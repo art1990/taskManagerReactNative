@@ -2,17 +2,19 @@
 import React from "react";
 import { LineChart as Chart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-const screenWidth = Dimensions.get("window").width;
+const screenWidth = Dimensions.get("window").width * 0.95;
 // types
 import { IWeeksListProps } from "../../types";
+// colors
+import { Colors } from "../../assets/styles/constants";
 
 const chartConfig = {
   backgroundColor: "red",
   backgroundGradientFrom: "#fff",
   backgroundGradientTo: "#fff",
-  decimalPlaces: 2, // optional, defaults to 2dp
+  decimalPlaces: 0, // optional, defaults to 2dp
   color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
-  labelColor: (opacity = 1) => `rgba(0, 0, 0, 0.4)`,
+  labelColor: (opacity = 1) => Colors.chartLabelColor,
   style: {
     borderRadius: 0,
   },
@@ -45,8 +47,9 @@ const LineChart: React.FC<IWeeksListProps> = ({ weekData, suffixY = "" }) => {
       yAxisInterval={1}
       chartConfig={chartConfig}
       style={{
-        marginVertical: 8,
+        marginVertical: 6,
         borderRadius: 16,
+        paddingRight: 36,
       }}
     />
   );

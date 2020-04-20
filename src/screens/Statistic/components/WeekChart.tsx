@@ -13,12 +13,15 @@ const WeekChart: React.FC<IWeekChartProps> = ({
   paginationText,
   weekData,
   suffixY,
+  chartName,
 }) => (
   <>
     <Paginator
       onNextPress={onNextPress}
       onPrevPress={onPrevPress}
       text={paginationText}
+      chartName={chartName}
+      horizontalLabels={weekData.labels}
     />
     <LineCharts weekData={weekData} suffixY={suffixY} />
   </>

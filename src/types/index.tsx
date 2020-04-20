@@ -25,6 +25,7 @@ export interface IIconButtonProps {
     | "addTag"
     | "prev"
     | "next"
+    | "calendar"
     | "filter";
   onPress: (id?) => void;
   color?: string;
@@ -48,6 +49,13 @@ export interface IInputProps {
   placeholder?: string;
   placeholderColor?: string;
   keyboardType?: KeyboardTypeOptions;
+}
+
+export interface IInputWithIconProps extends IInputProps {
+  style?: string;
+  onPress: (data?) => void;
+  icon: IIconButtonProps["icon"];
+  iconSize: IIconButtonProps["size"];
 }
 
 export interface IWeekData {
@@ -127,23 +135,26 @@ export interface ITitleWithFilterProps extends ITitleProps {
 }
 
 export interface IPaginatorProps {
-  text: string;
+  chartName: string;
   onNextPress: () => void;
   onPrevPress: () => void;
+  text?: string;
+  horizontalLabels?: IWeekChartProps["weekData"]["labels"];
 }
 
 export interface IWeekChartProps {
   onNextPress: () => void;
   onPrevPress: () => void;
-  paginationText: string;
+  paginationText?: IPaginatorProps["text"];
+  chartName: IPaginatorProps["chartName"];
   suffixY?: string;
   weekData: { data: number[]; labels: string[] };
 }
 
 export interface IDayChartProps {
   dayData: { labels?: string[]; data: string | number[]; barColors: string[] };
-  updateDate: (date: Date | string) => void;
-  currentDate: Date | string | number;
+  updateDate?: (date: Date | string) => void;
+  currentDate?: Date | string | number;
 }
 
 export interface ITaskSwipeableInfoProps extends ITaskInfoProps {

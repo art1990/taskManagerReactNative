@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import BarChart from "../../../components/BarChart";
 import Button from "../../../components/Button";
 import DatePicker from "@react-native-community/datetimepicker";
+import InputWithIcon from "../../../components/InputWithIcon";
 // utils
 import { fromUnixTime, format, getUnixTime } from "date-fns";
 // types
@@ -26,7 +27,12 @@ const PerDayChart: React.FC<IDayChartProps> = ({
   return (
     <>
       <BarChart dayData={dayData} />
-      <Button onPress={() => setShow(true)}>Show</Button>
+      <InputWithIcon
+        icon="calendar"
+        disabled
+        onPress={() => setShow(true)}
+        value={format(date, "MMM d yyyy")}
+      />
       {show && (
         <DatePicker
           testID="datePicker"

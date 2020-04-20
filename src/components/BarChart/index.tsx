@@ -5,21 +5,25 @@ import StackedBarChart from "./StackedBarChart";
 import { Dimensions } from "react-native";
 // type
 import { IDayChartProps } from "../../types";
+// colors
+import { Colors } from "../../assets/styles/constants";
 
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
-  backgroundColor: "red",
   backgroundGradientFrom: "#fff",
   backgroundGradientTo: "#fff",
-  // decimalPlaces: 2, // optional, defaults to 2dp
+  // optional, defaults to 2dp
   color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
-  labelColor: (opacity = 1) => `rgba(0, 0, 0, 0.4)`,
+  labelColor: (opacity = 1) => Colors.chartLabelColor,
   style: {
     borderRadius: 0,
   },
   propsForBackgroundLines: {
     strokeDasharray: false,
+  },
+  renderVerticalLabels: {
+    paddingRight: 2,
   },
 };
 
@@ -36,6 +40,7 @@ const BarChart: React.FC<IDayChartProps> = ({ dayData }) => {
       height={220}
       width={screenWidth}
       chartConfig={chartConfig}
+      decimalPlaces={0}
     />
   );
 };

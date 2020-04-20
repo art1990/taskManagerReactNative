@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 // components
 import Title from "../../components/Title";
 import WeekChart from "./components/WeekChart";
@@ -13,6 +13,8 @@ import {
   generateWeekForTask,
   generateForDay,
 } from "../../utils/date";
+// assets
+import Styles from "../../assets/styles";
 
 const Statistic: React.FC = () => {
   const {
@@ -35,24 +37,24 @@ const Statistic: React.FC = () => {
   const loggedPerDayData = loggedPerDay && generateForDay(loggedPerDay);
 
   return (
-    <ScrollView>
+    <ScrollView style={[Styles.wrapper]}>
       <Title text="Statistic" />
 
       {!isLoadingLoggedTime && loggedTime && (
         <WeekChart
           onNextPress={toNextTimeWeek}
           onPrevPress={toPrevTimeWeek}
-          paginationText="hahahah"
           weekData={loggedTimeData}
           suffixY=" H"
+          chartName="Logged time"
         />
       )}
       {!isLoadingLoggedTask && loggedTasks && (
         <WeekChart
           onNextPress={toNextTaskWeek}
           onPrevPress={toPrevTaskWeek}
-          paginationText="hahahah"
           weekData={loggedTasksData}
+          chartName="Logged tasks"
         />
       )}
       {!isLoadingLoggedPerDay && loggedPerDay && (
@@ -65,5 +67,9 @@ const Statistic: React.FC = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {},
+});
 
 export default Statistic;
