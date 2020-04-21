@@ -14,6 +14,7 @@ import {
   getHours,
   endOfHour,
   startOfHour,
+  format,
 } from "date-fns";
 // utils
 import { randomColor } from "randomcolor";
@@ -34,9 +35,9 @@ export const getUTCDate = (date) => {
   );
 };
 
-export const formatToUTCTime = (seconds) => {
+export const formatToUTCTime = (seconds, hasMounth) => {
   const date = fromUnixTime(+seconds);
-  return lightFormat(getUTCDate(date), "HH:mm:ss");
+  return format(getUTCDate(date), `HH:mm:ss${hasMounth ? " MMM MM" : ""}`);
 };
 
 // utils for week func

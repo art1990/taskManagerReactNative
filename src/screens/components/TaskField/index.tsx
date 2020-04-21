@@ -8,10 +8,17 @@ import { Colors } from "../../../assets/styles/constants";
 // types
 import { ITaskFieldProps } from "../../../types";
 
-const TaskField: React.FC<ITaskFieldProps> = ({ title, text, isTime }) => (
+const TaskField: React.FC<ITaskFieldProps> = ({
+  title,
+  text,
+  isTime,
+  hasMounth,
+}) => (
   <View style={styles.container}>
     <Text style={styles.title}>{title}</Text>
-    <Text style={styles.text}>{isTime ? formatToUTCTime(text) : text}</Text>
+    <Text style={styles.text}>
+      {isTime ? formatToUTCTime(text, hasMounth) : text}
+    </Text>
   </View>
 );
 

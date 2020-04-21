@@ -239,6 +239,7 @@ export interface ITaskFieldProps {
   title: string;
   text: string | number;
   isTime?: boolean;
+  hasMounth?: boolean;
 }
 
 export interface ICreateTaskProps {

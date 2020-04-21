@@ -20,7 +20,7 @@ const chartConfig = {
   },
 
   propsForDots: {
-    r: "6",
+    r: "3",
     strokeWidth: "2",
     stroke: "rgba(0, 0, 0, .4)",
   },
