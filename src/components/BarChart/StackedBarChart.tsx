@@ -5,6 +5,8 @@ import { View } from "react-native";
 import { Svg, Rect, G, Text } from "react-native-svg";
 // chart-kit
 import { AbstractChart } from "react-native-chart-kit";
+// types
+import { IStackedBarChartProps } from "../../types/index";
 
 const barWidth = 32;
 
@@ -20,7 +22,16 @@ class StackedBarChart extends AbstractChart {
       : 0;
   };
 
-  renderBars = (config) => {
+  renderBars = (config: {
+    data: [];
+    width: number;
+    height: number;
+    paddingTop: number;
+    paddingRight: number;
+    border: any;
+    colors: string;
+    stackedBar: boolean;
+  }): any => {
     const {
       data,
       width,
@@ -67,8 +78,12 @@ class StackedBarChart extends AbstractChart {
     });
   };
 
-  renderLegend = (config) => {
-    const { legend, colors, width, height } = config;
+  renderLegend: (config: {
+    legend: [];
+    colors: [];
+    width: number;
+    height: number;
+  }) => void = ({ legend, colors, width, height }) => {
     return legend.map((x, i) => {
       return (
         <G key={Math.random()}>
@@ -120,7 +135,7 @@ class StackedBarChart extends AbstractChart {
         border = actual;
       }
     }
-    var stackedBar = data.legend && data.legend.length == 0 ? false : true;
+    var stackedBar = !(data.legend && data.legend.length == 0);
     return (
       <View style={style}>
         <Svg height={height} width={width}>

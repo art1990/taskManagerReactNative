@@ -95,7 +95,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
       icon={() => <Icon width={iconSize} heigth={iconSize} color={color} />}
       onPress={onPress}
       style={[
-        ["cansel", "prev", "next"].indexOf(icon) !== -1 && {
+        ["cansel", "prev", "next"].includes(icon) && {
           height: iconSize,
           width: iconSize,
           margin: 0,

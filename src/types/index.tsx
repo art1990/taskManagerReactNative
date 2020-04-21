@@ -52,11 +52,12 @@ export interface IInputProps {
 }
 
 export interface IInputWithIconProps extends IInputProps {
-  style?: string;
-  inputStyle?: string | [] | {};
   onPress: (data?) => void;
+  inputStyle?: [] | {};
+  style?: {} | [];
   icon: IIconButtonProps["icon"];
-  iconSize: IIconButtonProps["size"];
+  iconSize?: IIconButtonProps["size"];
+  disabled?: boolean;
 }
 
 export interface IWeekData {
@@ -85,13 +86,13 @@ export interface INavigationMessage {
 export interface IPasswordInputProps extends IInputProps {
   iconSize?: number;
   isError?: boolean;
-  style?: {};
+  style?: {} | [];
 }
 
 export interface ITagProps {
   text: string;
   onDeletePress?: () => void;
-  style?: {};
+  style?: {} | [];
   setTags?: any;
 }
 
@@ -153,10 +154,10 @@ export interface IWeekChartProps {
 }
 
 export interface IDayChartProps {
-  chartName: string;
+  chartName?: string;
   dayData: { labels?: string[]; data: string | number[]; barColors: string[] };
   updateDate?: (date: Date | string) => void;
-  currentDate?: Date | string | number;
+  currentDate?: number;
   inputStyle?: IInputWithIconProps["inputStyle"];
   yLabel?: string;
   xLabelsList?: string[];
@@ -169,9 +170,12 @@ export interface ITaskSwipeableInfoProps extends ITaskInfoProps {
 }
 
 export interface ITaskViewProps {
-  task: any;
-  route: any;
+  route: { params: { [key: string]: string } };
   navigation: any;
+}
+
+export interface IStackedBarChartProps {
+  props: { width: number; height: number };
 }
 
 // forms

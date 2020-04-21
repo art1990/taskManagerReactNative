@@ -15,8 +15,8 @@ const chartConfig = {
   backgroundGradientFrom: "#fff",
   backgroundGradientTo: "#fff",
   // optional, defaults to 2dp
-  color: (opacity = 1) => `rgba(0, 0, 0, 1)`,
-  labelColor: (opacity = 1) => Colors.chartLabelColor,
+  color: () => `rgba(0, 0, 0, 1)`,
+  labelColor: () => Colors.chartLabelColor,
   style: {
     borderRadius: 0,
   },
