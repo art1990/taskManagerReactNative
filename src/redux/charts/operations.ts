@@ -27,8 +27,7 @@ function* getLoggedTasksForChart({ payload }) {
 function* getLoggedPerDayForChart({ payload }) {
   const { currentPerDay } = yield select(selectMeta);
 
-  const day = currentPerDay ? formatISO(currentPerDay) : currentPerDay;
-  const argApi = { currentPerDay: day };
+  const argApi = { currentPerDay };
   yield apiHandler(
     { api: getWeekDataApi, argApi },
     getLoggedPerDay,

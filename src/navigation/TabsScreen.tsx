@@ -72,7 +72,7 @@ const TabsScreen = () => (
 const styles = StyleSheet.create({
   taBarContainer: {
     backgroundColor: Colors.tabBarBGColor,
-    height: 70,
+    height: 50,
   },
 });
 export default TabsScreen;

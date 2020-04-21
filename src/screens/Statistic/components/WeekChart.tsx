@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 // components
 import LineCharts from "../../../components/LineChart";
 import Paginator from "./Paginator";
@@ -13,15 +13,24 @@ const WeekChart: React.FC<IWeekChartProps> = ({
   paginationText,
   weekData,
   suffixY,
+  chartName,
 }) => (
-  <>
+  <View style={styles.container}>
     <Paginator
       onNextPress={onNextPress}
       onPrevPress={onPrevPress}
       text={paginationText}
+      chartName={chartName}
+      horizontalLabels={weekData.labels}
     />
     <LineCharts weekData={weekData} suffixY={suffixY} />
-  </>
+  </View>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 30,
+  },
+});
 
 export default WeekChart;

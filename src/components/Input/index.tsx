@@ -4,6 +4,8 @@ import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 // types
 import { IInputProps } from "../../types";
+// colors
+import { Colors } from "../../assets/styles/constants";
 
 const Input: React.FC<IInputProps> = (
   {
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     color: "#333",
     fontSize: 18,
     fontWeight: "700",
+    backgroundColor: Colors.white,
   },
 });
 

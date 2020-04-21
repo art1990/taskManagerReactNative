@@ -9,7 +9,6 @@ import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
 import TaskField from "../components/TaskField";
 import Button from "../../components/Button";
-import Dialog from "../../components/Dialog";
 // sections
 import Time from "../sections/Time";
 // hooks

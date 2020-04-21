@@ -17,5 +17,7 @@ export enum Colors {
 
   line = "#D8D8D8",
 
-  chartsNav = "rgba(0, 0, 0, 0.4)",
+  barChart = "#C4C4C4",
+  chartLabelColor = "rgba(0, 0, 0, 0.4)",
+  chartsNav = chartLabelColor,
 }

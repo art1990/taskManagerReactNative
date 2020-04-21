@@ -53,6 +53,6 @@ export default StyleSheet.create({
     marginLeft: vw(-50),
     marginRight: vw(-50),
     width: vw(100),
-    // paddingHorizontal,
+    // test
   },
 });

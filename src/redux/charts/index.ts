@@ -2,6 +2,8 @@
 import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
+// utils
+import { getUnixTime } from "date-fns";
 
 // action types
 const GET_LOGGED_TIME = "taskManager/charts/getLoggedTime";
@@ -30,7 +32,7 @@ type Logged = {
 export interface IChartsState {
   loggedTime: Logged;
   loggedTasks: Logged;
-  loggedPerDay: {}[];
+  loggedPerDay: { tasksList: Logged["weeksList"] };
   meta: {
     totalWeeks: number;
     currentWeekTimeNumber: number;
@@ -54,7 +56,7 @@ const initialState: IChartsState = {
     totalWeeks: null,
     currentWeekTimeNumber: 1,
     currentWeekTaskNumber: 1,
-    currentPerDay: null,
+    currentPerDay: getUnixTime(new Date()),
     lastLoggedTimeSnapshot: null,
     lastLoggedTasksSnapshot: null,
     isLoadingLoggedTime: false,
@@ -85,6 +87,9 @@ export default produce(
         draft.meta[
           `last${section[0].toUpperCase() + section.slice(1)}Snapshot`
         ] = lastVisible;
+      } else {
+        draft[section] = payload;
+        return;
       }
       draft[section] = { startWeek, weeksList };
     };
@@ -93,7 +98,6 @@ export default produce(
       draft.meta[isLoading] = false;
       draft.meta.error = payload;
       draft.meta.action = null;
-      console.log(payload);
     };
 
     switch (type) {
