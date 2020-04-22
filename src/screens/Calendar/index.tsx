@@ -1,11 +1,15 @@
 // react
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+// componets
+import Title from "../../components/Title";
+import Calendar from "../../components/Calendar";
 
 export default () => {
   return (
     <View>
-      <Text>Calendar</Text>
+      <Title text="Calendar" />
+      <Calendar />
     </View>
   );
 };

@@ -14,7 +14,6 @@ import {
   generateForDay,
 } from "../../utils/date";
 // assets
-import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
 
 const Statistic: React.FC = () => {
