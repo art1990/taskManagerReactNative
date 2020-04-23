@@ -12,12 +12,12 @@ import { getUnixTime } from "date-fns";
 export const useCalendar = () => {
   const [date, setDate] = useState({
     string: "2020-04-25",
-    number: Date.now(),
+    number: 1587632990375,
   });
 
   const { response, error, isLoading } = useFetch(getWeekDataApi, {
     currentPerDay: date.number,
   });
 
-  return { calendarTask: response, setDate, date };
+  return { calendarTask: response, error, setDate, date, isLoading };
 };

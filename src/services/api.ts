@@ -267,7 +267,6 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     : await weeksCol[cursor](lastSnapshot).limit(1).get();
 
   const lastVisible = !currentPerDay && weekDoc.docs[weekDoc.docs.length - 1];
-  if (currentPerDay) console.log(weekDoc.exists);
   if (!weekDoc.exists && !!currentPerDay) {
     weekDoc = await weeksCol.limit(1).get();
     currentDay = startWeekSec;

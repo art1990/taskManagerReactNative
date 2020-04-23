@@ -19,6 +19,7 @@
     "@types/yup": "^0.26.33",
     "axios": "^0.19.2",
     "date-fns": "^2.11.0",
+    "equals": "^1.0.5",
     "expo": "~36.0.0",
     "expo-document-picker": "^8.0.0",
     "faker": "^4.1.0",

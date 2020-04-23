@@ -206,7 +206,6 @@ export const generateForDay = ({ tasksList: tasks }) => {
             : i === endHour
             ? differenceInSeconds(endDate, startOfHour(endDate))
             : 3600;
-        console.log("start", startHour, "end", endHour, duration / 60);
         hour.data.push(duration / 60);
         hour.colors.push(el.color);
       }

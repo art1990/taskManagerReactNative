@@ -11,7 +11,7 @@ import { useCalendar } from "../../../hooks/useCalendar";
 interface IHeaderProps {}
 
 const Header = () => {
-  const { calendarTask, setDate, date } = useCalendar();
+  const { calendarTask, setDate, date, isLoading } = useCalendar();
 
   const selectedStyle = {
     selected: true,
@@ -33,7 +33,7 @@ const Header = () => {
         markedDates={{ [date.string]: selectedStyle }}
         onDayPress={onDayPress}
       />
-      {!calendarTask && <Spinner />}
+      {isLoading && <Spinner />}
     </>
   );
 };
