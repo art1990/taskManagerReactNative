@@ -1,18 +1,12 @@
 // react
 import React, { useState, useCallback } from "react";
-import { StyleSheet } from "react-native";
-// components
-import Spinner from "../../Spinner";
+import { View, Text, StyleSheet } from "react-native";
 // react calendar
 import { WeekCalendar } from "react-native-calendars";
-// hooks
-import { useCalendar } from "../../../hooks/useCalendar";
 
 interface IHeaderProps {}
 
-const Header = () => {
-  const { calendarTask, setDate, date, isLoading } = useCalendar();
-
+const Header = ({ date, setDate }) => {
   const selectedStyle = {
     selected: true,
     marked: true,
@@ -33,7 +27,6 @@ const Header = () => {
         markedDates={{ [date.string]: selectedStyle }}
         onDayPress={onDayPress}
       />
-      {isLoading && <Spinner />}
     </>
   );
 };

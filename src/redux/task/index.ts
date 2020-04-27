@@ -92,7 +92,7 @@ const initialState: ITaskState = {
     startTaskTime: null,
     timeInterval: [],
     duration: 0,
-    isPaused: false,
+    isPaused: true,
     isCompleted: false,
     file: null,
   },

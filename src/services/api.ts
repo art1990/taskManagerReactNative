@@ -258,7 +258,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
 
   const cursor = action === "next" ? "startAfter" : "startAt";
 
-  const { startWeek: start, startWeekSec } = getStartWeek(currentPerDay);
+  const { startWeek: start, startWeekSec } = getStartWeek(currentPerDay) || {};
 
   let weekDoc = currentPerDay
     ? await weeksCol.doc(start).get()
@@ -287,9 +287,17 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
         duration = 0,
         endTime,
         timeInterval,
+        isCompleted,
       } = doc.data();
 
-      return { id, startTaskTime, duration, endTime, timeInterval };
+      return {
+        id,
+        startTaskTime,
+        duration,
+        endTime,
+        timeInterval,
+        isCompleted,
+      };
     }
   );
 

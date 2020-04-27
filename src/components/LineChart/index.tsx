@@ -49,7 +49,7 @@ const LineChart: React.FC<IWeeksListProps> = ({ weekData, suffixY = "" }) => {
       style={{
         marginVertical: 6,
         borderRadius: 16,
-        paddingRight: 36,
+        paddingRight: 38,
       }}
     />
   );

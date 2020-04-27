@@ -16,7 +16,6 @@ export const useFetch = (apiFunc, option, serializer = (data) => data) => {
   );
 
   useEffect(() => {
-    console.log("effect");
     const fetchData = async () => {
       setIsLoading(true);
       try {
@@ -24,11 +23,13 @@ export const useFetch = (apiFunc, option, serializer = (data) => data) => {
         const serializedResponse = serializer(res);
         setResponse(serializedResponse);
       } catch (error) {
+        console.log("usefetch error:     ", error);
         setError(error);
       }
       setIsLoading(false);
     };
     fetchData();
   }, [memoOption]);
+
   return { response, error, isLoading };
 };

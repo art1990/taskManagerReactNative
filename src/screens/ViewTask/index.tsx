@@ -3,12 +3,14 @@ import React, { useCallback } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 // redux
 import { useSelector } from "react-redux";
-import { selectCurrentTaskData } from "../../redux/task/selectors";
+import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
 // components
 import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
 import TaskField from "../components/TaskField";
 import Button from "../../components/Button";
+import Spinner from "../../components/Spinner";
+import Modal from "../../components/Modal";
 // sections
 import Time from "../sections/Time";
 // hooks
@@ -28,6 +30,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   } = useTaskAction();
 
   const task: any = useSelector(selectCurrentTaskData(id));
+  const { isLoading } = useSelector(selectMeta);
 
   const onRemovePress = () => {
     Alert.alert("hahah");
@@ -64,23 +67,29 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
           iconButtonList={iconButtonList}
           isCompleted={isCompleted}
         />
-
-        <TaskField title="Title" text={title} />
-        <TaskField title="Project" text={project} />
-        <Time
-          startTaskTime={startTaskTime}
-          endTime={endTime}
-          duration={duration}
-        />
-        {file && <TaskField title="Added file" text={file.name} />}
-        <Button
-          mode="text"
-          style={styles.buttonContainer}
-          labelStyle={styles.buttonLabel}
-          onPress={onRemovePress}
-        >
-          Delete task
-        </Button>
+        <Modal visible={isLoading} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <TaskField title="Title" text={title} />
+            <TaskField title="Project" text={project} />
+            <Time
+              startTaskTime={startTaskTime}
+              endTime={endTime}
+              duration={duration}
+            />
+            {file && <TaskField title="Added file" text={file.name} />}
+            <Button
+              mode="text"
+              style={styles.buttonContainer}
+              labelStyle={styles.buttonLabel}
+              onPress={onRemovePress}
+            >
+              Delete task
+            </Button>
+          </>
+        )}
       </View>
       {!isCompleted && (
         <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>

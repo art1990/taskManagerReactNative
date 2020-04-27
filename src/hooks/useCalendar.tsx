@@ -6,8 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFetch } from "../hooks/useFetch";
 // api
 import { getWeekDataApi } from "../services/api";
-// date-fns
-import { getUnixTime } from "date-fns";
+// serializer
+import { conversionToCalendar } from "../utils/conversion";
+// utils
+import { generateForCalendar } from "../utils/date";
+import { getUnixTime, parse } from "date-fns";
 
 export const useCalendar = () => {
   const [date, setDate] = useState({
@@ -15,9 +18,15 @@ export const useCalendar = () => {
     number: 1587632990375,
   });
 
-  const { response, error, isLoading } = useFetch(getWeekDataApi, {
-    currentPerDay: date.number,
-  });
+  const { response, error, isLoading } = useFetch(
+    getWeekDataApi,
+    {
+      currentPerDay: parse(date.string, "yyyy-MM-dd", new Date()),
+    },
+    conversionToCalendar
+  );
 
-  return { calendarTask: response, error, setDate, date, isLoading };
+  const calendarTask = response && generateForCalendar(response);
+
+  return { calendarTask, error, setDate, date, isLoading };
 };

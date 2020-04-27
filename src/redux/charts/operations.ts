@@ -10,7 +10,7 @@ import { getWeekDataApi } from "../../services/api";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
 // utils
-import { convertResponseToPerDay } from "../../utils/date";
+import { conversionToLoggedPerDay } from "../../utils/conversion";
 
 function* getLoggedTimeForChart({ payload }) {
   const { lastLoggedTimeSnapshot, action } = yield select(selectMeta);
@@ -31,7 +31,7 @@ function* getLoggedPerDayForChart({ payload }) {
   yield apiHandler(
     { api: getWeekDataApi, argApi },
     getLoggedPerDay,
-    convertResponseToPerDay
+    conversionToLoggedPerDay
   );
 }
 

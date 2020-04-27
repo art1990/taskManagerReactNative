@@ -20,4 +20,7 @@ export enum Colors {
   barChart = "#C4C4C4",
   chartLabelColor = "rgba(0, 0, 0, 0.4)",
   chartsNav = chartLabelColor,
+
+  calendarLabel = chartLabelColor,
+  calendarTaskBgColor = "#E9E5E5",
 }

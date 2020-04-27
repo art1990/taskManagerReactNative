@@ -12,7 +12,7 @@ import {
   generateWeekForTime,
   generateWeekForTask,
   generateForDay,
-} from "../../utils/date";
+} from "../../utils/charts";
 // assets
 import { Colors } from "../../assets/styles/constants";
 

@@ -178,6 +178,10 @@ export interface IStackedBarChartProps {
   props: { width: number; height: number };
 }
 
+export interface IModalProps {
+  visible: boolean;
+}
+
 // forms
 export interface IAuthForm {
   onSubmit: any;

@@ -4,12 +4,23 @@ import { View, Text, StyleSheet } from "react-native";
 // componets
 import Title from "../../components/Title";
 import Calendar from "../../components/Calendar";
+// colors
+import { Colors } from "../../assets/styles/constants";
 
-export default () => {
+const CalendarScreen = () => {
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Title text="Calendar" />
       <Calendar />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
+});
+
+export default CalendarScreen;

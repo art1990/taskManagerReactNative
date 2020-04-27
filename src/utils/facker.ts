@@ -1,7 +1,7 @@
 // faker
 import faker from "faker";
 // date-fns
-import { getUnixTime, isSameWeek, fromUnixTime } from "date-fns";
+import { getUnixTime, isSameWeek, fromUnixTime, addWeeks } from "date-fns";
 // utils
 import { getStartWeek } from "./date";
 // types
@@ -72,15 +72,20 @@ export const generateTasksData = () => {
 
       tasks.forEach(({ timeInterval, id }) =>
         timeInterval.forEach((el) => {
-          do {
-            const { startWeek, startWeekSec } = getStartWeek(el.startTime);
+          for (
+            let start = el.startTime;
+            !isSameWeek(start, el.endTime, { weekStartsOn: 1 }) ||
+            start === el.startTime;
+            start += 604800 // add one week
+          ) {
+            const { startWeek, startWeekSec } = getStartWeek(start);
             if (weeks[startWeek]?.tasksId?.includes(id)) return;
 
             weeks[startWeek] = {
               tasksId: [...(weeks[startWeek]?.tasksId || []), id],
               startWeekSec,
             };
-          } while (!isSameWeek(el.startTime, el.endTime, { weekStartsOn: 1 }));
+          }
         })
       );
       return weeks;

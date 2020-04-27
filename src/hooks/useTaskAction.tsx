@@ -1,5 +1,6 @@
 // react
 import React, { useState, useEffect, useCallback } from "react";
+import { Alert } from "react-native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { selectTaskData, selectCurrentTaskData } from "../redux/task/selectors";
@@ -13,7 +14,7 @@ interface ITaskAction {
   onEditPress: (_id?: string) => void;
   onPausePress: () => void;
   onRemovePress: (_id?: string, uri?: string) => void;
-  onResumePress: (tasksData: any) => void;
+  onResumePress: (task: {}) => void;
   onMarkAsCompletedPress: () => void;
   toAddTags: () => void;
   toFilters: () => void;
@@ -50,8 +51,10 @@ const useTaskAction = (): ITaskAction => {
     navigation.navigate(Routes.FILTERS);
   };
 
-  const onResumePress = taskData => {
-    const data = { ...(task || taskData), navigation };
+  const onResumePress = (userData) => {
+    if (!taskData.isPaused) return Alert.alert("Paused active task!!");
+
+    const data = { ...(task || userData || taskData), navigation };
     dispatch(resume.request(data));
   };
 
@@ -67,7 +70,7 @@ const useTaskAction = (): ITaskAction => {
     onMarkAsCompletedPress,
     toAddTags,
     toFilters,
-    task
+    task,
   };
 };
 
