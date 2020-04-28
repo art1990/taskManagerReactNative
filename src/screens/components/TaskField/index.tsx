@@ -8,7 +8,7 @@ import { Colors } from "../../../assets/styles/constants";
 
 interface ITaskFieldProps {
   title: string;
-  text: string | number;
+  text?: string | number;
   isTime?: boolean;
   hasMounth?: boolean;
 }
@@ -18,12 +18,17 @@ const TaskField: React.FC<ITaskFieldProps> = ({
   text,
   isTime,
   hasMounth,
+  children,
 }) => (
   <View style={styles.container}>
     <Text style={styles.title}>{title}</Text>
-    <Text style={styles.text}>
-      {isTime ? formatToUTCTime(text, hasMounth) : text}
-    </Text>
+    {children ? (
+      children
+    ) : (
+      <Text style={styles.text}>
+        {isTime ? formatToUTCTime(text, hasMounth) : text}
+      </Text>
+    )}
   </View>
 );
 

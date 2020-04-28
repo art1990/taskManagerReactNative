@@ -10,9 +10,25 @@ import { getWeekDataApi } from "../services/api";
 import { conversionToCalendar } from "../utils/conversion";
 // utils
 import { generateForCalendar } from "../utils/calendar";
-import { getUnixTime, parse } from "date-fns";
+import { parse } from "date-fns";
 
-export const useCalendar = () => {
+export interface IUseCalendarReturn {
+  calendarTasks: {}[];
+  error: any;
+  setDate: React.Dispatch<
+    React.SetStateAction<{
+      string: string;
+      number: number;
+    }>
+  >;
+  date: {
+    string: string;
+    number: number;
+  };
+  isLoading: boolean;
+}
+
+export const useCalendar = (): IUseCalendarReturn => {
   const [date, setDate] = useState({
     string: "2020-04-25",
     number: 1587632990375,

@@ -7,8 +7,15 @@ import CaruselTask from "./CaruselTask";
 import { Colors } from "../../../assets/styles/constants";
 // utils
 import { generateHourList } from "../../../utils/time";
+// types
+import { IUseCalendarReturn } from "../../../hooks/useCalendar";
 
-const Body = ({ calendarTasks, onEditPress }) => {
+interface IBodyProps {
+  calendarTasks: IUseCalendarReturn["calendarTasks"];
+  onEditPress: () => void;
+}
+
+const Body: React.FC<IBodyProps> = ({ calendarTasks, onEditPress }) => {
   const hourList = calendarTasks && generateHourList(calendarTasks);
 
   return (

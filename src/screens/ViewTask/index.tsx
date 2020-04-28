@@ -11,6 +11,7 @@ import TaskField from "../components/TaskField";
 import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
 import Modal from "../../components/Modal";
+import Tags from "../../components/Tags";
 // sections
 import Time from "../sections/Time";
 // hooks
@@ -32,7 +33,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
     onMarkAsCompletedPress,
   } = useTaskAction();
 
-  const task: any = useSelector(selectCurrentTaskData(id));
+  const task = useSelector(selectCurrentTaskData(id));
   const { isLoading } = useSelector(selectMeta);
 
   const onRemovePress = () => {
@@ -82,6 +83,11 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
               endTime={endTime}
               duration={duration}
             />
+            {task.tags && (
+              <TaskField title="Tags">
+                <Tags tags={task.tags} style={styles.tags} />
+              </TaskField>
+            )}
             {file && <TaskField title="Added file" text={file.name} />}
             <Button
               mode="text"
@@ -117,6 +123,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     color: Colors.error,
+  },
+  tags: {
+    marginTop: -10,
+    marginLeft: -8,
   },
 });
 
