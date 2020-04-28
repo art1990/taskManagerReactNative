@@ -5,8 +5,13 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import IconButton from "../IconButton";
 // constants
 import { Colors } from "../../assets/styles/constants";
-// types
-import { ITagProps } from "../../types";
+
+interface ITagProps {
+  text: string;
+  onDeletePress?: () => void;
+  style?: {} | [];
+  setTags?: any;
+}
 
 const Tag: React.FC<ITagProps> = ({ text, onDeletePress, style, setTags }) => {
   const onAddThisTag = () => {

@@ -4,7 +4,7 @@ import isWithinInterval from "date-fns/isWithinInterval";
 // utils
 import { convertToDate } from "./date";
 // type
-import { IWeek } from "../types";
+import { IWeek } from "./charts";
 import { IChartsState } from "../redux/charts";
 
 // utils for day

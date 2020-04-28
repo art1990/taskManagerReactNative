@@ -8,7 +8,7 @@ import { Colors } from "../../assets/styles/constants";
 // assets
 import Complete from "../../assets/img/icons/complete.svg";
 // types
-import { ITitleProps } from "../../types";
+import { ITitleProps } from "./types";
 
 const Title: React.FC<ITitleProps> = ({
   text,
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   iconButtonContainer: {
     flex: 0,
     flexDirection: "row",
+    alignItems: "center",
   },
 });
 

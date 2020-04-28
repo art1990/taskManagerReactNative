@@ -9,8 +9,10 @@ import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
 // styles
 import Styles from "../../assets/styles";
-// types
-import { ICreateTaskProps } from "../../types";
+
+interface ICreateTaskProps {
+  navigation: any;
+}
 
 const CreateTask: React.FC<ICreateTaskProps> = ({ navigation }) => {
   const dispatch = useDispatch();

@@ -18,8 +18,11 @@ import useTaskAction from "../../hooks/useTaskAction";
 // assets
 import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
-// types
-import { ITaskViewProps } from "../../types";
+
+interface ITaskViewProps {
+  route: { params: { [key: string]: string } };
+  navigation: any;
+}
 
 const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { id } = route?.params;

@@ -5,8 +5,13 @@ import { View, Text, StyleSheet } from "react-native";
 import { formatToUTCTime } from "../../../utils/date";
 // constanst
 import { Colors } from "../../../assets/styles/constants";
-// types
-import { ITaskFieldProps } from "../../../types";
+
+interface ITaskFieldProps {
+  title: string;
+  text: string | number;
+  isTime?: boolean;
+  hasMounth?: boolean;
+}
 
 const TaskField: React.FC<ITaskFieldProps> = ({
   title,

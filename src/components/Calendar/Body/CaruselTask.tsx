@@ -1,6 +1,6 @@
 //react
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 // components
 import IconButton from "../../IconButton";

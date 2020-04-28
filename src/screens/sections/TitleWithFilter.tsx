@@ -6,7 +6,12 @@ import IconButton from "../../components/IconButton";
 // colors
 import { Colors } from "../../assets/styles/constants";
 // types
-import { ITitleWithFilterProps } from "../../types";
+import { ITitleProps } from "../../components/Title/types";
+
+export interface ITitleWithFilterProps extends ITitleProps {
+  onPressFilter?: () => void;
+  isHasTag: boolean;
+}
 
 const TitleWithFilter: React.FC<ITitleWithFilterProps> = ({
   onPressFilter,

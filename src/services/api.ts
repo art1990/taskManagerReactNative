@@ -7,7 +7,17 @@ import { generateTasksData } from "../utils/facker";
 import { isSameWeek, addWeeks } from "date-fns";
 // types
 import { IChartsState } from "../redux/charts";
-import { IWeekObj } from "../types/api";
+import { ITaskState } from "../redux/task";
+
+export interface IWeekObj {
+  id: ITaskState["taskData"]["id"];
+  startTaskTime: ITaskState["taskData"]["startTaskTime"];
+  duration: ITaskState["taskData"]["duration"];
+  endTime: ITaskState["taskData"]["endTime"];
+  timeInterval: ITaskState["taskData"]["timeInterval"];
+  isCompleted: ITaskState["taskData"]["isCompleted"];
+  title: ITaskState["taskData"]["title"];
+}
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<

@@ -11,9 +11,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../../assets/styles/constants";
 // styles
 import Styles, { paddingHorizontal } from "../../assets/styles";
-import { vw } from "react-native-expo-viewport-units";
-// types
-import { IWorkingTaskInfoProps } from "../../types";
+
+interface IWorkingTaskInfoProps {
+  title: string;
+  startTime: number;
+  duration: number;
+  onCreateTask: () => void;
+  style?: {};
+}
 
 const WorkingTaskInfo: React.FC<IWorkingTaskInfoProps> = ({
   title,

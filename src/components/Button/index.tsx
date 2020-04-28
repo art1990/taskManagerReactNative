@@ -5,8 +5,15 @@ import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 // contsnts
 import { Colors } from "../../assets/styles/constants";
-// interfaces
-import { IButtonProps } from "../../types";
+
+interface IButtonProps {
+  onPress: () => void;
+  children: string;
+  color?: string;
+  labelStyle?: {};
+  style?: {};
+  mode?: any;
+}
 
 const CustomButton: React.FC<IButtonProps> = ({
   onPress,

@@ -12,7 +12,7 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { SignUpSchema } from "../../../utils/validation";
 // types
-import { IAuthForm, ISignUpFormData } from "../../../types";
+import { IAuthForm, ISignUpFormData } from "../types";
 
 type FormData = {
   email: string;

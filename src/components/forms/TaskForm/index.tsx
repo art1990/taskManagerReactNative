@@ -14,8 +14,19 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 import { useTags } from "../../../hooks/useTags";
 // validation
 import { CreateTaskSchema } from "../../../utils/validation";
-// types
-import { ITaskForm } from "../../../types";
+
+export interface ITaskForm {
+  onSubmit: any;
+  isEditing?: boolean;
+  formData?: TaskFormData;
+  style?: {};
+  children?: ReactElement;
+}
+
+type TaskFormData = {
+  file: {};
+  defaultValues: {};
+};
 
 const TaskForm: React.FC<ITaskForm> = ({
   isEditing,

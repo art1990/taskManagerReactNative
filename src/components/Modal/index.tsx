@@ -1,8 +1,10 @@
 // react
 import React from "react";
 import { StyleSheet, View, Modal as RNModal } from "react-native";
-// type
-import { IModalProps } from "../../types";
+
+export interface IModalProps {
+  visible: boolean;
+}
 
 const Modal: React.FC<IModalProps> = ({ visible }) => (
   <RNModal visible={visible} transparent={true}>

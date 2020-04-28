@@ -6,9 +6,17 @@ import IconButton from "../../../components/IconButton";
 // styles
 import Styles from "../../../assets/styles";
 // types
-import { IPaginatorProps } from "../../../types";
+import { IWeekChartProps } from "./WeekChart";
 // colors
 import { Colors } from "../../../assets/styles/constants";
+
+export interface IPaginatorProps {
+  chartName: string;
+  onNextPress: () => void;
+  onPrevPress: () => void;
+  text?: string;
+  horizontalLabels?: IWeekChartProps["weekData"]["labels"];
+}
 
 const Paginator: React.FC<IPaginatorProps> = ({
   text,

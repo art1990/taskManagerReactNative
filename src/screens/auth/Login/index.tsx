@@ -11,7 +11,7 @@ import NavigationMessage from "../../../components/NavigationMessage";
 // constants
 import { Routes } from "../../../navigation/routes";
 // types
-import { ILoginProps } from "../../../types";
+import { ILoginProps } from "../types";
 // styles
 import Styles from "../../../assets/styles";
 

@@ -3,8 +3,12 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 // components
 import TaskField from "../../screens/components/TaskField";
-// types
-import { ITimeSectionProps } from "../../types";
+
+interface ITimeSectionProps {
+  startTaskTime: number;
+  endTime: number;
+  duration: number;
+}
 
 const TimeSection: React.FC<ITimeSectionProps> = ({
   startTaskTime,

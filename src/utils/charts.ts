@@ -18,7 +18,26 @@ import { getStartWeek, getEndWeek } from "./date";
 import { randomColor } from "randomcolor";
 // type
 import { IChartsState } from "../redux/charts";
-import { IWeeksListProps, IWeekData } from "../types";
+
+export interface IWeekData {
+  data: number[];
+  labels: string[];
+}
+
+export interface IWeek {
+  startTaskTime: number;
+  duration: number;
+  id: string;
+  endTime: number;
+  timeInterval: { startTime: number; endTime: number }[];
+  isCompleted: boolean;
+}
+
+export interface IWeeksListProps {
+  weeksList?: IWeek[];
+  weekData: IWeekData;
+  suffixY?: string;
+}
 
 // week
 const generateDayLabel = (date: Date): string => lightFormat(date, "dd.MM");

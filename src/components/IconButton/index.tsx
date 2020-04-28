@@ -12,7 +12,7 @@ import Remove from "../../assets/img/icons/trash.svg";
 // constants
 import { Colors } from "../../assets/styles/constants";
 // types
-import { IMaterialIconProps, IIconButtonProps } from "../../types";
+import { IMaterialIconProps, IIconButtonProps } from "./type";
 
 const MaterialIcon: React.FC<IMaterialIconProps> = ({
   name,

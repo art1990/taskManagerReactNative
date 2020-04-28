@@ -7,8 +7,11 @@ import Tag from "../../Tag";
 // hooks
 import useTaskAction from "../../../hooks/useTaskAction";
 import { useTags } from "../../../hooks/useTags";
-// type
-import { ITagInput } from "../../../types";
+
+interface ITagInput {
+  tags?: string[];
+  style?: {};
+}
 
 const TagInput: React.FC<ITagInput> = (props) => {
   const { tags = [], style } = props;

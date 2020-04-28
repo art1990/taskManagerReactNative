@@ -13,7 +13,7 @@ import { Routes } from "../../../navigation/routes";
 // styles
 import Styles from "../../../assets/styles";
 // types
-import { ILoginProps } from "../../../types";
+import { ILoginProps } from "../types";
 
 const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
   const dispatch = useDispatch();
