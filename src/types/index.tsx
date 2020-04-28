@@ -65,14 +65,17 @@ export interface IWeekData {
   labels: string[];
 }
 
+export interface IWeek {
+  startTaskTime: number;
+  duration: number;
+  id: string;
+  endTime: number;
+  timeInterval: { startTime: number; endTime: number }[];
+  isCompleted: boolean;
+}
+
 export interface IWeeksListProps {
-  weeksList?: {
-    startTaskTime: number;
-    duration: number;
-    id: string;
-    endTime: number;
-    timeInterval: { startTime: number; endTime: number }[];
-  }[];
+  weeksList?: IWeek[];
   weekData: IWeekData;
   suffixY?: string;
 }

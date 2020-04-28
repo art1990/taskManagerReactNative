@@ -6,11 +6,10 @@ import {
   startOfWeek,
   getUnixTime,
   endOfWeek,
+  format,
 } from "date-fns";
 
 export const getUTCDate = (date) => {
-  //const date = new Date(dateString);
-
   return new Date(
     date.getUTCFullYear(),
     date.getUTCMonth(),
@@ -21,9 +20,10 @@ export const getUTCDate = (date) => {
   );
 };
 
-export const formatToUTCTime = (seconds, hasMounth) => {
-  const date = fromUnixTime(+seconds);
-  return format(getUTCDate(date), `HH:mm:ss${hasMounth ? " MMM d" : ""}`);
+export const formatToUTCTime = (seconds, hasMounth?) => {
+  const unixDate = fromUnixTime(+seconds);
+  const date = seconds < 99999999 ? getUTCDate(unixDate) : unixDate;
+  return format(date, `HH:mm:ss${hasMounth ? " MMM d" : ""}`);
 };
 
 export const convertToDate = (data) =>
@@ -37,9 +37,12 @@ const getStartOrEndWeek = (
   weekSec: string,
   time?: string | number
 ): { [x: string]: any } => {
-  const weekDate = func(time ? fromUnixTime(+time) : new Date(), {
-    weekStartsOn: 1,
-  });
+  const weekDate = func(
+    typeof time !== "object" ? fromUnixTime(+time) : time || new Date(),
+    {
+      weekStartsOn: 1,
+    }
+  );
 
   return {
     [week]: formatISO(weekDate),

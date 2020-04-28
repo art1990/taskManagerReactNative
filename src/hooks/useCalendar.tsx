@@ -9,7 +9,7 @@ import { getWeekDataApi } from "../services/api";
 // serializer
 import { conversionToCalendar } from "../utils/conversion";
 // utils
-import { generateForCalendar } from "../utils/date";
+import { generateForCalendar } from "../utils/calendar";
 import { getUnixTime, parse } from "date-fns";
 
 export const useCalendar = () => {
@@ -26,7 +26,7 @@ export const useCalendar = () => {
     conversionToCalendar
   );
 
-  const calendarTask = response && generateForCalendar(response);
+  const calendarTasks = response && generateForCalendar(response);
 
-  return { calendarTask, error, setDate, date, isLoading };
+  return { calendarTasks, error, setDate, date, isLoading };
 };

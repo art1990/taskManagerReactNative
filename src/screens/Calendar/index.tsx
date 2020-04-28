@@ -1,9 +1,10 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 // componets
 import Title from "../../components/Title";
 import Calendar from "../../components/Calendar";
+
 // colors
 import { Colors } from "../../assets/styles/constants";
 

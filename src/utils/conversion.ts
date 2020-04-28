@@ -1,14 +1,11 @@
 // date-fns
-import {
-  isSameDay,
-  fromUnixTime,
-  getUnixTime,
-  startOfDay,
-  endOfDay,
-} from "date-fns";
+import { getUnixTime, startOfDay, endOfDay } from "date-fns";
 import isWithinInterval from "date-fns/isWithinInterval";
 // utils
 import { convertToDate } from "./date";
+// type
+import { IWeek } from "../types";
+import { IChartsState } from "../redux/charts";
 
 // utils for day
 const isInRange = (current, start, end) => {
@@ -19,8 +16,23 @@ const isInRange = (current, start, end) => {
   return isWithinInterval(currentDate, { start: startDate, end: endDate });
 };
 
+interface IConversionToDay {
+  weeksList: IWeek[];
+  currentPerDay: IChartsState["meta"]["currentPerDay"];
+}
+
+interface ICalendarReturn {
+  tasksList: Omit<IWeek, "timeInterval">[];
+  currentDay: IChartsState["meta"]["currentPerDay"];
+}
+
 // logged per day
-export const conversionToLoggedPerDay = (data) => {
+export const conversionToLoggedPerDay = (
+  data: IConversionToDay
+): {
+  tasksList: IConversionToDay["weeksList"];
+  currentDay: IConversionToDay["currentPerDay"];
+} => {
   const { weeksList, currentPerDay } = data;
   // const currentPerDay = getUnixTime(new Date(2020, 3, 17));
   const tasksList = weeksList
@@ -32,28 +44,35 @@ export const conversionToLoggedPerDay = (data) => {
 
     .map((task) => {
       const timeInterval = task.timeInterval.filter((el) =>
-        isSameDay(fromUnixTime(currentPerDay), fromUnixTime(el.startTime))
+        isInRange(currentPerDay, el.startTime, el.endTime)
       );
 
       return { ...task, timeInterval };
     });
 
-  return { tasksList };
+  return { tasksList, currentDay: currentPerDay };
 };
 
 // calendar
-export const conversionToCalendar = (data) => {
+export const conversionToCalendar = (
+  data: IConversionToDay
+): ICalendarReturn => {
   /*** if wee want to convert second from WeekCalendar
        to Date obj we need use new Date() ***/
-  console.log(data);
   const { weeksList, currentPerDay } = data;
-  const tasksList = weeksList
-    .filter((task) => {
-      if (!task.isCompleted) return false;
+  const filtertasksList = weeksList.filter((task) => {
+    if (!task.isCompleted) return false;
+    return task.timeInterval.find(({ startTime, endTime }) =>
+      isInRange(currentPerDay, startTime, endTime)
+    );
+  });
 
-      return isInRange(currentPerDay, task.startTaskTime, task.endTime);
-    })
+  const tasksList = filtertasksList.map((task) => {
+    const timeInterval = task.timeInterval.filter((el) =>
+      isInRange(currentPerDay, el.startTime, el.endTime)
+    );
 
-    .map(({ timeinterval, ...task }) => task);
+    return { ...task, timeInterval };
+  });
   return { tasksList, currentDay: getUnixTime(currentPerDay) };
 };

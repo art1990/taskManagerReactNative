@@ -99,7 +99,6 @@ export const generateWeekForTime = ({
   );
   const data = [];
   const labels = [];
-  console.log(weekObj);
 
   Object.entries(weekObj).forEach(([label, seconds]) => {
     labels.push(label);
@@ -141,7 +140,9 @@ export const generateWeekForTask = ({
 };
 
 // day
-export const generateForDay = ({ tasksList: tasks }) => {
+export const generateForDay = ({ tasksList: tasks, currentDay }) => {
+  const current = fromUnixTime(currentDay);
+
   const tasksColorsList = randomColor({
     count: tasks.length,
     hue: "monochrome",
@@ -158,8 +159,16 @@ export const generateForDay = ({ tasksList: tasks }) => {
 
   tasksList.forEach((el) => {
     el.timeInterval.forEach(({ startTime, endTime }) => {
-      const startDate = fromUnixTime(startTime);
-      const endDate = fromUnixTime(endTime);
+      let startDate = fromUnixTime(startTime);
+      let endDate = fromUnixTime(endTime);
+      if (!isSameDay(startDate, current)) {
+        startDate = startOfDay(current);
+      }
+
+      if (!isSameDay(endDate, current)) {
+        endDate = endOfDay(current);
+      }
+
       const startHour = getHours(startDate);
       const endHour = getHours(endDate);
 
@@ -167,7 +176,7 @@ export const generateForDay = ({ tasksList: tasks }) => {
         const hour = dayWithHoursObj[i];
         const duration =
           startHour === endHour
-            ? endTime - startTime
+            ? differenceInSeconds(endDate, startDate)
             : i === startHour
             ? differenceInSeconds(endOfHour(startDate), startDate)
             : i === endHour

@@ -9,4 +9,5 @@ export interface IWeekObj {
   endTime: ITaskState["taskData"]["endTime"];
   timeInterval: ITaskState["taskData"]["timeInterval"];
   isCompleted: ITaskState["taskData"]["isCompleted"];
+  title: ITaskState["taskData"]["title"];
 }
