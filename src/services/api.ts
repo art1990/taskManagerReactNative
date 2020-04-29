@@ -255,8 +255,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
-    lastLoggedTimeSnapshot,
-    lastLoggedTasksSnapshot,
+    lastVisibleRequest,
     currentPerDay,
     action,
   } = meta;
@@ -264,7 +263,8 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
   let currentDay = currentPerDay;
 
-  const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTasksSnapshot;
+  const lastSnapshot =
+    (currentWeekTimeNumber || currentWeekTaskNumber) && lastVisibleRequest;
 
   const cursor = action === "next" ? "startAfter" : "startAt";
 

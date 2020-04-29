@@ -1,5 +1,5 @@
 // react
-import react, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 // redux
 import { useDispatch, useSelector } from "react-redux";
