@@ -1,16 +1,14 @@
 // react
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 // react calendar
 import { WeekCalendar } from "react-native-calendars";
 // type
 import { IUseCalendarReturn } from "../../../hooks/useCalendar";
 
-interface IHeaderProps {
-  date: IUseCalendarReturn["date"];
-  setDate: IUseCalendarReturn["setDate"];
-}
-
-const Header: React.FC<IHeaderProps> = ({ date, setDate }) => {
+const Header: React.FC<Pick<IUseCalendarReturn, "date" | "setDate">> = ({
+  date,
+  setDate,
+}) => {
   const selectedStyle = {
     selected: true,
     marked: true,

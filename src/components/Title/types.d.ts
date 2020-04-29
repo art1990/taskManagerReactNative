@@ -1,3 +1,6 @@
+// types
+import { ReactElement } from "react";
+
 export interface ITitleProps {
   text: string;
   buttonText?: string;
@@ -5,5 +8,5 @@ export interface ITitleProps {
   buttonAction?: () => void;
   iconButtonList?: JSX.Element[];
   isCompleted?: boolean;
-  children?: any;
+  children?: ReactElement;
 }

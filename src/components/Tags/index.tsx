@@ -3,11 +3,13 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 // components
 import Tag from "../Tag";
+// types
+import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 interface ITags {
   tags: string[];
   removeTag?: (i?) => void;
-  style?: {} | [];
+  style?: typeStyleObj;
 }
 
 const Tags: React.FC<ITags> = ({ tags, removeTag, style }) => {

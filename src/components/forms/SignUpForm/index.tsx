@@ -6,7 +6,6 @@ import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
 import Button from "../../Button";
 import KeyboardView from "../../KeyboardView";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation

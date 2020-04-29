@@ -1,5 +1,8 @@
+// types
+import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
 export interface IInputProps {
-  style?: {};
+  style?: typeStyleObj;
   name: string;
   value: string;
   onChangeText?: (text: string) => void;
