@@ -11,16 +11,8 @@ import {
   getTags,
 } from ".";
 import { selectUser } from "../user/selectors";
-import { initialize } from "../user";
 // saga
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  select,
-  put,
-} from "redux-saga/effects";
+import { takeEvery, takeLatest, select, put } from "redux-saga/effects";
 // api
 import {
   initializeVariableToApiService,

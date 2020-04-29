@@ -6,18 +6,9 @@ import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
 import { isSameWeek, addWeeks } from "date-fns";
 // types
-import { IChartsState } from "../redux/charts";
 import { ITaskState } from "../redux/task";
 
-export interface IWeekObj {
-  id: ITaskState["taskData"]["id"];
-  startTaskTime: ITaskState["taskData"]["startTaskTime"];
-  duration: ITaskState["taskData"]["duration"];
-  endTime: ITaskState["taskData"]["endTime"];
-  timeInterval: ITaskState["taskData"]["timeInterval"];
-  isCompleted: ITaskState["taskData"]["isCompleted"];
-  title: ITaskState["taskData"]["title"];
-}
+type TWeekObj = Omit<ITaskState["taskData"], "isPaused" | "file" | "project">;
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -247,7 +238,7 @@ export const generateTasksApi = async () => {
 };
 
 // charts
-export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
+export const getWeekDataApi = async (meta) => {
   const getDataFromDoc = (doc: any): { tasksId: string; startWeek: number } =>
     Array.isArray(doc.docs) ? doc.docs[0].data() : doc.data();
   const { size: totalWeeks }: { size: number } = await weeksCol.get();
@@ -290,8 +281,8 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     .orderBy("timestamp")
     .get();
 
-  const weeksList: IWeekObj[] = tasksDoc.docs.map(
-    (doc: any): IWeekObj => {
+  const weeksList: TWeekObj[] = tasksDoc.docs.map(
+    (doc: any): TWeekObj => {
       const {
         id,
         startTaskTime,

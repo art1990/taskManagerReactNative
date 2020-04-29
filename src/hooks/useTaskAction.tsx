@@ -36,7 +36,13 @@ const useTaskAction = (): ITaskAction => {
   };
 
   const onRemovePress: (_id?: string, uri?: string) => void = (_id, uri) => {
-    dispatch(remove.request({ id: id || _id, uri }));
+    Alert.alert("Remove task", "Do you want to remove tasks??", [
+      { text: "Cansel", style: "cancel" },
+      {
+        text: "Remove",
+        onPress: () => dispatch(remove.request({ id: id || _id, uri })),
+      },
+    ]);
   };
 
   const onEditPress = (_id?: string): void => {

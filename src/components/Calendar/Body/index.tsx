@@ -1,5 +1,5 @@
 // react
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 // components
 import CaruselTask from "./CaruselTask";
@@ -16,7 +16,10 @@ interface IBodyProps {
 }
 
 const Body: React.FC<IBodyProps> = ({ calendarTasks, onEditPress }) => {
-  const hourList = calendarTasks && generateHourList(calendarTasks);
+  const hourList = useMemo(
+    () => calendarTasks && generateHourList(calendarTasks),
+    [calendarTasks, generateHourList]
+  );
 
   const generateTasks = useCallback(() => {
     return hourList?.map(([hour, tasksList], i) => (
