@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from "react-native";
 import StackedBarChart from "./StackedBarChart";
 import { Dimensions } from "react-native";
 // type
-import { IDayChartProps } from "../../types";
+import { IDayChartProps } from "./types";
 // colors
 import { Colors } from "../../assets/styles/constants";
 

@@ -5,8 +5,11 @@ import { Text, StyleSheet } from "react-native";
 import { getUnixTime } from "date-fns";
 // utils
 import { formatToUTCTime } from "../../utils/date";
-// types
-import { ITimerProps } from "../../types";
+
+interface ITimerProps {
+  startTime: number;
+  duration: number;
+}
 
 const Timer: React.FC<ITimerProps> = ({ startTime, duration }) => {
   const [currentTime, setCurrentTime] = useState<number>(

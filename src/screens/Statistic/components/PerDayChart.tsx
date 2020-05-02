@@ -8,7 +8,7 @@ import InputWithIcon from "../../../components/InputWithIcon";
 // utils
 import { fromUnixTime, format } from "date-fns";
 // types
-import { IDayChartProps } from "../../../types/index";
+import { IDayChartProps } from "../../../components/BarChart/types";
 // assets
 import Styles from "../../../assets/styles";
 import { Colors } from "../../../assets/styles/constants";

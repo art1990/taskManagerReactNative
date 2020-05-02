@@ -20,7 +20,7 @@ const chartConfig = {
   },
 
   propsForDots: {
-    r: "6",
+    r: "3",
     strokeWidth: "2",
     stroke: "rgba(0, 0, 0, .4)",
   },
@@ -49,7 +49,7 @@ const LineChart: React.FC<IWeeksListProps> = ({ weekData, suffixY = "" }) => {
       style={{
         marginVertical: 6,
         borderRadius: 16,
-        paddingRight: 36,
+        paddingRight: 38,
       }}
     />
   );

@@ -10,7 +10,7 @@ import Styles, { paddingHorizontal } from "../../assets/styles";
 import Completed from "../../assets/img/icons/complete.svg";
 import Resume from "../../assets/img/icons/resume.svg";
 // types
-import { ITaskInfoProps } from "../../types";
+import { ITaskInfoProps } from "./types";
 
 const TaskInfo: React.FC<ITaskInfoProps> = ({
   title,

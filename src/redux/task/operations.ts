@@ -1,41 +1,7 @@
 // redux
-import {
-  create,
-  resume,
-  pause,
-  remove,
-  update,
-  getIncomplete,
-  getList,
-  getMoreList,
-  getTags,
-} from ".";
-import { selectUser } from "../user/selectors";
-import { initialize } from "../user";
+import { create, resume, pause, remove, update, getList, getTags } from ".";
 // saga
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  select,
-  put,
-} from "redux-saga/effects";
-// api
-import {
-  initializeVariableToApiService,
-  uploadFileApi,
-  updateIncompleteTaskApi,
-  addTaskApi,
-  updateTaskApi,
-  removeTaskApi,
-  pauseTaskApi,
-  resumeTaskApi,
-  getIncompleteTaskApi,
-  getTaskListApi,
-  getTagsApi,
-  getMoreTasksListApi,
-} from "../../services/api";
+import { takeEvery } from "redux-saga/effects";
 // handlers
 import { apiHandler } from "../utils/apiHandler";
 // date
@@ -44,107 +10,74 @@ import { dateNow } from "../../utils/date";
 // constants
 import { Routes } from "../../navigation/routes";
 
-function* createTask({ payload: { navigation, ...payload } }) {
-  try {
-    let file = null;
-    let argApi = {};
+function* createTask({ payload: { navigation, api, ...payload } }) {
+  const date = new Date();
+  const startTaskTime = getUnixTime(date);
 
-    if (payload.file) {
-      const uri = yield apiHandler({
-        api: uploadFileApi,
-        argApi: payload.file,
-      });
+  const task = {
+    ...payload,
+    startTaskTime,
+    startTime: startTaskTime,
+    duration: 0,
+    isCompleted: false,
+    isPaused: false,
+    timeInterval: [{ startTime: startTaskTime }],
+    date: dateNow(date),
+  };
+  yield apiHandler({ task, api });
+  yield navigation.navigate(Routes.TASKS_LIST);
+}
 
-      file = {
-        name: payload.file.name,
-        size: payload.file.size,
-        uri,
-      };
-    }
-    const date = new Date();
-
-    const startTaskTime = getUnixTime(date);
-
-    argApi = {
-      ...payload,
-      startTaskTime,
-      startTime: startTaskTime,
-      timeInterval: [{ startTaskTime }],
-      file,
-      date: dateNow(date),
-    };
-    const task = yield apiHandler({ api: addTaskApi, argApi });
-    yield apiHandler({ api: updateIncompleteTaskApi, argApi: task });
-    yield navigation.navigate(Routes.TASKS_LIST);
-    yield put(create.success(task));
-  } catch (err) {
-    yield put(create.failure(err));
-  }
+function* removeTask({ payload }) {
+  yield apiHandler(payload, undefined, Routes.TASKS_LIST);
 }
 
 function* pauseTask({ payload }) {
+  const { task } = payload;
   const endTime = getUnixTime(new Date());
-  const duration = endTime - payload.startTime + payload.duration;
-  const timeInterval = payload.timeInterval.map((el, i, arr) => {
+  const duration = endTime - task.startTime + task.duration;
+  const timeInterval = task.timeInterval.map((el, i, arr) => {
     if (i === arr.length - 1) return { ...el, endTime };
     return el;
   });
   const argApi = {
     ...payload,
-    timeInterval,
-    endTime,
-    duration,
+    task: { ...payload.task, timeInterval, endTime, duration },
   };
-  yield apiHandler({ api: pauseTaskApi, argApi }, pause);
+  yield apiHandler(argApi);
 }
 
 function* resumeTask({ payload: { navigation, ...payload } }) {
   const startTime = getUnixTime(new Date());
 
-  const timeInterval = [...payload.timeInterval, { startTime }];
+  const timeInterval = [...payload.task.timeInterval, { startTime }];
 
-  const argApi = { ...payload, timeInterval, startTime };
-  yield apiHandler({ api: resumeTaskApi, argApi }, resume);
+  const argApi = {
+    ...payload,
+    task: { ...payload.task, timeInterval, startTime },
+  };
+  yield apiHandler(argApi);
   if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
 }
 
-function* removeTask({ payload }) {
-  yield apiHandler({ api: removeTaskApi, argApi: payload }, remove);
-}
-
-function* updateTask({ payload: { navigation, ...payload } }) {
-  yield apiHandler({ api: updateTaskApi, argApi: payload }, update);
-  if (navigation) yield navigation.navigate(Routes.TASKS_LIST);
-}
-
-function* getIncompleteTask() {
-  const userData = yield select(selectUser);
-  yield initializeVariableToApiService(userData);
-
-  yield apiHandler({ api: getIncompleteTaskApi }, getIncomplete);
+function* updateTask({ payload }) {
+  yield apiHandler(payload, undefined, "goBack");
 }
 
 function* getTasksList({ payload }) {
-  yield apiHandler({ api: getTaskListApi, argApi: payload }, getList);
+  yield apiHandler(payload);
 }
 
-function* getMoreTasksList({ payload }) {
-  yield apiHandler({ api: getMoreTasksListApi, argApi: payload }, getMoreList);
-}
-
-function* getTagsList() {
-  yield apiHandler({ api: getTagsApi }, getTags);
+function* getTagsList({ payload }) {
+  yield apiHandler(payload);
 }
 
 export default function* watchTask() {
-  // yield take(initialize.type);
   yield takeEvery(create.REQUEST, createTask);
   yield takeEvery(pause.REQUEST, pauseTask);
   yield takeEvery(resume.REQUEST, resumeTask);
   yield takeEvery(remove.REQUEST, removeTask);
   yield takeEvery(update.REQUEST, updateTask);
-  yield takeEvery(getIncomplete.REQUEST, getIncompleteTask);
   yield takeEvery(getList.REQUEST, getTasksList);
-  yield takeLatest(getMoreList.REQUEST, getMoreTasksList);
   yield takeEvery(getTags.REQUEST, getTagsList);
 }

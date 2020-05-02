@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // components
 import Timer from "../Timer";
 // react-native-papper
@@ -11,31 +11,41 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Colors } from "../../assets/styles/constants";
 // styles
 import Styles, { paddingHorizontal } from "../../assets/styles";
-import { vw } from "react-native-expo-viewport-units";
 // types
-import { IWorkingTaskInfoProps } from "../../types";
+import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
+interface IWorkingTaskInfoProps {
+  title: string;
+  startTime: number;
+  duration: number;
+  onCreateTask: () => void;
+  toView: () => void;
+  style?: typeStyleObj;
+}
 
 const WorkingTaskInfo: React.FC<IWorkingTaskInfoProps> = ({
   title,
-  style,
   startTime,
   duration,
   onCreateTask,
+  toView,
 }) => (
-  <View style={[Styles.rowSpaceBetween, styles.container]}>
-    <Text style={styles.title}>{title}</Text>
-    <Timer startTime={startTime} duration={duration} />
-    <IconButton
-      style={styles.button}
-      icon={() => <MaterialIcons name="pause-circle-filled" size={20} />}
-      onPress={onCreateTask}
-    />
-  </View>
+  <TouchableOpacity onPress={toView}>
+    <View style={[Styles.rowSpaceBetween, styles.container]}>
+      <Text style={styles.title}>{title}</Text>
+      <Timer startTime={startTime} duration={duration} />
+      <IconButton
+        style={styles.button}
+        icon={() => <MaterialIcons name="pause-circle-filled" size={20} />}
+        onPress={onCreateTask}
+      />
+    </View>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 32,
+    paddingVertical: 25,
     backgroundColor: Colors.taskInfoBGColor,
     paddingHorizontal,
     position: "relative",

@@ -3,8 +3,12 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 // components
 import Button from "../Button";
-// types
-import { INavigationMessage } from "../../types";
+
+interface INavigationMessage {
+  text: string;
+  buttonText: string;
+  goTo: () => void;
+}
 
 const NavigationMessage: React.FC<INavigationMessage> = ({
   text,

@@ -11,7 +11,13 @@ import TaskInfo from "../../components/TaskInfo";
 import TrashIcon from "../../assets/img/icons/trash.svg";
 import PencilIcon from "../../assets/img/icons/pencil.svg";
 // types
-import { ITaskSwipeableInfoProps } from "../../types";
+import { ITaskInfoProps } from "../../components/TaskInfo/types";
+
+export interface ITaskSwipeableInfoProps extends ITaskInfoProps {
+  onRemovePress: () => void;
+  onEditPress: () => void;
+  onResumePress: () => void;
+}
 
 const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   const scale = dragX.interpolate({

@@ -8,8 +8,11 @@ import IconButton from "../../../components/IconButton";
 import Styles from "../../../assets/styles";
 // constants
 import { Colors } from "../../../assets/styles/constants";
-// type
-import { IInfoAndRemoveFile } from "../../../types";
+
+interface IInfoAndRemoveFile {
+  name: string;
+  onRemovePress: () => void;
+}
 
 const InfoAndRemoveFile: React.FC<IInfoAndRemoveFile> = ({
   name,

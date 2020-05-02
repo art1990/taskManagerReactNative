@@ -5,8 +5,6 @@ import { View } from "react-native";
 import { Svg, Rect, G, Text } from "react-native-svg";
 // chart-kit
 import { AbstractChart } from "react-native-chart-kit";
-// types
-import { IStackedBarChartProps } from "../../types/index";
 
 const barWidth = 32;
 

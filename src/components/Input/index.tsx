@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 // types
-import { IInputProps } from "../../types";
+import { IInputProps } from "./types";
 // colors
 import { Colors } from "../../assets/styles/constants";
 

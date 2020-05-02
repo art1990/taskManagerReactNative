@@ -3,12 +3,15 @@ import React, { useCallback } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 // components
 import Input from "../../Input";
-import Tag from "../../Tag";
+import Tags from "../../Tags";
 // hooks
 import useTaskAction from "../../../hooks/useTaskAction";
-import { useTags } from "../../../hooks/useTags";
-// type
-import { ITagInput } from "../../../types";
+import useTags from "../../../hooks/useTags";
+
+interface ITagInput {
+  tags?: string[];
+  style?: {};
+}
 
 const TagInput: React.FC<ITagInput> = (props) => {
   const { tags = [], style } = props;
@@ -21,14 +24,7 @@ const TagInput: React.FC<ITagInput> = (props) => {
         <Input label="Add tag" disabled />
       </TouchableOpacity>
       <View style={styles.tagsContainer}>
-        {tags.map((el, i) => (
-          <Tag
-            key={el}
-            style={styles.tags}
-            text={el}
-            onDeletePress={() => removeTag(i)}
-          />
-        ))}
+        <Tags tags={tags} removeTag={removeTag} />
       </View>
     </>
   );

@@ -6,8 +6,9 @@ import { getStartWeek, dateNow } from "../utils/date";
 import { generateTasksData } from "../utils/facker";
 import { isSameWeek, addWeeks } from "date-fns";
 // types
-import { IChartsState } from "../redux/charts";
-import { IWeekObj } from "../types/api";
+import { ITaskState } from "../redux/task";
+
+type TWeekObj = Omit<ITaskState["taskData"], "isPaused" | "file" | "project">;
 
 /* START initialize user and userDoc variavle */
 type UserDoc = firebase.firestore.DocumentReference<
@@ -81,7 +82,6 @@ export const addTaskApi = async (task) => {
     ...task,
     timestamp,
   };
-
   if (taskData.id) return updateTaskApi(taskData);
 
   const { id } = await tasksListCol.add(taskData);
@@ -237,7 +237,7 @@ export const generateTasksApi = async () => {
 };
 
 // charts
-export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
+export const getWeekDataApi = async (meta) => {
   const getDataFromDoc = (doc: any): { tasksId: string; startWeek: number } =>
     Array.isArray(doc.docs) ? doc.docs[0].data() : doc.data();
   const { size: totalWeeks }: { size: number } = await weeksCol.get();
@@ -245,8 +245,7 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const {
     currentWeekTimeNumber,
     currentWeekTaskNumber,
-    lastLoggedTimeSnapshot,
-    lastLoggedTasksSnapshot,
+    lastVisibleRequest,
     currentPerDay,
     action,
   } = meta;
@@ -254,11 +253,13 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
   const currentWeekNumber = currentWeekTimeNumber || currentWeekTaskNumber;
   let currentDay = currentPerDay;
 
-  const lastSnapshot = lastLoggedTimeSnapshot || lastLoggedTasksSnapshot;
+  const lastSnapshot =
+    (currentWeekTimeNumber || currentWeekTaskNumber) && lastVisibleRequest;
 
   const cursor = action === "next" ? "startAfter" : "startAt";
 
-  const { startWeek: start, startWeekSec } = getStartWeek(currentPerDay);
+  const { startWeek: start, startWeekSec } =
+    (currentPerDay && getStartWeek(currentPerDay)) || {};
 
   let weekDoc = currentPerDay
     ? await weeksCol.doc(start).get()
@@ -267,7 +268,6 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     : await weeksCol[cursor](lastSnapshot).limit(1).get();
 
   const lastVisible = !currentPerDay && weekDoc.docs[weekDoc.docs.length - 1];
-  if (currentPerDay) console.log(weekDoc.exists);
   if (!weekDoc.exists && !!currentPerDay) {
     weekDoc = await weeksCol.limit(1).get();
     currentDay = startWeekSec;
@@ -280,17 +280,27 @@ export const getWeekDataApi = async (meta: IChartsState["meta"]) => {
     .orderBy("timestamp")
     .get();
 
-  const weeksList: IWeekObj[] = tasksDoc.docs.map(
-    (doc: any): IWeekObj => {
+  const weeksList: TWeekObj[] = tasksDoc.docs.map(
+    (doc: any): TWeekObj => {
       const {
         id,
         startTaskTime,
         duration = 0,
         endTime,
         timeInterval,
+        isCompleted,
+        title,
       } = doc.data();
 
-      return { id, startTaskTime, duration, endTime, timeInterval };
+      return {
+        id,
+        startTaskTime,
+        duration,
+        endTime,
+        timeInterval,
+        isCompleted,
+        title,
+      };
     }
   );
 

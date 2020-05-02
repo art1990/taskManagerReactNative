@@ -3,8 +3,12 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 // components
 import TaskField from "../../screens/components/TaskField";
-// types
-import { ITimeSectionProps } from "../../types";
+
+interface ITimeSectionProps {
+  startTaskTime: number;
+  endTime: number;
+  duration: number;
+}
 
 const TimeSection: React.FC<ITimeSectionProps> = ({
   startTaskTime,
@@ -13,8 +17,8 @@ const TimeSection: React.FC<ITimeSectionProps> = ({
 }) => (
   <>
     <View style={styles.timeSection}>
-      <TaskField title="Start time" text={startTaskTime} isTime />
-      <TaskField title="End time" text={endTime} isTime />
+      <TaskField title="Start time" hasMounth text={startTaskTime} isTime />
+      <TaskField title="End time" hasMounth text={endTime} isTime />
     </View>
     <TaskField title="Duration" text={duration} isTime />
   </>

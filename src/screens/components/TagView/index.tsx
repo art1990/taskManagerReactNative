@@ -7,8 +7,14 @@ import Button from "../../../components/Button";
 // styles
 import Styles from "../../../assets/styles";
 import { Colors } from "../../../assets/styles/constants";
-// types
-import { ITagViewProps } from "../../../types";
+
+interface ITagViewProps {
+  allTags: string[];
+  initialTags: string[];
+  Input?: React.FC<any>;
+  buttonText: string;
+  buttonAction: (arr: string[]) => void;
+}
 
 const TagView: React.FC<ITagViewProps> = ({
   allTags,
@@ -39,7 +45,7 @@ const TagView: React.FC<ITagViewProps> = ({
     setTags(copyTags);
   };
 
-  const filteredAllTags = allTags.filter((el) => !tags?.includes(el));
+  const filteredAllTags = allTags?.filter((el) => !tags?.includes(el));
 
   return (
     <>

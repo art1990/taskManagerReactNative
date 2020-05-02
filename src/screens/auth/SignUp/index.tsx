@@ -1,35 +1,24 @@
 // react
 import React from "react";
 import { StyleSheet, View } from "react-native";
-// redux
-import { useDispatch } from "react-redux";
-import { register } from "../../../redux/user/index";
 // components
 import SignUpForm from "../../../components/forms//SignUpForm";
 import Title from "../../../components/Title";
 import NavigationMessage from "../../../components/NavigationMessage";
-// navigate
-import { Routes } from "../../../navigation/routes";
+// hooks
+import useUser from "../../../hooks/useUser";
 // styles
 import Styles from "../../../assets/styles";
 // types
-import { ILoginProps } from "../../../types";
+import { ILoginProps } from "../types";
 
-const SignUp: React.FC<ILoginProps> = ({ navigation }) => {
-  const dispatch = useDispatch();
-
-  const onSignUpPress = (data) => {
-    dispatch(register.request(data));
-  };
-
-  const toSignIn = () => {
-    navigation.navigate(Routes.LOGIN);
-  };
+const SignUp: React.FC<ILoginProps> = () => {
+  const { onSignUpPress, toSignIn, isLoading } = useUser();
 
   return (
     <View style={[Styles.authWrapper, Styles.authContainer]}>
       <Title text="Sign-up" />
-      <SignUpForm onSubmit={onSignUpPress} />
+      <SignUpForm onSubmit={onSignUpPress} isLoading={isLoading} />
       <NavigationMessage
         text="Already have an account?"
         buttonText="Sign In"

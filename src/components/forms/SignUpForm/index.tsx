@@ -6,13 +6,12 @@ import FormInput from "../../forms/components/FormInput";
 import FormPasswordInput from "../../forms/components/FormPasswordInput";
 import Button from "../../Button";
 import KeyboardView from "../../KeyboardView";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { SignUpSchema } from "../../../utils/validation";
 // types
-import { IAuthForm, ISignUpFormData } from "../../../types";
+import { IAuthForm, ISignUpFormData } from "../types";
 
 type FormData = {
   email: string;
@@ -20,7 +19,7 @@ type FormData = {
   passwordConfirm: string;
 };
 
-const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
+const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, isLoading }) => {
   const methods = useForm<ISignUpFormData>({
     validationSchema: SignUpSchema,
   });
@@ -64,6 +63,7 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
           <Button
             style={styles.button}
             onPress={handleSubmit(handleUserSubmit)}
+            loading={isLoading}
           >
             Submit
           </Button>

@@ -5,7 +5,7 @@ import { View, StyleSheet } from "react-native";
 import Input from "../../components/Input";
 import IconButton from "../../components/IconButton";
 // types
-import { IInputWithIconProps } from "../../types";
+import { IInputWithIconProps } from "./types";
 
 const InputWithIcon: React.FC<IInputWithIconProps> = ({
   onChangeText,

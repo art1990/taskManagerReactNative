@@ -2,8 +2,12 @@
 import React from "react";
 // components
 import InputWithIcon from "../../components/InputWithIcon/index";
-// types
-import { IAddTagInputProps } from "../../types";
+
+export interface IAddTagInputProps {
+  value: string;
+  onChangeText: (event: any) => void;
+  onAddPress: () => void;
+}
 
 const AddTagInput: React.FC<IAddTagInputProps> = ({
   onChangeText,

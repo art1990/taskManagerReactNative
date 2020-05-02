@@ -1,15 +1,15 @@
 // faker
 import faker from "faker";
 // date-fns
-import { getUnixTime, isSameWeek, fromUnixTime } from "date-fns";
+import { getUnixTime, isSameWeek } from "date-fns";
 // utils
 import { getStartWeek } from "./date";
 // types
-import { ITask } from "../types";
+import { ITaskState } from "../redux/task";
 
 let date = getUnixTime(new Date());
 
-const generateTask = (): ITask => {
+const generateTask = (): ITaskState["taskData"] => {
   const { random, hacker } = faker;
 
   const id = random.uuid();
@@ -66,21 +66,31 @@ export const generateTasksData = () => {
       return task;
     }),
     generateWeeks(
-      tasks: ITask[]
-    ): { [key: string]: { tasksId?: ITask["id"][]; startWeekSec?: string } } {
+      tasks: ITaskState["taskData"][]
+    ): {
+      [key: string]: {
+        tasksId?: ITaskState["taskData"]["id"][];
+        startWeekSec?: string;
+      };
+    } {
       const weeks = {};
 
       tasks.forEach(({ timeInterval, id }) =>
         timeInterval.forEach((el) => {
-          do {
-            const { startWeek, startWeekSec } = getStartWeek(el.startTime);
+          for (
+            let start = el.startTime;
+            !isSameWeek(start, el.endTime, { weekStartsOn: 1 }) ||
+            start === el.startTime;
+            start += 604800 // add one week
+          ) {
+            const { startWeek, startWeekSec } = getStartWeek(start);
             if (weeks[startWeek]?.tasksId?.includes(id)) return;
 
             weeks[startWeek] = {
               tasksId: [...(weeks[startWeek]?.tasksId || []), id],
               startWeekSec,
             };
-          } while (!isSameWeek(el.startTime, el.endTime, { weekStartsOn: 1 }));
+          }
         })
       );
       return weeks;

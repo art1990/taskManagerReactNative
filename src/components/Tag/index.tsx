@@ -1,12 +1,19 @@
 // ract
-import React from "react";
+import React, { Dispatch } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 // coponents
 import IconButton from "../IconButton";
 // constants
 import { Colors } from "../../assets/styles/constants";
 // types
-import { ITagProps } from "../../types";
+import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
+interface ITagProps {
+  text: string;
+  onDeletePress?: (i?) => void;
+  style?: typeStyleObj;
+  setTags?: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
 const Tag: React.FC<ITagProps> = ({ text, onDeletePress, style, setTags }) => {
   const onAddThisTag = () => {

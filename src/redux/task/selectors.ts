@@ -1,14 +1,15 @@
 // utils
 import { searchTask } from "../utils/state";
-// interface
-import { ITaskState } from ".";
+// types
+import { ITaskState } from "../task";
 
-export const selectTaskData = state => state.task.taskData;
-export const selectTasksList = state => state.task.tasksList;
-export const selectCurrentTaskData: any = searchId => state =>
-  searchTask(searchId, state);
+export const selectTaskData = (state) => state.task.taskData;
+export const selectTasksList = (state) => state.task.tasksList;
+export const selectCurrentTaskData = (searchId) => (
+  state
+): ITaskState["taskData"] => searchTask(searchId, state);
 
-export const selectTaskFormData = searchId => state => {
+export const selectTaskFormData = (searchId) => (state) => {
   const task = searchTask(searchId, state);
 
   if (task) {
@@ -21,4 +22,4 @@ export const selectTaskFormData = searchId => state => {
 
 export const selectMeta = (state): ITaskState["meta"] => state.task.meta;
 
-export const selectTags = state => state.task.tags;
+export const selectTags = (state) => state.task.tags;

@@ -1,55 +1,27 @@
 // react
-import React, { useCallback } from "react";
+import React from "react";
 import { View, ScrollView } from "react-native";
-// redux
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectTaskFormData,
-  selectCurrentTaskData,
-} from "../../redux/task/selectors";
-import { update, remove } from "../../redux/task";
 // components
 import Title from "../../components/Title";
 import TaskForm from "../../components/forms/TaskForm";
+// hooks
+import useUpdateTask from "../../hooks/task/useUpdateTask";
+import useRemoveTask from "../../hooks/task/useRemoveTask";
 // sections
 import Time from "../sections/Time";
-// routes
-import { Routes } from "../../navigation/routes";
 // styles
-import Styles from "../../assets/styles";
 import styles from "../../assets/styles";
 
-export default ({ route, navigation }) => {
-  const dispatch = useDispatch();
-
-  const { id } = route?.params;
-  const formData = useSelector(selectTaskFormData(id));
-  const {
-    startTaskTime,
-    endTime,
-    duration,
-    isCompleted,
-    isPaused,
-  } = useSelector(selectCurrentTaskData(id));
-
-  const onUpdateTask = (data) => {
-    dispatch(update.request({ ...data, id }));
-    navigation.navigate(Routes.TASKS_LIST);
-  };
-
-  const removeTaskAndNavigate = useCallback(() => {
-    dispatch(remove.request({ id }));
-    navigation.navigate(Routes.TASKS_LIST);
-  }, [id]);
-
-  const timeProps = { startTaskTime, endTime, duration };
+const EditTask: React.FC = () => {
+  const { onUpdateTask, formData, timeProps } = useUpdateTask();
+  const { onRemovePress } = useRemoveTask();
 
   return (
     <View style={styles.wrapper}>
       <Title
         text="Edit task"
         buttonText="Delete task"
-        buttonAction={removeTaskAndNavigate}
+        buttonAction={() => onRemovePress(undefined, true)}
       />
       <ScrollView>
         <TaskForm isEditing formData={formData} onSubmit={onUpdateTask}>
@@ -59,3 +31,5 @@ export default ({ route, navigation }) => {
     </View>
   );
 };
+
+export default EditTask;

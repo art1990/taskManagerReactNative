@@ -12,14 +12,15 @@ import Remove from "../../assets/img/icons/trash.svg";
 // constants
 import { Colors } from "../../assets/styles/constants";
 // types
-import { IMaterialIconProps, IIconButtonProps } from "../../types";
+import { IMaterialIconProps, IIconButtonProps } from "./type";
 
 const MaterialIcon: React.FC<IMaterialIconProps> = ({
+  style,
   name,
   width,
   height,
   color,
-}) => <MaterialIcons name={name} size={width || height} color={color} />;
+}) => <MaterialIcons name={name} size={width || height} color={color} style={style} />;
 
 const Pause: React.FC<IMaterialIconProps> = (props) => (
   <MaterialIcon name="pause-circle-filled" {...props} />
@@ -57,6 +58,15 @@ const Filter: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon name="filter-list" color={color} {...rest} />
 );
 
+const ClearFilter: React.FC<IMaterialIconProps> = ({ style, color, ...rest }) => (
+  <MaterialCommunityIcons
+  style={style}
+    name="filter-remove-outline"
+    color={color}
+    {...rest}
+  />
+);
+
 const Calendar: React.FC<IMaterialIconProps> = ({ width, height, color }) => (
   <MaterialCommunityIcons
     name="calendar-text"
@@ -83,6 +93,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
     prev: Prev,
     next: Next,
     filter: Filter,
+    clearFilter: ClearFilter,
     calendar: Calendar,
   };
 
@@ -95,7 +106,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
       icon={() => <Icon width={iconSize} heigth={iconSize} color={color} />}
       onPress={onPress}
       style={[
-        ["cansel", "prev", "next"].includes(icon) && {
+        ["cansel", "prev", "next", "edit"].includes(icon) && {
           height: iconSize,
           width: iconSize,
           margin: 0,

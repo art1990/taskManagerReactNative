@@ -11,9 +11,9 @@ import { useForm, Controller, FormContext } from "react-hook-form";
 // validation
 import { LoginSchema } from "../../../utils/validation";
 // types
-import { IAuthForm, ILoginFormData } from "../../../types";
+import { IAuthForm, ILoginFormData } from "../types";
 
-const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
+const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit, isLoading }) => {
   const methods = useForm<ILoginFormData>({
     validationSchema: LoginSchema,
   });
@@ -48,6 +48,7 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit }) => {
           <Button
             style={styles.button}
             onPress={handleSubmit(handleUserSubmit)}
+            loading={isLoading}
           >
             Login
           </Button>
