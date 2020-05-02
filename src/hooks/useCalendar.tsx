@@ -1,11 +1,9 @@
 // react
-import React, { useState, useEffect } from "react";
-// redux
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 // hook
 import { useFetch } from "../hooks/useFetch";
 // api
-import { getWeekDataApi } from "../services/api";
+import { getWeekDataApi } from "../services/api/chart";
 // serializer
 import { conversionToCalendar } from "../utils/conversion";
 // utils

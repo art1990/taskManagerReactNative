@@ -1,10 +1,5 @@
 // react
 import React from "react";
-// redux
-import { useSelector } from "react-redux";
-import { selectLoading } from "../redux/user/selectors";
-// components
-import Spinner from "../components/Spinner";
 // navigation
 import { NavigationContainer } from "@react-navigation/native";
 // stack screens
@@ -15,9 +10,6 @@ import { useAuth } from "../hooks/useAuth";
 
 const RootNavigator = () => {
   const { user } = useAuth();
-  const isLoader = useSelector(selectLoading);
-
-  if (isLoader) return <Spinner />;
 
   return (
     <NavigationContainer>

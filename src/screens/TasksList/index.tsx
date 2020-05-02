@@ -1,11 +1,8 @@
 // react
-import React, { useCallback, useEffect } from "react";
-import { View, ScrollView, StyleSheet, FlatList } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import { View, StyleSheet } from "react-native";
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import { logout, initialize } from "../../redux/user";
-import { getIncomplete, getList, getMoreList } from "../../redux/task";
+import { useSelector } from "react-redux";
 import {
   selectTaskData,
   selectTasksList,
@@ -13,176 +10,88 @@ import {
 } from "../../redux/task/selectors";
 // components
 import Button from "../../components/Button";
-import TaskSwipeableInfo from "./TaskSwipeableInfo";
-import TaskInfo from "../../components/TaskInfo";
 import WorkingTaskInfo from "../../components/WorkingTaskInfo";
 import TitleWithFilter from "../sections/TitleWithFilter";
 import GenerateListOfTask from "./GenerateListOfTask";
 import Spinner from "../../components/Spinner";
+import FlatList from "./FlatList";
+import Tags from "../../components/Tags";
 // hooks
-import { useAuth } from "../../hooks/useAuth";
-import useTaskAction from "../../hooks/useTaskAction";
 import useIsMounted from "../../hooks/useIsMounted";
-// routes
-import { Routes } from "../../navigation/routes";
+import useUpdateTask from "../../hooks/task/useUpdateTask";
+import { useFetchTaskData } from "../../hooks/task/useFetchTaskData";
+import useRemoveTask from "../../hooks/task/useRemoveTask";
+import useUser from "../../hooks/useUser";
+import useTaskNavigation from "../../hooks/task/useTaskNavigation";
+import useListener from "../../hooks/db/useListener";
+import useTags from "../../hooks/useTags";
+// utils
+import { isEmpty } from "../../utils/array";
 // styles
 import Styles from "../../assets/styles";
-import { Colors } from "../../assets/styles/constants";
-// types
-import { ITaskState } from "../../redux/task";
 
-export default ({ navigation }) => {
-  const { user } = useAuth();
+export default () => {
   const taskData = useSelector(selectTaskData);
   const tasksList = useSelector(selectTasksList);
-  const {
-    isLoading,
-    isLoadingIncomplete,
-    filters,
-    lastVisible,
-    isLoadingTaskList,
-    limit,
-    tasksCount,
-  } = useSelector(selectMeta);
-  const {
-    onEditPress,
-    onResumePress,
-    onRemovePress,
-    onPausePress,
-    toFilters,
-  } = useTaskAction();
+  const { isLoading, filters, isMoreLoading, tasksCount } = useSelector(
+    selectMeta
+  );
+  const { onLogoutPress } = useUser();
+  const { onResumePress, onPausePress } = useUpdateTask();
+  const { onRemovePress } = useRemoveTask();
+  const { getTasksList } = useFetchTaskData();
+  const { toAddTask, toView, toFilters } = useTaskNavigation();
   const isMounted = useIsMounted();
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!user) return;
-    user && dispatch(initialize.run(user));
-    dispatch(getIncomplete.request());
-  }, [user]);
-
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(getList.request({ filters, limit }));
-    }, [user, filters])
-  );
-
-  const onLogOut = useCallback(() => {
-    dispatch(logout.run());
-  }, [dispatch, logout]);
-
-  const toAddTask = useCallback(() => {
-    navigation.navigate(Routes.CREATE_TASK);
-  }, [navigation]);
-
-  const toView = useCallback(
-    ({ id }) => {
-      navigation.navigate(Routes.VIEW_TASK, { id });
-    },
-    [navigation]
-  );
+  const { updateTagFilter } = useTags();
+  useListener(getTasksList, filters);
 
   const loadMore = useCallback(() => {
-    tasksList.length < tasksCount &&
-      dispatch(getMoreList.request({ filters, lastVisible, limit }));
-  }, [
-    tasksList,
-    tasksCount,
-    dispatch,
-    getMoreList,
-    filters,
-    lastVisible,
-    limit,
+    if (tasksList.length >= tasksCount || isMoreLoading) return;
+    getTasksList({ isMoreLoading: true });
+  }, [tasksList, tasksCount, getTasksList]);
+
+  const renderFooter = useCallback(() => (isMoreLoading ? <Spinner /> : null), [
+    isMoreLoading,
   ]);
 
-  const renderFooter = () => {
-    if (!isLoadingTaskList) return null;
-
-    return <Spinner />;
-  };
-
-  const isLoader = isLoading || isLoadingIncomplete || !isMounted;
+  const isLoader = isLoading || !isMounted;
   const { startTime, duration, title } = taskData;
   return (
     <View
       style={[
         Styles.wrapper,
         styles.container,
-        !tasksList && Styles.columnSpaceBetween,
+        isEmpty(tasksList) && Styles.columnSpaceBetween,
       ]}
     >
       <TitleWithFilter
         text="Tasks"
         buttonText="Log out"
-        buttonAction={onLogOut}
+        buttonAction={onLogoutPress}
         onPressFilter={toFilters}
-        isHasTag={!!filters}
+        onPressClearFilter={updateTagFilter}
+        isHasTag={filters?.length > 0}
       />
+      <Tags tags={filters} updateTagFilter={updateTagFilter} />
       {isLoader ? (
         <Spinner />
-      ) : tasksList ? (
+      ) : !isEmpty(tasksList) ? (
         <>
           <FlatList
-            style={Styles.fullScreen}
-            data={tasksList}
-            keyExtractor={(item) => item.id}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.001}
-            ListFooterComponent={renderFooter}
-            renderItem={(el: { item: ITaskState["taskData"] }) => {
-              const {
-                title,
-                project,
-                duration,
-                startTaskTime,
-                isPaused,
-                isCompleted,
-                id,
-                file,
-              } = el.item;
-
-              if (taskData?.id === id) {
-                const props = {
-                  title,
-                  project,
-                  startTaskTime,
-                  isPaused,
-                  style: { backgroundColor: Colors.taskInfoBGColorActive },
-                };
-                return <TaskInfo {...props} />;
-              }
-
-              const props = {
-                title,
-                project,
-                duration,
-                isPaused,
-                isCompleted,
-              };
-
-              return (
-                <TaskSwipeableInfo
-                  key={id}
-                  {...props}
-                  onRemovePress={() => {
-                    onRemovePress(id, file?.uri);
-                  }}
-                  onEditPress={() => {
-                    onEditPress(id);
-                  }}
-                  onResumePress={() => onResumePress(el.item)}
-                  toView={() => toView(el.item)}
-                />
-              );
-            }}
+            renderFooter={renderFooter}
+            loadMore={loadMore}
+            tasksList={tasksList}
+            taskDataId={taskData?.id}
+            onRemovePress={onRemovePress}
+            onResumePress={onResumePress}
           />
-
           {startTime ? (
             <WorkingTaskInfo
               title={title}
               startTime={startTime}
               duration={duration}
               onCreateTask={onPausePress}
+              toView={() => toView(taskData.id)}
             />
           ) : (
             <Button onPress={toAddTask}>Add task</Button>

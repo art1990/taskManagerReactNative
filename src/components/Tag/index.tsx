@@ -10,7 +10,7 @@ import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes"
 
 interface ITagProps {
   text: string;
-  onDeletePress?: () => void;
+  onDeletePress?: (i?) => void;
   style?: typeStyleObj;
   setTags?: React.Dispatch<React.SetStateAction<string[]>>;
 }

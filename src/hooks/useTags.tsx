@@ -1,17 +1,20 @@
 // react
 import react, { useCallback, useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 // react-navigate
 import { useNavigation } from "@react-navigation/native";
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import { getTags, updateCurrentTags, updateFilter } from "../redux/task/index";
+import { useSelector } from "react-redux";
+import { getTags, updateCurrentTags, updateFilter } from "../redux/task";
 import { selectTags } from "../redux/task/selectors";
+// hook
+import useDispatch from "./redux/useDispatch";
+// api
+import { getTagsApi } from "../services/api/tags";
 // routes
 import { Routes } from "../navigation/routes";
 
-export const useTags = (setValue?: (field: string, value: string) => void) => {
-  const dispatch = useDispatch();
+export default (setValue?: (field: string, value: string) => void) => {
+  const { dispatch } = useDispatch();
   const { current, all } = useSelector(selectTags);
   const navigation = useNavigation();
 
@@ -34,11 +37,9 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     navigation.navigate(Routes.TASKS_LIST);
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(getTags.request());
-    }, [getTags])
-  );
+  const getTagsList = useCallback(() => {
+    dispatch(getTags, getTagsApi);
+  }, [dispatch]);
 
   useEffect(() => {
     setValue && setValue("tags", current);
@@ -51,5 +52,6 @@ export const useTags = (setValue?: (field: string, value: string) => void) => {
     addTags,
     removeTag,
     updateTagFilter,
+    getTagsList,
   };
 };

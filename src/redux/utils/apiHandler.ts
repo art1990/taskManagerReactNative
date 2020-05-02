@@ -4,18 +4,34 @@ import { Alert } from "react-native";
 import { put, call } from "redux-saga/effects";
 
 export function* apiHandler(
-  { api, argApi = undefined },
-  action = undefined,
-  convertResponse = (data) => data
+  payload,
+  convertResponse = (data) => data,
+  navigate = undefined
 ) {
+  const {
+    api: { api, firebase, reduxAction: action },
+    meta,
+    navigation,
+    task,
+    ...rest
+  } = payload;
   try {
-    const res = yield call(api, argApi);
+    const arg = { ...firebase, ...rest, meta };
+    if (task) {
+      arg.task = task;
+    }
+    const response = yield call(api, arg);
+    const res =
+      typeof meta !== "undefined" ? { ...response, ...meta } : response;
     const convertRes = convertResponse(res);
     yield action && put(action.success(convertRes));
+    if (navigate === "goBack") return yield navigation?.goBack();
+    if (navigate) yield navigation?.navigate(navigate);
 
     return res;
   } catch (err) {
     yield action && put(action.failure(err));
+    console.log(err.message);
     Alert.alert(err.message);
   }
 }

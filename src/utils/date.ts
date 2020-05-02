@@ -38,7 +38,9 @@ const getStartOrEndWeek = (
   time?: string | number
 ): { [x: string]: any } => {
   const weekDate = func(
-    typeof time !== "object" ? fromUnixTime(+time) : time || new Date(),
+    typeof time !== "object" && typeof time !== "undefined"
+      ? fromUnixTime(+time)
+      : time || new Date(),
     {
       weekStartsOn: 1,
     }

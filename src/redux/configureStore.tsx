@@ -1,6 +1,5 @@
 // redux
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import user from "./user";
 import task from "./task";
 // redux-saga
 import createSagaMiddleware from "redux-saga";
@@ -9,7 +8,6 @@ import rootSaga from "./rootSaga";
 // store
 const configureStore = () => {
   const rootReducer = combineReducers({
-    user,
     task,
   });
 

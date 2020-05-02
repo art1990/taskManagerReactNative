@@ -19,7 +19,7 @@ type FormData = {
   passwordConfirm: string;
 };
 
-const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
+const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, isLoading }) => {
   const methods = useForm<ISignUpFormData>({
     validationSchema: SignUpSchema,
   });
@@ -63,6 +63,7 @@ const SignUpForm: React.FC<IAuthForm> = ({ onSubmit, style }) => {
           <Button
             style={styles.button}
             onPress={handleSubmit(handleUserSubmit)}
+            loading={isLoading}
           >
             Submit
           </Button>

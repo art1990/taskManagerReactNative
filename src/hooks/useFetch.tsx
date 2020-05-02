@@ -1,7 +1,8 @@
 // react
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 // hook
 import { useMemoCompare } from "../hooks/useMemoCompare";
+import { useFirestore } from "./db/useFirestore";
 // utils
 import equal from "equals";
 
@@ -9,6 +10,8 @@ export const useFetch = (apiFunc, option, conversion = (data) => data) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const firestore = useFirestore();
 
   const memoOption = useMemoCompare(
     option,
@@ -19,7 +22,7 @@ export const useFetch = (apiFunc, option, conversion = (data) => data) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const res = await apiFunc(memoOption);
+        const res = await apiFunc({ ...memoOption, ...firestore });
         const serializedResponse = conversion(res);
         setResponse(serializedResponse);
       } catch (error) {

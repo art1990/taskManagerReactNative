@@ -82,7 +82,6 @@ export const addTaskApi = async (task) => {
     ...task,
     timestamp,
   };
-
   if (taskData.id) return updateTaskApi(taskData);
 
   const { id } = await tasksListCol.add(taskData);

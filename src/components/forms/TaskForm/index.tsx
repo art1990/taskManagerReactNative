@@ -11,7 +11,7 @@ import KeyboardView from "../../KeyboardView";
 // react-hook-form
 import { useForm, Controller, FormContext } from "react-hook-form";
 // hooks
-import { useTags } from "../../../hooks/useTags";
+import useTags from "../../../hooks/useTags";
 // validation
 import { CreateTaskSchema } from "../../../utils/validation";
 

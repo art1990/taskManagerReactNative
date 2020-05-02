@@ -13,6 +13,7 @@ interface IButtonProps {
   labelStyle?: {};
   style?: {};
   mode?: any;
+  loading?: boolean;
 }
 
 const CustomButton: React.FC<IButtonProps> = ({
@@ -22,6 +23,7 @@ const CustomButton: React.FC<IButtonProps> = ({
   color,
   labelStyle,
   style,
+  loading,
   ...rest
 }) => {
   const isText = mode === "text";
@@ -38,6 +40,7 @@ const CustomButton: React.FC<IButtonProps> = ({
       labelStyle={textStyle}
       style={containerStyle}
       uppercase={false}
+      loading={loading}
       {...rest}
     >
       {children}

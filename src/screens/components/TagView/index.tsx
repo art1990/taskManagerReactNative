@@ -45,7 +45,7 @@ const TagView: React.FC<ITagViewProps> = ({
     setTags(copyTags);
   };
 
-  const filteredAllTags = allTags.filter((el) => !tags?.includes(el));
+  const filteredAllTags = allTags?.filter((el) => !tags?.includes(el));
 
   return (
     <>

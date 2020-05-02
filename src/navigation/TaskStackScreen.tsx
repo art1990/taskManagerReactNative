@@ -25,11 +25,11 @@ const TaskStackScreen = () => (
     }}
   >
     <TaskStack.Screen name={Routes.TASKS_LIST} component={TasksList} />
+    <TaskStack.Screen name={Routes.FILTERS} component={Filters} />
     <TaskStack.Screen name={Routes.EDIT_TASK} component={EditTask} />
     <TaskStack.Screen name={Routes.VIEW_TASK} component={ViewTask} />
     <TaskStack.Screen name={Routes.CREATE_TASK} component={CreateTask} />
     <TaskStack.Screen name={Routes.ADD_TAGS} component={AddTags} />
-    <TaskStack.Screen name={Routes.FILTERS} component={Filters} />
   </TaskStack.Navigator>
 );
 

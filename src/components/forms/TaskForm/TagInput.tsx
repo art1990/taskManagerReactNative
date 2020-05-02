@@ -6,7 +6,7 @@ import Input from "../../Input";
 import Tags from "../../Tags";
 // hooks
 import useTaskAction from "../../../hooks/useTaskAction";
-import { useTags } from "../../../hooks/useTags";
+import useTags from "../../../hooks/useTags";
 
 interface ITagInput {
   tags?: string[];

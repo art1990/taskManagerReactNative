@@ -1,6 +1,6 @@
 // react
 import React, { useCallback } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet } from "react-native";
 // redux
 import { useSelector } from "react-redux";
 import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
@@ -15,7 +15,9 @@ import Tags from "../../components/Tags";
 // sections
 import Time from "../sections/Time";
 // hooks
-import useTaskAction from "../../hooks/useTaskAction";
+import useTaskNavigation from "../../hooks/task/useTaskNavigation";
+import useUpdateTask from "../../hooks/task/useUpdateTask";
+import useRemoveTask from "../../hooks/task/useRemoveTask";
 // assets
 import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
@@ -27,22 +29,14 @@ interface ITaskViewProps {
 
 const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { id } = route?.params;
-  const {
-    onEditPress,
-    onResumePress,
-    onMarkAsCompletedPress,
-  } = useTaskAction();
+  const { onResumePress, onMarkAsCompletedPress } = useUpdateTask();
+  const { toEdit } = useTaskNavigation();
+  const { onRemovePress } = useRemoveTask();
 
   const task = useSelector(selectCurrentTaskData(id));
   const { isLoading } = useSelector(selectMeta);
 
-  const onRemovePress = () => {
-    Alert.alert("hahah");
-  };
-
-  const EditIconButton = (
-    <IconButton key={1} icon="edit" onPress={onEditPress} />
-  );
+  const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
     <IconButton key={2} icon="resume" onPress={onResumePress} />
   );
@@ -93,7 +87,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
               mode="text"
               style={styles.buttonContainer}
               labelStyle={styles.buttonLabel}
-              onPress={onRemovePress}
+              onPress={() => onRemovePress(undefined, true)}
             >
               Delete task
             </Button>

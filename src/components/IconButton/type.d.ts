@@ -1,3 +1,6 @@
+// type
+import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
 export interface IIconButtonProps {
   size?: number;
   icon:
@@ -10,15 +13,17 @@ export interface IIconButtonProps {
     | "prev"
     | "next"
     | "calendar"
-    | "filter";
+    | "filter"
+    | "clearFilter";
   onPress: (id?) => void;
   color?: string;
-  style?: {};
+  style?: typeStyleObj;
 }
 
 export interface IMaterialIconProps {
   name: string;
   color?: string;
+  style?: typeStyleObj;
   width: number;
   height: number;
 }

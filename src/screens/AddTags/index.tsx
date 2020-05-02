@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 // hooks
-import { useTags } from "../../hooks/useTags";
+import useTags from "../../hooks/useTags";
 // components
 import Title from "../../components/Title";
 import TagView from "../components/TagView";

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // hooks
 import { useFetch } from "../hooks/useFetch";
 // api
-import { getWeekDataApi } from "../services/api";
+import { getWeekDataApi } from "../services/api/chart";
 // utils
 import { getUnixTime } from "date-fns";
 
