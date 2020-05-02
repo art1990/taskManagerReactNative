@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 // components
 import PerDayChart from "./components/PerDayChart";
+import Spinner from "../../components/Spinner";
 // hooks
 import { useChart } from "../../hooks/useChart";
 // utils
@@ -29,14 +30,18 @@ const LoggedPerDay = () => {
 
   return (
     <>
-      {!isLoading && weekData && (
-        <PerDayChart
-          inputStyle={styles.input}
-          dayData={chartData}
-          updateDate={updatePerDay}
-          currentDate={currentPerDay}
-          chartName="Logged per day"
-        />
+      {isLoading ? (
+        <Spinner isChart />
+      ) : (
+        weekData && (
+          <PerDayChart
+            inputStyle={styles.input}
+            dayData={chartData}
+            updateDate={updatePerDay}
+            currentDate={currentPerDay}
+            chartName="Logged per day"
+          />
+        )
       )}
     </>
   );

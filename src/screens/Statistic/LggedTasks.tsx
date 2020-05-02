@@ -2,6 +2,8 @@
 import React, { useMemo } from "react";
 // components
 import WeekChart from "./components/WeekChart";
+import Spinner from "../../components/Spinner";
+
 // hooks
 import { useChart } from "../../hooks/useChart";
 // utils
@@ -19,13 +21,17 @@ const LoggedTasks = () => {
 
   return (
     <>
-      {!isLoading && weekData && (
-        <WeekChart
-          onNextPress={toNextTaskWeek}
-          onPrevPress={toPrevTaskWeek}
-          weekData={chartData}
-          chartName="Logged tasks"
-        />
+      {isLoading ? (
+        <Spinner isChart />
+      ) : (
+        weekData && (
+          <WeekChart
+            onNextPress={toNextTaskWeek}
+            onPrevPress={toPrevTaskWeek}
+            weekData={chartData}
+            chartName="Logged tasks"
+          />
+        )
       )}
     </>
   );

@@ -1,5 +1,9 @@
 // react
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
-export default () => <ActivityIndicator size="large" color="000ff" />;
+export default ({ isChart }) => (
+  <View style={{ height: isChart ? 282 : "auto", justifyContent: "center" }}>
+    <ActivityIndicator size="large" color="000ff" />
+  </View>
+);

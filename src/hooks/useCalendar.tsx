@@ -8,7 +8,7 @@ import { getWeekDataApi } from "../services/api/chart";
 import { conversionToCalendar } from "../utils/conversion";
 // utils
 import { generateForCalendar } from "../utils/calendar";
-import { parse } from "date-fns";
+import { parse, format } from "date-fns";
 
 export interface IUseCalendarReturn {
   calendarTasks: {}[];
@@ -26,10 +26,13 @@ export interface IUseCalendarReturn {
   isLoading: boolean;
 }
 
+const dn = new Date();
+const dnString = format(dn, "y-LL-dd");
+
 export const useCalendar = (): IUseCalendarReturn => {
   const [date, setDate] = useState({
-    string: "2020-04-25",
-    number: 1587632990375,
+    string: dnString,
+    number: +dn,
   });
 
   const { response, error, isLoading } = useFetch(
