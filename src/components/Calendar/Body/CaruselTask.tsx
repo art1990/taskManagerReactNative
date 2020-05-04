@@ -21,6 +21,7 @@ const CaruselTask = ({ style, hour, data, onEditPress }) => {
         <Text>{formatToUTCTime(item.duration)}</Text>
         <IconButton
           size={26}
+          style={styles.icon}
           icon="edit"
           onPress={() => onEditPress(item.id)}
         />
@@ -33,7 +34,6 @@ const CaruselTask = ({ style, hour, data, onEditPress }) => {
       <Text style={styles.hourLabel}>{hour}</Text>
       <Carousel
         slideStyle={{ alignSelf: "flex-start" }}
-        // firstItem={4}
         layout={"stack"}
         layoutCardOffset={15}
         data={data}
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.1)",
     paddingHorizontal: 12,
   },
+  icon: { width: 26, height: 26 },
   hourLabel: {
     flex: 0,
     marginBottom: 25,

@@ -2,8 +2,6 @@
 import actionCreator, { createAction } from "../utils/actionCreator";
 // immer
 import produce, { Draft } from "immer";
-// utils
-import { updateTasksList } from "../utils/reducer";
 
 // action types
 const PAUSE = "taskManager/task/pause";
@@ -14,6 +12,9 @@ type REMOVE = typeof REMOVE;
 
 const UPDATE = "taskManager/task/update";
 type UPDATE = typeof UPDATE;
+
+const GET = "taskManager/task/get";
+type GET = typeof GET;
 
 const GET_LIST = "taskManager/task/getList";
 type GET_LIST = typeof GET_LIST;
@@ -37,6 +38,7 @@ type UPDATE_FILTER = typeof UPDATE_FILTER;
 export const pause = createAction(PAUSE);
 export const remove = createAction(REMOVE);
 export const update = createAction(UPDATE);
+export const get = createAction(GET);
 export const getList = createAction(GET_LIST);
 export const create = createAction(CREATE);
 export const resume = createAction(RESUME);
@@ -118,19 +120,11 @@ export default produce(
     switch (type) {
       case remove.REQUEST:
         return request();
-      case remove.SUCCESS:
-        // draft.meta.isLoading = false;
-        // draft.tasksList = draft.tasksList.filter(({ id }) => id !== payload);
-        return;
       case remove.FAILURE:
         return failure();
 
       case update.REQUEST:
         return request();
-      case update.SUCCESS:
-        // draft.meta.isLoading = false;
-        // draft.tasksList = updateTasksList(draft.tasksList, payload);
-        return;
       case update.FAILURE:
         return failure();
 
@@ -156,29 +150,18 @@ export default produce(
 
       case create.REQUEST:
         return request();
-      case create.SUCCESS:
-        // draft.meta.isLoading = false;
-        // draft.taskData = { ...draft.taskData, ...payload };
-        return;
       case create.FAILURE:
         return failure();
 
       case resume.REQUEST:
         return request();
-      case resume.SUCCESS:
-        // draft.meta.isLoading = false;
-        // draft.taskData = payload;
-        // draft.tasksList = updateTasksList(draft.tasksList, payload);
-        return;
       case resume.FAILURE:
         return failure();
 
       case pause.REQUEST:
         return request();
       case pause.SUCCESS:
-        // draft.meta.isLoading = false;
         draft.taskData = initialState.taskData;
-        // draft.tasksList = updateTasksList(draft.tasksList, payload);
         return;
       case pause.FAILURE:
         return failure();

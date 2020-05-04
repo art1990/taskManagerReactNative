@@ -1,9 +1,6 @@
 // react
 import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
-// redux
-import { useSelector } from "react-redux";
-import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
 // components
 import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
@@ -18,6 +15,10 @@ import Time from "../sections/Time";
 import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 import useUpdateTask from "../../hooks/task/useUpdateTask";
 import useRemoveTask from "../../hooks/task/useRemoveTask";
+import { useFetch } from "../../hooks/useFetch";
+import useIsMounted from "../../hooks/useIsMounted";
+// api
+import { getTaskApi } from "../../services/api/task";
 // assets
 import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
@@ -32,9 +33,8 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { onResumePress, onMarkAsCompletedPress } = useUpdateTask();
   const { toEdit } = useTaskNavigation();
   const { onRemovePress } = useRemoveTask();
-
-  const task = useSelector(selectCurrentTaskData(id));
-  const { isLoading } = useSelector(selectMeta);
+  const { isLoading, response: task } = useFetch(getTaskApi, { id });
+  const isMounted = useIsMounted();
 
   const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
@@ -50,7 +50,10 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
     duration,
     file,
     isCompleted,
-  } = task;
+    isPaused,
+  } = task || {};
+
+  console.log(task);
   return (
     <View
       style={[
@@ -62,11 +65,11 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
       <View>
         <Title
           text="Task"
-          iconButtonList={iconButtonList}
+          iconButtonList={isPaused && iconButtonList}
           isCompleted={isCompleted}
         />
         <Modal visible={isLoading} />
-        {isLoading ? (
+        {isLoading || !isMounted ? (
           <Spinner />
         ) : (
           <>

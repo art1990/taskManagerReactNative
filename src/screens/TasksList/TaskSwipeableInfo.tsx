@@ -85,9 +85,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: "center",
   },
-  swipe: {
-    backgroundColor: "red",
-  },
+  swipe: {},
 });
 
 export default TaskSwipeableInfo;

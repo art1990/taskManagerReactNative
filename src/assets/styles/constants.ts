@@ -1,4 +1,6 @@
 export enum Colors {
+  headerColor = "rgba(0, 0, 0, 0.4)",
+
   tab = "#979797",
   activeTab = "#000000",
   tabBarBGColor = "#F1F0F0",

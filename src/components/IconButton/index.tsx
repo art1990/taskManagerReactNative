@@ -20,7 +20,14 @@ const MaterialIcon: React.FC<IMaterialIconProps> = ({
   width,
   height,
   color,
-}) => <MaterialIcons name={name} size={width || height} color={color} style={style} />;
+}) => (
+  <MaterialIcons
+    name={name}
+    size={width || height}
+    color={color}
+    style={style}
+  />
+);
 
 const Pause: React.FC<IMaterialIconProps> = (props) => (
   <MaterialIcon name="pause-circle-filled" {...props} />
@@ -58,9 +65,13 @@ const Filter: React.FC<IMaterialIconProps> = ({ color, ...rest }) => (
   <MaterialIcon name="filter-list" color={color} {...rest} />
 );
 
-const ClearFilter: React.FC<IMaterialIconProps> = ({ style, color, ...rest }) => (
+const ClearFilter: React.FC<IMaterialIconProps> = ({
+  style,
+  color,
+  ...rest
+}) => (
   <MaterialCommunityIcons
-  style={style}
+    style={style}
     name="filter-remove-outline"
     color={color}
     {...rest}
@@ -106,7 +117,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
       icon={() => <Icon width={iconSize} heigth={iconSize} color={color} />}
       onPress={onPress}
       style={[
-        ["cansel", "prev", "next", "edit"].includes(icon) && {
+        ["cansel", "prev", "next"].includes(icon) && {
           height: iconSize,
           width: iconSize,
           margin: 0,

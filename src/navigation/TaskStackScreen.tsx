@@ -19,10 +19,7 @@ const TaskStack = createStackNavigator();
 const TaskStackScreen = () => (
   <TaskStack.Navigator
     initialRouteName={Routes.TASKS_LIST}
-    screenOptions={{
-      headerStyle,
-      gestureEnabled: true,
-    }}
+    screenOptions={headerStyle}
   >
     <TaskStack.Screen name={Routes.TASKS_LIST} component={TasksList} />
     <TaskStack.Screen name={Routes.FILTERS} component={Filters} />

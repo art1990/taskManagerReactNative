@@ -8,7 +8,7 @@ import { db } from "../../fireBase";
 export const useFirestore = () => {
   const { user } = useAuth();
 
-  if (!user) return null;
+  if (!user) return {};
 
   const userDoc = db.collection("users").doc(user.uid);
   const tasksListCol = userDoc?.collection("tasksList");

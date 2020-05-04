@@ -23,7 +23,7 @@ import { headerStyle } from "./styles";
 const StatisticStack = createStackNavigator();
 
 const StatisticStackScreen = () => (
-  <StatisticStack.Navigator screenOptions={{ headerStyle }}>
+  <StatisticStack.Navigator screenOptions={headerStyle}>
     <StatisticStack.Screen name={Routes.STATISTIC} component={Statistic} />
   </StatisticStack.Navigator>
 );
@@ -32,7 +32,7 @@ const StatisticStackScreen = () => (
 const CalendarStack = createStackNavigator();
 
 const CalendarStackScreen = () => (
-  <CalendarStack.Navigator screenOptions={{ headerStyle }}>
+  <CalendarStack.Navigator screenOptions={headerStyle}>
     <CalendarStack.Screen name={Routes.CALENDAR} component={Calendar} />
   </CalendarStack.Navigator>
 );

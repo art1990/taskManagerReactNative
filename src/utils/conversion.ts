@@ -5,7 +5,8 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import { convertToDate } from "./date";
 // type
 import { IWeek } from "./charts";
-import { IChartsState } from "../redux/charts";
+
+type TCurrentDay = number;
 
 // utils for day
 const isInRange = (current, start, end) => {
@@ -18,12 +19,12 @@ const isInRange = (current, start, end) => {
 
 interface IConversionToDay {
   weeksList: IWeek[];
-  currentPerDay: IChartsState["meta"]["currentPerDay"];
+  currentPerDay: TCurrentDay;
 }
 
 interface ICalendarReturn {
   tasksList: Omit<IWeek, "timeInterval">[];
-  currentDay: IChartsState["meta"]["currentPerDay"];
+  currentDay: TCurrentDay;
 }
 
 // logged per day
@@ -34,7 +35,6 @@ export const conversionToLoggedPerDay = (
   currentDay: IConversionToDay["currentPerDay"];
 } => {
   const { weeksList, currentPerDay } = data;
-  // const currentPerDay = getUnixTime(new Date(2020, 3, 17));
   const tasksList = weeksList
     .filter((task) =>
       task.timeInterval.find(({ startTime, endTime }) =>

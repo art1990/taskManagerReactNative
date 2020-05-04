@@ -136,6 +136,11 @@ export const updateTaskApi = async ({ tasksListCol, task }) => {
   return task;
 };
 
+export const getTaskApi = async ({ id, tasksListCol }) => {
+  const doc = await tasksListCol.doc(id).get();
+  return doc.data();
+};
+
 export const getTaskListApi = async ({
   filters: defaultFilters,
   lastVisible,

@@ -3,7 +3,7 @@ import { getStartWeek } from "../../utils/date";
 // interface
 import { ITaskState } from "../../redux/task";
 
-type TWeekObj = Omit<ITaskState["taskData"], "isPaused" | "file" | "project">;
+type TWeekObj = Omit<ITaskState["taskData"], "file" | "project">;
 
 export const getWeekDataApi = async ({ weeksCol, tasksListCol, ...meta }) => {
   const getDataFromDoc = (doc: any): { tasksId: string; startWeek: number } =>
@@ -48,29 +48,33 @@ export const getWeekDataApi = async ({ weeksCol, tasksListCol, ...meta }) => {
     .orderBy("timestamp")
     .get();
 
-  const weeksList: TWeekObj[] = tasksDoc.docs.map(
-    (doc: any): TWeekObj => {
-      const {
-        id,
-        startTaskTime,
-        duration = 0,
-        endTime,
-        timeInterval,
-        isCompleted,
-        title,
-      } = doc.data();
+  const weeksList: TWeekObj[] = tasksDoc.docs
+    .map(
+      (doc: any): TWeekObj => {
+        const {
+          id,
+          startTaskTime,
+          duration = 0,
+          endTime,
+          timeInterval,
+          isCompleted,
+          isPaused,
+          title,
+        } = doc.data();
 
-      return {
-        id,
-        startTaskTime,
-        duration,
-        endTime,
-        timeInterval,
-        isCompleted,
-        title,
-      };
-    }
-  );
+        return {
+          id,
+          startTaskTime,
+          duration,
+          endTime,
+          timeInterval,
+          isCompleted,
+          isPaused,
+          title,
+        };
+      }
+    )
+    .filter(({ isPaused }) => !!isPaused);
 
   return {
     weeksList,

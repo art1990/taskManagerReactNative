@@ -61,15 +61,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderLeftWidth: 1,
     borderColor: Colors.calendarLabel,
-
-    // zIndex: 0,
   },
   tasksContainer: {
     backgroundColor: "transparent",
     borderColor: "black",
     borderWidth: 1,
     flex: 1,
-    // height: "100%",
     position: "absolute",
     top: 0,
     left: 0,
