@@ -39,11 +39,11 @@ export default () => {
   const { onLogoutPress } = useUser();
   const { onResumePress, onPausePress } = useUpdateTask();
   const { onRemovePress } = useRemoveTask();
-  const { getTasksList } = useFetchTaskData();
+  const { getTasksList, resetTaskData } = useFetchTaskData();
   const { toAddTask, toView, toFilters } = useTaskNavigation();
   const isMounted = useIsMounted();
   const { updateTagFilter } = useTags();
-  useListener(getTasksList, filters);
+  useListener(getTasksList, filters, resetTaskData);
 
   const loadMore = useCallback(() => {
     if (tasksList.length >= tasksCount || isMoreLoading) return;

@@ -18,19 +18,20 @@ export const useFetch = (apiFunc, option, conversion = (data) => data) => {
     (prevOption) => prevOption && equal(option, prevOption)
   );
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await apiFunc({ ...memoOption, ...firestore });
+      const serializedResponse = conversion(res);
+      setResponse(serializedResponse);
+    } catch (error) {
+      console.log("usefetch error:     ", error);
+      setError(error);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await apiFunc({ ...memoOption, ...firestore });
-        const serializedResponse = conversion(res);
-        setResponse(serializedResponse);
-      } catch (error) {
-        console.log("usefetch error:     ", error);
-        setError(error);
-      }
-      setIsLoading(false);
-    };
     fetchData();
   }, [memoOption]);
 

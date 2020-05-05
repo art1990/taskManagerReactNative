@@ -16,8 +16,6 @@ import {
 // utils
 import { getStartWeek, getEndWeek } from "./date";
 import { randomColor } from "randomcolor";
-// type
-import { IChartsState } from "../redux/charts";
 
 export interface IWeekData {
   data: number[];
@@ -69,7 +67,7 @@ export const generateWeekForTime = ({
   startWeek: day,
   weeksList,
 }: {
-  startWeek: IChartsState["loggedTime"]["startWeek"];
+  startWeek: number;
   weeksList: IWeeksListProps["weeksList"];
 }): IWeekData => {
   let { weekObj, startWeek, endWeek } = generateDayOfWeeklist(day);
@@ -130,7 +128,7 @@ export const generateWeekForTask = ({
   startWeek,
   weeksList,
 }: {
-  startWeek: IChartsState["loggedTasks"]["startWeek"];
+  startWeek: number;
   weeksList: IWeeksListProps["weeksList"];
 }) => {
   let { weekObj } = generateDayOfWeeklist(startWeek);

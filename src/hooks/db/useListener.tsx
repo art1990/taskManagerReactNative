@@ -6,7 +6,7 @@ import { useMemoCompare } from "../useMemoCompare";
 // utils
 import equal from "equals";
 
-export default (action, depth) => {
+export default (action, depth, unmount = undefined) => {
   const [renderNum, setRenderNum] = useState(0);
 
   const memoDepth = useMemoCompare(depth, (prevDepth) =>
@@ -21,6 +21,7 @@ export default (action, depth) => {
     setRenderNum(renderNum + 1);
     return () => {
       unsubscribe();
+      unmount && unmount();
     };
   }, []);
 

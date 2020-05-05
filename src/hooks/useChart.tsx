@@ -1,14 +1,16 @@
 // react';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // hooks
 import { useFetch } from "../hooks/useFetch";
+import useReduxIsLoadingListener from "../hooks/redux/useReduxIsloadingListener";
 // api
 import { getWeekDataApi } from "../services/api/chart";
 // utils
 import { getUnixTime } from "date-fns";
 
 export const useChart = (option, conversion?) => {
-  const [stateOption, setStateOption] = useState(option);
+  const [stateOption, setStateOption] = useState({ ...option, switch: false });
+  useReduxIsLoadingListener(setStateOption);
 
   const { currentPerDay } = stateOption;
 

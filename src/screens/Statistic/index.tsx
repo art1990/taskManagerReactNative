@@ -13,7 +13,7 @@ const Statistic: React.FC = () => {
   return (
     <View style={[styles.container]}>
       <ScrollView>
-        <Title text="Statistic" />
+        <Title text="Statistic" style={styles.title} />
         <LoggedTime />
         <LoggedTasks />
         <LoggedPerDay />
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     paddingRight: 30,
   },
   input: { marginLeft: 26 },
+  title: {
+    marginLeft: 15,
+  },
 });
 
 export default Statistic;

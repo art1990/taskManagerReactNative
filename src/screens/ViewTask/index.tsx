@@ -53,7 +53,6 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
     isPaused,
   } = task || {};
 
-  console.log(task);
   return (
     <View
       style={[
@@ -86,14 +85,16 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
               </TaskField>
             )}
             {file && <TaskField title="Added file" text={file.name} />}
-            <Button
-              mode="text"
-              style={styles.buttonContainer}
-              labelStyle={styles.buttonLabel}
-              onPress={() => onRemovePress(undefined, true)}
-            >
-              Delete task
-            </Button>
+            {isPaused && (
+              <Button
+                mode="text"
+                style={styles.buttonContainer}
+                labelStyle={styles.buttonLabel}
+                onPress={() => onRemovePress(undefined, true)}
+              >
+                Delete task
+              </Button>
+            )}
           </>
         )}
       </View>

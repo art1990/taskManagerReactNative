@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 // react-native-papper
 import { IconButton } from "react-native-paper";
 // expo
@@ -28,9 +28,7 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   const size = 20;
 
   return (
-    <Animated.View
-      style={[styles.iconContainer, { transform: [{ scale }] }, styles.swipe]}
-    >
+    <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
       <IconButton
         icon={() => <TrashIcon width={size} height={size} />}
         onPress={onRemovePress}
@@ -85,7 +83,5 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: "center",
   },
-  swipe: {},
 });
-
 export default TaskSwipeableInfo;

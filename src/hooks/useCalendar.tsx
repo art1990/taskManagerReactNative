@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 // hook
 import { useFetch } from "../hooks/useFetch";
+import useReduxIsloadingListener from "../hooks/redux/useReduxIsloadingListener";
 // api
 import { getWeekDataApi } from "../services/api/chart";
 // serializer
@@ -35,11 +36,17 @@ export const useCalendar = (): IUseCalendarReturn => {
     number: +dn,
   });
 
+  const [sw, setSw] = useState(false);
+  useReduxIsloadingListener(setSw);
+
+  const options = {
+    currentPerDay: parse(date.string, "yyyy-MM-dd", new Date()),
+    sw,
+  };
+
   const { response, error, isLoading } = useFetch(
     getWeekDataApi,
-    {
-      currentPerDay: parse(date.string, "yyyy-MM-dd", new Date()),
-    },
+    options,
     conversionToCalendar
   );
 

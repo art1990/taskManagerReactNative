@@ -34,6 +34,9 @@ type UPDATE_CURRENT_TAGS = typeof UPDATE_CURRENT_TAGS;
 const UPDATE_FILTER = "taskManager/task/updateFilter";
 type UPDATE_FILTER = typeof UPDATE_FILTER;
 
+const RESET = "taskManager/task/reset";
+type RESET = typeof RESET;
+
 // actions
 export const pause = createAction(PAUSE);
 export const remove = createAction(REMOVE);
@@ -45,6 +48,7 @@ export const resume = createAction(RESUME);
 export const getTags = createAction(GET_TAGS);
 export const updateCurrentTags = actionCreator(UPDATE_CURRENT_TAGS);
 export const updateFilter = actionCreator(UPDATE_FILTER);
+export const reset = actionCreator(RESET);
 
 // initial state
 export interface ITaskState {
@@ -182,6 +186,8 @@ export default produce(
       case updateFilter.type:
         draft.meta.filters = payload;
         return;
+      case reset.type:
+        return initialState;
 
       default:
         return draft;
