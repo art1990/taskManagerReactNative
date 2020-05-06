@@ -61,12 +61,20 @@
     "@types/react-native": "~0.60.23",
     "@types/react-redux": "^7.1.7",
     "babel-preset-expo": "~8.0.0",
-    "jest-expo": "~36.0.1",
+    "detox": "^16.4.0",
+    "detox-expo-helpers": "^0.6.0",
+    "expo-detox-hook": "^1.0.10",
+    "jest-expo": "^37.0.0",
     "react-native-debugger-open": "^0.3.24",
+    "react-native-testing-library": "^1.13.2",
+    "react-test-renderer": "^16.13.1",
     "typescript": "~3.6.3"
   },
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "detox": {
+    "test-runner": "jest"
+  }
 }

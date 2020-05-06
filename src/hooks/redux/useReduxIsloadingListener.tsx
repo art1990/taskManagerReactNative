@@ -7,7 +7,9 @@ import { selectMeta } from "../../redux/task/selectors";
 /*** this hook take setSate useHook function
      and switched swith option in this state ***/
 
-export default (setStateOption) => {
+export default (
+  setStateOption: React.Dispatch<React.SetStateAction<{ [key: string]: any }>>
+) => {
   const { isLoading } = useSelector(selectMeta);
 
   useEffect(() => {
