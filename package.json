@@ -4,8 +4,10 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest",
-    "postinstall": "rndebugger-open --expo"
+    "test": "node_modules/.bin/jest test/**/*.spec.js",
+    "postinstall": "rndebugger-open --expo",
+    "e2e:test": "detox test -c android.emu.debug",
+    "e2e:build": "detox build -c android.emu.debug"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.3.2",
@@ -71,10 +73,29 @@
     "typescript": "~3.6.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "private": true,
   "detox": {
-    "test-runner": "jest"
+    "test-runner": "jest",
+    "runner-config": "./e2e/config.json",
+    "configurations": {
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew app:assembleDebug app:assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_2_API_29"
+        }
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew app:assembleRelease app:assembleAndroidTest -DtestBuildType=release && cd ..",
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_2_API_29"
+        }
+      }
+    }
   }
 }
