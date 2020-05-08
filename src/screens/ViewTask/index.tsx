@@ -15,10 +15,9 @@ import Time from "../sections/Time";
 import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 import useUpdateTask from "../../hooks/task/useUpdateTask";
 import useRemoveTask from "../../hooks/task/useRemoveTask";
-import { useFetch } from "../../hooks/useFetch";
-import useIsMounted from "../../hooks/useIsMounted";
-// api
-import { getTaskApi } from "../../services/api/task";
+// redux
+import { useSelector } from "react-redux";
+import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
 // assets
 import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
@@ -33,8 +32,9 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { onResumePress, onMarkAsCompletedPress } = useUpdateTask();
   const { toEdit } = useTaskNavigation();
   const { onRemovePress } = useRemoveTask();
-  const { isLoading, response: task } = useFetch(getTaskApi, { id });
-  const isMounted = useIsMounted();
+
+  const task = useSelector(selectCurrentTaskData(id));
+  const { isLoading } = useSelector(selectMeta);
 
   const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
@@ -68,7 +68,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
           isCompleted={isCompleted}
         />
         <Modal visible={isLoading} />
-        {isLoading || !isMounted ? (
+        {isLoading ? (
           <Spinner />
         ) : (
           <>
@@ -98,7 +98,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
           </>
         )}
       </View>
-      {!isCompleted && (
+      {!isCompleted && isPaused && (
         <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>
       )}
     </View>

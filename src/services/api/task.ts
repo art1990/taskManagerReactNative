@@ -150,7 +150,7 @@ export const getTaskListApi = async ({
   meta,
 }) => {
   const filters = defaultFilters?.length < 1 ? null : defaultFilters;
-  const orderedTasksListCol = tasksListCol.orderBy("timestamp");
+  const orderedTasksListCol = tasksListCol.orderBy("timestamp", "desc");
   const taskData = await getDataFromDoc(userDoc, "taskData");
   const { size } = filters
     ? await tasksListCol.where("tags", "array-contains-any", filters).get()
@@ -160,15 +160,22 @@ export const getTaskListApi = async ({
     ? filters
       ? lastVisible?.filtered
       : lastVisible?.ordinary
-    : true;
+    : null;
 
   const tasksListCollection = filters
-    ? await orderedTasksListCol
-        .where("tags", "array-contains-any", filters)
-        .startAfter(lastSnapshot)
-        .limit(limit)
-        .get()
-    : await orderedTasksListCol.startAfter(lastSnapshot).limit(limit).get();
+    ? lastSnapshot
+      ? await orderedTasksListCol
+          .where("tags", "array-contains-any", filters)
+          .startAfter(lastSnapshot)
+          .limit(limit)
+          .get()
+      : await orderedTasksListCol
+          .where("tags", "array-contains-any", filters)
+          .limit(limit)
+          .get()
+    : lastSnapshot
+    ? await orderedTasksListCol.startAfter(lastSnapshot).limit(limit).get()
+    : await orderedTasksListCol.limit(limit).get();
 
   const snapshot =
     tasksListCollection.docs[tasksListCollection.docs.length - 1];
