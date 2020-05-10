@@ -10,7 +10,7 @@ const GenerateListOfTask = () => {
   const { generateTasks } = useFacker();
 
   return (
-    <View style={StyleSheet.container}>
+    <View>
       <Text style={styles.text}>You don’t have tasks recently added.</Text>
       <Button
         labelStyle={[styles.button, styles.text]}
