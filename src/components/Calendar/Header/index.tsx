@@ -1,7 +1,9 @@
 // react
 import React, { useCallback } from "react";
+import { StyleSheet } from "react-native";
 // react calendar
-import { WeekCalendar } from "react-native-calendars";
+// @ts-ignore
+import { WeekCalendar, CalendarProvider } from "react-native-calendars";
 // type
 import { IUseCalendarReturn } from "../../../hooks/useCalendar";
 
@@ -15,22 +17,24 @@ const Header: React.FC<Pick<IUseCalendarReturn, "date" | "setDate">> = ({
     selectedColor: "grey",
   };
 
-  const onDayPress = useCallback(
-    ({ dateString, timestamp }) => {
-      setDate({ string: dateString, number: timestamp });
+  const onDateChanged = useCallback(
+    (date) => {
+      setDate(date);
     },
     [setDate]
   );
 
   return (
-    <>
-      <WeekCalendar
-        context={{ date: date.string }}
-        markedDates={{ [date.string]: selectedStyle }}
-        onDayPress={onDayPress}
-      />
-    </>
+    <CalendarProvider
+      date={date}
+      style={styles.container}
+      onDateChanged={onDateChanged}
+    >
+      <WeekCalendar markedDates={{ [date]: selectedStyle }} />
+    </CalendarProvider>
   );
 };
+
+const styles = StyleSheet.create({ container: { flex: 0 } });
 
 export default Header;

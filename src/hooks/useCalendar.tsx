@@ -14,16 +14,8 @@ import { parse, format } from "date-fns";
 export interface IUseCalendarReturn {
   calendarTasks: {}[];
   error: any;
-  setDate: React.Dispatch<
-    React.SetStateAction<{
-      string: string;
-      number: number;
-    }>
-  >;
-  date: {
-    string: string;
-    number: number;
-  };
+  setDate: React.Dispatch<React.SetStateAction<string>>;
+  date: string;
   isLoading: boolean;
 }
 
@@ -31,16 +23,13 @@ const dn = new Date();
 const dnString = format(dn, "y-LL-dd");
 
 export const useCalendar = (): IUseCalendarReturn => {
-  const [date, setDate] = useState({
-    string: dnString,
-    number: +dn,
-  });
+  const [date, setDate] = useState(dnString);
 
   const [sw, setSw] = useState(false);
   useReduxIsloadingListener(setSw);
 
   const options = {
-    currentPerDay: parse(date.string, "yyyy-MM-dd", new Date()),
+    currentPerDay: parse(date, "yyyy-MM-dd", new Date()),
     sw,
   };
 

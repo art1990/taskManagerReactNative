@@ -58,6 +58,7 @@ export default () => {
   const { startTime, duration, title } = taskData;
   return (
     <View
+      testID="task"
       style={[
         Styles.wrapper,
         styles.container,
