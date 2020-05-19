@@ -16,7 +16,7 @@ const TimeSection: React.FC<ITimeSectionProps> = ({
   duration,
 }) => (
   <>
-    <View style={styles.timeSection}>
+    <View style={styles.timeSection} testID="timeSection">
       <TaskField title="Start time" hasMounth text={startTaskTime} isTime />
       {endTime && (
         <TaskField title="End time" hasMounth text={endTime} isTime />

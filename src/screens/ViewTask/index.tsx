@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
     color: Colors.error,
   },
   tags: {
-    marginTop: -10,
     marginLeft: -8,
   },
 });

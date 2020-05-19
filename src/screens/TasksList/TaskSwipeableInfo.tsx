@@ -30,10 +30,12 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   return (
     <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
       <IconButton
+        testID="removeBtn"
         icon={() => <TrashIcon width={size} height={size} />}
         onPress={onRemovePress}
       />
       <IconButton
+        testID="editBtn"
         icon={() => <PencilIcon width={size} height={size} />}
         onPress={onEditPress}
       />

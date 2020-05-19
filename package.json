@@ -6,7 +6,7 @@
     "start": "react-native start",
     "test": "node_modules/.bin/jest test/**/*.spec.js",
     "postinstall": "rndebugger-open --expo",
-    "e2e:test": "detox test -c android.emu.debug",
+    "e2e:test": "detox test -c android.emu.debug --forceExit",
     "e2e:build": "detox build -c android.emu.debug"
   },
   "dependencies": {
@@ -17,6 +17,8 @@
     "@react-navigation/stack": "^5.1.1",
     "@types/date-fns": "^2.6.0",
     "@types/firebase": "^3.2.1",
+    "@types/jasmine": "^3.5.10",
+    "@types/jest": "^25.2.2",
     "@types/react-native-calendars": "^1.20.7",
     "@types/react-native-snap-carousel": "^3.8.1",
     "@types/reselect": "^2.2.0",

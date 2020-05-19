@@ -43,9 +43,8 @@ const Tags: React.FC<ITags> = ({ tags, removeTag, updateTagFilter, style }) => {
 const styles = StyleSheet.create({
   tagsContainer: {
     flexDirection: "row",
-  },
-  tags: {
-    marginBottom: 0,
+    flexWrap: "wrap",
+    marginBottom: -10,
   },
 });
 

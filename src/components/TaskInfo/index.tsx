@@ -29,7 +29,7 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
     : "start: " + formatToUTCTime(startTaskTime);
 
   return (
-    <TouchableOpacity onPress={toView}>
+    <TouchableOpacity testID="task" onPress={toView}>
       <View style={[Styles.rowSpaceBetween, styles.container, style]}>
         <View style={[Styles.rowSpaceBetween, styles.titleWithProjectSection]}>
           <Text>tit# {title} </Text>
@@ -42,6 +42,7 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
           ) : (
             isPaused && (
               <IconButton
+                testID="resumeBtn"
                 icon={() => <Resume width={size} heigth={size} />}
                 onPress={onResumePress}
                 style={styles.button}

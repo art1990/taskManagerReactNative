@@ -1,5 +1,5 @@
 // react
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 // hooks
 import useTags from "../../hooks/useTags";
@@ -12,7 +12,11 @@ import { Colors } from "../../assets/styles/constants";
 import Styles from "../../assets/styles";
 
 const AddTags: React.FC = () => {
-  const { allTags, tags: initialTags, addTags } = useTags();
+  const { allTags, tags: initialTags, addTags, getTagsList } = useTags();
+
+  useEffect(() => {
+    getTagsList();
+  }, []);
 
   return (
     <ScrollView

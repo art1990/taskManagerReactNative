@@ -31,10 +31,14 @@ const WorkingTaskInfo: React.FC<IWorkingTaskInfoProps> = ({
   toView,
 }) => (
   <TouchableOpacity onPress={toView}>
-    <View style={[Styles.rowSpaceBetween, styles.container]}>
+    <View
+      testID="workingTask"
+      style={[Styles.rowSpaceBetween, styles.container]}
+    >
       <Text style={styles.title}>{title}</Text>
       <Timer startTime={startTime} duration={duration} />
       <IconButton
+        testID="workingPauseBtn"
         style={styles.button}
         icon={() => <MaterialIcons name="pause-circle-filled" size={20} />}
         onPress={onCreateTask}

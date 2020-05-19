@@ -58,7 +58,7 @@ export default () => {
   const { startTime, duration, title } = taskData;
   return (
     <View
-      testID="task"
+      testID="taskHeader"
       style={[
         Styles.wrapper,
         styles.container,
@@ -95,13 +95,17 @@ export default () => {
               toView={() => toView(taskData.id)}
             />
           ) : (
-            <Button onPress={toAddTask}>Add task</Button>
+            <Button testID="addTaskBtn" onPress={toAddTask}>
+              Add task
+            </Button>
           )}
         </>
       ) : (
         <>
           <GenerateListOfTask />
-          <Button onPress={toAddTask}>Add task</Button>
+          <Button testID="addTaskBtn" onPress={toAddTask}>
+            Add task
+          </Button>
         </>
       )}
     </View>
