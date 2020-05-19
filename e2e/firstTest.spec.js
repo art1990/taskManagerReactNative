@@ -117,55 +117,55 @@ describe("Example", () => {
     const taskHeader = getTaskHeader();
     await expect(taskHeader).toBeVisible();
   });
-  // it("should task create", async () => {
-  //   const addTaskBtn = getAddTaskBtn();
+  it("should task create", async () => {
+    const addTaskBtn = getAddTaskBtn();
 
-  //   await sleep(10000);
-  //   try {
-  //     await pauseTask();
-  //     await sleep(10000);
-  //   } catch (e) {}
+    await sleep(10000);
+    try {
+      await pauseTask();
+      await sleep(10000);
+    } catch (e) {}
 
-  //   await addTaskBtn.tap();
+    await addTaskBtn.tap();
 
-  //   const title = getInputTile();
-  //   const project = getInputProject();
-  //   const toAddTagsBtn = getBtnToAddTags();
+    const title = getInputTile();
+    const project = getInputProject();
+    const toAddTagsBtn = getBtnToAddTags();
 
-  //   await title.typeText(taskData.title);
-  //   await project.typeText(taskData.project);
-  //   await toAddTagsBtn.tap();
+    await title.typeText(taskData.title);
+    await project.typeText(taskData.project);
+    await toAddTagsBtn.tap();
 
-  //   const tagInput = getInputTag();
-  //   const iconButton = getIconButton();
-  //   const addTagBtn = getDoneBtn();
+    const tagInput = getInputTag();
+    const iconButton = getIconButton();
+    const addTagBtn = getDoneBtn();
 
-  //   await tagInput.typeText(taskData.tag);
-  //   await iconButton.tap();
-  //   await addTagBtn.tap();
+    await tagInput.typeText(taskData.tag);
+    await iconButton.tap();
+    await addTagBtn.tap();
 
-  //   const startTaskBtn = getStartTaskBtn();
-  //   await startTaskBtn.tap();
-  // });
+    const startTaskBtn = getStartTaskBtn();
+    await startTaskBtn.tap();
+  });
 
-  // it("should task pause", async () => {
-  //   await sleep(10000);
-  //   await pauseTask();
-  // });
+  it("should task pause", async () => {
+    await sleep(10000);
+    await pauseTask();
+  });
 
-  // it("should resume task", async () => {
-  //   await sleep(10000);
-  //   await resumeTask();
-  // });
+  it("should resume task", async () => {
+    await sleep(10000);
+    await resumeTask();
+  });
 
-  // it("should edit task", async () => {
-  //   await sleep(10000);
-  //   try {
-  //     await pauseTask();
-  //   } catch (e) {}
-  //   await sleep(10000);
-  //   await editTask();
-  // });
+  it("should edit task", async () => {
+    await sleep(10000);
+    try {
+      await pauseTask();
+    } catch (e) {}
+    await sleep(10000);
+    await editTask();
+  });
 
   it("shold remove task", async () => {
     await sleep(10000);
