@@ -18,14 +18,15 @@ type TCallback = ({
 export default () => {
   const [progress, setProgress] = useState(0);
 
-  const callback: TCallback = useCallback(() => {
+  const callback: TCallback = useCallback(
     (downloadProgress: TDownloadProgress) => {
       const progress =
         downloadProgress.totalBytesWritten /
         downloadProgress.totalBytesExpectedToWrite;
       setProgress(progress);
-    };
-  }, [setProgress]);
+    },
+    [setProgress]
+  );
 
   const downloadFile = async (file: TFile) => {
     const downloadResumable = await FileSystem.createDownloadResumable(

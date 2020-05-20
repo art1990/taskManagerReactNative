@@ -9,13 +9,13 @@ import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
 import Modal from "../../components/Modal";
 import Tags from "../../components/Tags";
+import FileRow from "./FileRow";
 // sections
 import Time from "../sections/Time";
 // hooks
 import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 import useUpdateTask from "../../hooks/task/useUpdateTask";
 import useRemoveTask from "../../hooks/task/useRemoveTask";
-import useDownload from "../../hooks/useDownload";
 // redux
 import { useSelector } from "react-redux";
 import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
@@ -36,8 +36,6 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
 
   const task = useSelector(selectCurrentTaskData(id));
   const { isLoading } = useSelector(selectMeta);
-
-  const { downloadFile, progress } = useDownload();
 
   const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
@@ -87,11 +85,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
                 <Tags tags={task.tags} style={styles.tags} />
               </TaskField>
             )}
-            {file && (
-              <TouchableOpacity onPress={() => downloadFile(file)}>
-                <TaskField title="Added file" text={file.name} />
-              </TouchableOpacity>
-            )}
+            <FileRow file={file} />
             {isPaused && (
               <Button
                 mode="text"

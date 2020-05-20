@@ -1,5 +1,6 @@
 export enum Colors {
   headerColor = "rgba(0, 0, 0, 0.4)",
+  progress = headerColor,
 
   tab = "#979797",
   activeTab = "#000000",
