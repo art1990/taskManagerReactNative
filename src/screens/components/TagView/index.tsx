@@ -51,6 +51,7 @@ const TagView: React.FC<ITagViewProps> = ({
     <>
       {Input && (
         <Input
+          style={styles.input}
           onChangeText={onChangeText}
           value={text}
           onAddPress={() => addLocalTag()}
@@ -63,7 +64,7 @@ const TagView: React.FC<ITagViewProps> = ({
           ))}
         </View>
         <View style={styles.line} />
-        <View style={Styles.row}>
+        <View style={(Styles.row, styles.allTAgContainer)}>
           {filteredAllTags.map((el, i) => (
             <Tag key={i} text={el} setTags={setTags} />
           ))}
@@ -77,13 +78,17 @@ const TagView: React.FC<ITagViewProps> = ({
 };
 
 const styles = StyleSheet.create({
+  input: { marginBottom: 8 },
   currenTagContainer: {
     marginBottom: 10,
-    minHeight: 50,
+    minHeight: 30,
+    flexWrap: "wrap",
   },
+  allTAgContainer: { flexWrap: "wrap", flexDirection: "row" },
   line: {
     borderBottomColor: Colors.line,
     borderBottomWidth: 1,
+    marginBottom: 8,
   },
 
   button: {

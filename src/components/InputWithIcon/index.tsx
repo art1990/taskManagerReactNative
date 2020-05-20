@@ -42,6 +42,7 @@ const InputWithIcon: React.FC<IInputWithIconProps> = ({
   return (
     <View style={[styles.container, inputStyle]}>
       <IconButton
+        testID="iconButton"
         icon={icon}
         onPress={onPress}
         style={[styles.icon]}

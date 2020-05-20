@@ -10,6 +10,8 @@ import Carousel from "react-native-snap-carousel";
 import { Colors } from "../../../assets/styles/constants";
 // utils
 import { formatToUTCTime } from "../../../utils/date";
+// icons
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 
@@ -19,6 +21,9 @@ const CaruselTask = ({ style, hour, data, onEditPress }) => {
       <View style={[styles.item, item.style, { minHeight: 30 }]}>
         <Text>{item.title}</Text>
         <Text>{formatToUTCTime(item.duration)}</Text>
+        {data?.length > 1 && (
+          <MaterialCommunityIcons name="arrow-left-right-bold-outline" />
+        )}
         <IconButton
           size={26}
           style={styles.icon}

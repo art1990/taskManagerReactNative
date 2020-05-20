@@ -1,5 +1,5 @@
 // ract
-import React, { Dispatch } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 // coponents
 import IconButton from "../IconButton";
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingHorizontal: 8,
     marginHorizontal: 8,
-    marginVertical: 18,
+    marginVertical: 8,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.taskInfoBGColor,

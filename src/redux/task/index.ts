@@ -34,6 +34,9 @@ type UPDATE_CURRENT_TAGS = typeof UPDATE_CURRENT_TAGS;
 const UPDATE_FILTER = "taskManager/task/updateFilter";
 type UPDATE_FILTER = typeof UPDATE_FILTER;
 
+const RESET = "taskManager/task/reset";
+type RESET = typeof RESET;
+
 // actions
 export const pause = createAction(PAUSE);
 export const remove = createAction(REMOVE);
@@ -45,24 +48,37 @@ export const resume = createAction(RESUME);
 export const getTags = createAction(GET_TAGS);
 export const updateCurrentTags = actionCreator(UPDATE_CURRENT_TAGS);
 export const updateFilter = actionCreator(UPDATE_FILTER);
+export const reset = actionCreator(RESET);
+
+export type TFile = {
+  name: string;
+  size: number;
+  type: "sucess";
+  uri: string;
+};
+
+type TTags = string[];
+
+type TTaskData = {
+  id: null | string;
+  title: string;
+  project: string;
+  startTime?: number;
+  endTime?: number;
+  startTaskTime?: number;
+  timeInterval: { startTime: number; endTime: number }[];
+  duration?: number;
+  isPaused: boolean;
+  isCompleted: boolean;
+  file: TFile;
+  tags: TTags;
+};
 
 // initial state
 export interface ITaskState {
-  tasksList: null | object[];
-  taskData: {
-    id: null | string;
-    title: string;
-    project: string;
-    startTime?: number;
-    endTime?: number;
-    startTaskTime?: number;
-    timeInterval: { startTime: number; endTime: number }[];
-    duration?: number;
-    isPaused: boolean;
-    isCompleted: boolean;
-    file: null | object[];
-  };
-  tags: { current: string[]; all: string[] };
+  tasksList: TTaskData[];
+  taskData: TTaskData;
+  tags: { current: TTags; all: TTags };
   meta: {
     isLoading: boolean;
     isMoreLoading: boolean;
@@ -88,6 +104,7 @@ const initialState: ITaskState = {
     isPaused: true,
     isCompleted: false,
     file: null,
+    tags: [],
   },
   tags: { current: [], all: [] },
   meta: {
@@ -182,6 +199,8 @@ export default produce(
       case updateFilter.type:
         draft.meta.filters = payload;
         return;
+      case reset.type:
+        return initialState;
 
       default:
         return draft;

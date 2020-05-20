@@ -14,6 +14,7 @@ interface IButtonProps {
   style?: {};
   mode?: any;
   loading?: boolean;
+  testID?: string;
 }
 
 const CustomButton: React.FC<IButtonProps> = ({

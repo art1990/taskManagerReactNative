@@ -39,11 +39,11 @@ export default () => {
   const { onLogoutPress } = useUser();
   const { onResumePress, onPausePress } = useUpdateTask();
   const { onRemovePress } = useRemoveTask();
-  const { getTasksList } = useFetchTaskData();
+  const { getTasksList, resetTaskData } = useFetchTaskData();
   const { toAddTask, toView, toFilters } = useTaskNavigation();
   const isMounted = useIsMounted();
   const { updateTagFilter } = useTags();
-  useListener(getTasksList, filters);
+  useListener(getTasksList, filters, resetTaskData);
 
   const loadMore = useCallback(() => {
     if (tasksList.length >= tasksCount || isMoreLoading) return;
@@ -58,6 +58,7 @@ export default () => {
   const { startTime, duration, title } = taskData;
   return (
     <View
+      testID="taskHeader"
       style={[
         Styles.wrapper,
         styles.container,
@@ -94,13 +95,17 @@ export default () => {
               toView={() => toView(taskData.id)}
             />
           ) : (
-            <Button onPress={toAddTask}>Add task</Button>
+            <Button testID="addTaskBtn" onPress={toAddTask}>
+              Add task
+            </Button>
           )}
         </>
       ) : (
         <>
           <GenerateListOfTask />
-          <Button onPress={toAddTask}>Add task</Button>
+          <Button testID="addTaskBtn" onPress={toAddTask}>
+            Add task
+          </Button>
         </>
       )}
     </View>

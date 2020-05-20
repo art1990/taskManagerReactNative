@@ -24,8 +24,8 @@ export interface ITaskForm {
 }
 
 type TaskFormData = {
-  file: {};
-  defaultValues: {};
+  file: { name?: string; size?: number; uri?: string };
+  defaultValues: { tags: string[] };
 };
 
 const TaskForm: React.FC<ITaskForm> = ({
@@ -52,7 +52,7 @@ const TaskForm: React.FC<ITaskForm> = ({
 
   const { tags, setTags } = useTags(setValue);
 
-  const file = watch("file");
+  const file: TaskFormData["file"] = watch("file");
   const name = file?.name;
   useEffect(() => {
     if (!file) {
@@ -73,7 +73,9 @@ const TaskForm: React.FC<ITaskForm> = ({
 
   const onChange = (args) => args[0].nativeEvent.text;
 
-  const handleUserSubmit = ({ file, ...data }) => {
+  const handleUserSubmit = (props) => {
+    const { file, ...data } = props;
+
     const values = file ? { file, ...data } : data;
     onSubmit(values);
   };
@@ -91,6 +93,7 @@ const TaskForm: React.FC<ITaskForm> = ({
       <FormContext {...methods}>
         <KeyboardView>
           <Controller
+            testID="title"
             as={FormInput}
             style={styles.input}
             label="Title"
@@ -99,6 +102,7 @@ const TaskForm: React.FC<ITaskForm> = ({
             rules={{ required: true }}
           />
           <Controller
+            testID="project"
             as={FormInput}
             style={styles.input}
             label="Project"
@@ -120,7 +124,11 @@ const TaskForm: React.FC<ITaskForm> = ({
             <InfoAndRemoveFile name={name} onRemovePress={removeTaskFile} />
           )}
         </KeyboardView>
-        <Button style={styles.button} onPress={handleSubmit(handleUserSubmit)}>
+        <Button
+          testID="taskFormBtn"
+          style={styles.button}
+          onPress={handleSubmit(handleUserSubmit)}
+        >
           {buttonText}
         </Button>
       </FormContext>

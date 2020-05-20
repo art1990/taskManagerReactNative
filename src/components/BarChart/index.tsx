@@ -34,7 +34,7 @@ const BarChart: React.FC<IDayChartProps> = ({
   yLabel,
 }) => {
   const data = {
-    labels: [2, 4, 6, 8, 10, 12, 2, 4, 6, 8, 10, 12],
+    labels: [...new Array(12)].map((_, i) => (i * 2 + 1) % 12),
     data: dayData.data,
     barColors: dayData.barColors,
   };

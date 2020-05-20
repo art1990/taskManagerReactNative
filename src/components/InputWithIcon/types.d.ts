@@ -9,4 +9,5 @@ export interface IInputWithIconProps extends IInputProps {
   icon: IIconButtonProps["icon"];
   iconSize?: IIconButtonProps["size"];
   disabled?: boolean;
+  testID?: string;
 }

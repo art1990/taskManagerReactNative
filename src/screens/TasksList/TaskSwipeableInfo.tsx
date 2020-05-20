@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 // react-native-papper
 import { IconButton } from "react-native-paper";
 // expo
@@ -8,7 +8,9 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 // compoents
 import TaskInfo from "../../components/TaskInfo";
 // assets
+// @ts-ignore
 import TrashIcon from "../../assets/img/icons/trash.svg";
+// @ts-ignore
 import PencilIcon from "../../assets/img/icons/pencil.svg";
 // types
 import { ITaskInfoProps } from "../../components/TaskInfo/types";
@@ -28,14 +30,14 @@ const RightActions = ({ progress, dragX, onEditPress, onRemovePress }) => {
   const size = 20;
 
   return (
-    <Animated.View
-      style={[styles.iconContainer, { transform: [{ scale }] }, styles.swipe]}
-    >
+    <Animated.View style={[styles.iconContainer, { transform: [{ scale }] }]}>
       <IconButton
+        testID="removeBtn"
         icon={() => <TrashIcon width={size} height={size} />}
         onPress={onRemovePress}
       />
       <IconButton
+        testID="editBtn"
         icon={() => <PencilIcon width={size} height={size} />}
         onPress={onEditPress}
       />
@@ -85,7 +87,5 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: "center",
   },
-  swipe: {},
 });
-
 export default TaskSwipeableInfo;

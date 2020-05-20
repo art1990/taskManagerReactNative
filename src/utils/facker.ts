@@ -1,13 +1,13 @@
 // faker
 import faker from "faker";
 // date-fns
-import { getUnixTime, isSameWeek } from "date-fns";
+import { getUnixTime, isSameWeek, addWeeks } from "date-fns";
 // utils
 import { getStartWeek } from "./date";
 // types
 import { ITaskState } from "../redux/task";
 
-let date = getUnixTime(new Date());
+let date = getUnixTime(addWeeks(new Date(), -2));
 
 const generateTask = (): ITaskState["taskData"] => {
   const { random, hacker } = faker;

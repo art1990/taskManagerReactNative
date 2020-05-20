@@ -1,6 +1,6 @@
 // react
 import React, { useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 // components
 import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
@@ -9,16 +9,16 @@ import Button from "../../components/Button";
 import Spinner from "../../components/Spinner";
 import Modal from "../../components/Modal";
 import Tags from "../../components/Tags";
+import FileRow from "./FileRow";
 // sections
 import Time from "../sections/Time";
 // hooks
 import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 import useUpdateTask from "../../hooks/task/useUpdateTask";
 import useRemoveTask from "../../hooks/task/useRemoveTask";
-import { useFetch } from "../../hooks/useFetch";
-import useIsMounted from "../../hooks/useIsMounted";
-// api
-import { getTaskApi } from "../../services/api/task";
+// redux
+import { useSelector } from "react-redux";
+import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
 // assets
 import Styles from "../../assets/styles";
 import { Colors } from "../../assets/styles/constants";
@@ -33,8 +33,9 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
   const { onResumePress, onMarkAsCompletedPress } = useUpdateTask();
   const { toEdit } = useTaskNavigation();
   const { onRemovePress } = useRemoveTask();
-  const { isLoading, response: task } = useFetch(getTaskApi, { id });
-  const isMounted = useIsMounted();
+
+  const task = useSelector(selectCurrentTaskData(id));
+  const { isLoading } = useSelector(selectMeta);
 
   const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
@@ -53,7 +54,6 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
     isPaused,
   } = task || {};
 
-  console.log(task);
   return (
     <View
       style={[
@@ -69,7 +69,7 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
           isCompleted={isCompleted}
         />
         <Modal visible={isLoading} />
-        {isLoading || !isMounted ? (
+        {isLoading ? (
           <Spinner />
         ) : (
           <>
@@ -85,20 +85,24 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
                 <Tags tags={task.tags} style={styles.tags} />
               </TaskField>
             )}
-            {file && <TaskField title="Added file" text={file.name} />}
-            <Button
-              mode="text"
-              style={styles.buttonContainer}
-              labelStyle={styles.buttonLabel}
-              onPress={() => onRemovePress(undefined, true)}
-            >
-              Delete task
-            </Button>
+            <FileRow file={file} />
+            {isPaused && (
+              <Button
+                mode="text"
+                style={styles.buttonContainer}
+                labelStyle={styles.buttonLabel}
+                onPress={() => onRemovePress(undefined, true)}
+              >
+                Delete task
+              </Button>
+            )}
           </>
         )}
       </View>
-      {!isCompleted && (
-        <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>
+      {!isCompleted && isPaused && (
+        <Button style={styles.buttonMark} onPress={onMarkAsCompletedPress}>
+          Mark as Completed
+        </Button>
       )}
     </View>
   );
@@ -121,8 +125,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: Colors.error,
   },
+  buttonMark: { marginTop: 15 },
   tags: {
-    marginTop: -10,
     marginLeft: -8,
   },
 });

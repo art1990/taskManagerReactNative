@@ -3,7 +3,7 @@ import { typeStyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes"
 
 export interface IInputProps {
   style?: typeStyleObj;
-  name: string;
+  name?: string;
   value: string;
   onChangeText?: (text: string) => void;
   secureTextEntry?: boolean;

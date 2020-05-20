@@ -11,7 +11,7 @@ import { Colors } from "../../assets/styles/constants";
 const CalendarScreen = () => {
   return (
     <View style={styles.wrapper}>
-      <Title text="Calendar" />
+      <Title text="Calendar" style={{ marginLeft: 18 }} />
       <Calendar />
     </View>
   );

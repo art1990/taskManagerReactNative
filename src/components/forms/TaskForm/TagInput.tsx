@@ -20,7 +20,7 @@ const TagInput: React.FC<ITagInput> = (props) => {
 
   return (
     <>
-      <TouchableOpacity style={[style]} onPress={toAddTags}>
+      <TouchableOpacity testID="toTags" style={[style]} onPress={toAddTags}>
         <Input label="Add tag" disabled />
       </TouchableOpacity>
       <View style={styles.tagsContainer}>
@@ -32,10 +32,7 @@ const TagInput: React.FC<ITagInput> = (props) => {
 
 const styles = StyleSheet.create({
   tagsContainer: {
-    flexDirection: "row",
-  },
-  tags: {
-    marginBottom: 0,
+    marginTop: 10,
   },
 });
 

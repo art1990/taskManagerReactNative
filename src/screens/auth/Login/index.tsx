@@ -17,7 +17,7 @@ const Login: React.FC<ILoginProps> = () => {
   const { onSignInPress, toSignUp, isLoading } = useUser();
 
   return (
-    <View style={[Styles.authWrapper, Styles.authContainer]}>
+    <View testID="welcome" style={[Styles.authWrapper, Styles.authContainer]}>
       <Title text="Sign in" />
       <LoginForm onSubmit={onSignInPress} isLoading={isLoading} />
       <NavigationMessage

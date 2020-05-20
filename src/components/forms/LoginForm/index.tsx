@@ -27,6 +27,7 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit, isLoading }) => {
       <KeyboardView>
         <FormContext {...methods}>
           <Controller
+            testID="email"
             as={FormInput}
             style={styles.input}
             label="Email"
@@ -37,6 +38,7 @@ const LoginForm: React.FC<IAuthForm> = ({ style, onSubmit, isLoading }) => {
             defaultValue=""
           />
           <Controller
+            testID="password"
             as={FormPasswordInput}
             style={styles.input}
             label="Password"

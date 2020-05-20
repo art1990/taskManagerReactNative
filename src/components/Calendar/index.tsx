@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 // components
 import Header from "./Header";
@@ -7,12 +7,11 @@ import Body from "./Body";
 import Spinner from "../Spinner";
 // hooks
 import { useCalendar } from "../../hooks/useCalendar";
-// hooks
-import useTaskAction from "../../hooks/useTaskAction";
+import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 
-const Calendar = () => {
+const Calendar: React.FC = () => {
   const { calendarTasks, setDate, date, isLoading } = useCalendar();
-  const { onEditPress } = useTaskAction();
+  const { toEdit } = useTaskNavigation();
 
   return (
     <>
@@ -20,7 +19,7 @@ const Calendar = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <Body calendarTasks={calendarTasks} onEditPress={onEditPress} />
+        <Body calendarTasks={calendarTasks} onEditPress={toEdit} />
       )}
     </>
   );
@@ -28,4 +27,4 @@ const Calendar = () => {
 
 const styles = StyleSheet.create({});
 
-export default Calendar;
+export default memo(Calendar);

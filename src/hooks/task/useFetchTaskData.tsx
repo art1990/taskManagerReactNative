@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 // redux
 import { useSelector } from "react-redux";
-import { getList } from "../../redux/task";
+import { getList, reset } from "../../redux/task";
 import { selectMeta } from "../../redux/task/selectors";
 // api
 import { getTaskListApi } from "../../services/api/task";
@@ -24,5 +24,7 @@ export const useFetchTaskData = () => {
     dispatch(getList, getTaskListApi, params);
   };
 
-  return { getTasksList };
+  const resetTaskData = () => dispatch(reset.run());
+
+  return { getTasksList, resetTaskData };
 };

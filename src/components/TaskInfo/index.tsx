@@ -7,7 +7,9 @@ import { IconButton } from "react-native-paper";
 import { formatToUTCTime } from "../../utils/date";
 // assets
 import Styles, { paddingHorizontal } from "../../assets/styles";
+// @ts-ignore
 import Completed from "../../assets/img/icons/complete.svg";
+// @ts-ignore
 import Resume from "../../assets/img/icons/resume.svg";
 // types
 import { ITaskInfoProps } from "./types";
@@ -29,11 +31,15 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
     : "start: " + formatToUTCTime(startTaskTime);
 
   return (
-    <TouchableOpacity onPress={toView}>
+    <TouchableOpacity testID="task" onPress={toView}>
       <View style={[Styles.rowSpaceBetween, styles.container, style]}>
         <View style={[Styles.rowSpaceBetween, styles.titleWithProjectSection]}>
-          <Text>tit# {title} </Text>
-          <Text>proj# {project}</Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            tit# {title}{" "}
+          </Text>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            proj# {project}
+          </Text>
         </View>
         <View style={styles.durationWithIconSection}>
           <Text> {timeText}</Text>
@@ -42,6 +48,7 @@ const TaskInfo: React.FC<ITaskInfoProps> = ({
           ) : (
             isPaused && (
               <IconButton
+                testID="resumeBtn"
                 icon={() => <Resume width={size} heigth={size} />}
                 onPress={onResumePress}
                 style={styles.button}
@@ -74,10 +81,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   titleWithProjectSection: {
-    width: "60%",
+    width: "72%",
     overflow: "hidden",
     justifyContent: "flex-start",
   },
+  text: { flexShrink: 1 },
 });
 
 export default TaskInfo;
