@@ -50,23 +50,35 @@ export const updateCurrentTags = actionCreator(UPDATE_CURRENT_TAGS);
 export const updateFilter = actionCreator(UPDATE_FILTER);
 export const reset = actionCreator(RESET);
 
+export type TFile = {
+  name: string;
+  size: number;
+  type: "sucess";
+  uri: string;
+};
+
+type TTags = string[];
+
+type TTaskData = {
+  id: null | string;
+  title: string;
+  project: string;
+  startTime?: number;
+  endTime?: number;
+  startTaskTime?: number;
+  timeInterval: { startTime: number; endTime: number }[];
+  duration?: number;
+  isPaused: boolean;
+  isCompleted: boolean;
+  file: TFile;
+  tags: TTags;
+};
+
 // initial state
 export interface ITaskState {
-  tasksList: null | object[];
-  taskData: {
-    id: null | string;
-    title: string;
-    project: string;
-    startTime?: number;
-    endTime?: number;
-    startTaskTime?: number;
-    timeInterval: { startTime: number; endTime: number }[];
-    duration?: number;
-    isPaused: boolean;
-    isCompleted: boolean;
-    file: null | object[];
-  };
-  tags: { current: string[]; all: string[] };
+  tasksList: TTaskData[];
+  taskData: TTaskData;
+  tags: { current: TTags; all: TTags };
   meta: {
     isLoading: boolean;
     isMoreLoading: boolean;
@@ -92,6 +104,7 @@ const initialState: ITaskState = {
     isPaused: true,
     isCompleted: false,
     file: null,
+    tags: [],
   },
   tags: { current: [], all: [] },
   meta: {

@@ -18,6 +18,7 @@ export interface IIconButtonProps {
   onPress: (id?) => void;
   color?: string;
   style?: typeStyleObj;
+  testID?: string;
 }
 
 export interface IMaterialIconProps {

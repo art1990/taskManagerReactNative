@@ -1,5 +1,5 @@
 // ract
-import React, { Dispatch } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 // coponents
 import IconButton from "../IconButton";

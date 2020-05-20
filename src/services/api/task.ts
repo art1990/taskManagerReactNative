@@ -130,7 +130,11 @@ export const resumeTaskApi = async ({
   return taskData;
 };
 
-export const updateTaskApi = async ({ tasksListCol, task }) => {
+export const updateTaskApi = async ({ tasksListCol, task, user }) => {
+  if (task.file || task?.file.slice(0, 4) === "file") {
+    task.file.uri = await uploadFileApi(task.file, user);
+  }
+
   await tasksListCol.doc(task.id).update(task);
 
   return task;

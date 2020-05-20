@@ -1,6 +1,6 @@
 // react
 import React, { useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 // components
 import Title from "../../components/Title";
 import IconButton from "../../components/IconButton";
@@ -15,6 +15,7 @@ import Time from "../sections/Time";
 import useTaskNavigation from "../../hooks/task/useTaskNavigation";
 import useUpdateTask from "../../hooks/task/useUpdateTask";
 import useRemoveTask from "../../hooks/task/useRemoveTask";
+import useDownload from "../../hooks/useDownload";
 // redux
 import { useSelector } from "react-redux";
 import { selectCurrentTaskData, selectMeta } from "../../redux/task/selectors";
@@ -35,6 +36,8 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
 
   const task = useSelector(selectCurrentTaskData(id));
   const { isLoading } = useSelector(selectMeta);
+
+  const { downloadFile, progress } = useDownload();
 
   const EditIconButton = <IconButton key={1} icon="edit" onPress={toEdit} />;
   const ResumeIconButton = (
@@ -84,7 +87,11 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
                 <Tags tags={task.tags} style={styles.tags} />
               </TaskField>
             )}
-            {file && <TaskField title="Added file" text={file.name} />}
+            {file && (
+              <TouchableOpacity onPress={() => downloadFile(file)}>
+                <TaskField title="Added file" text={file.name} />
+              </TouchableOpacity>
+            )}
             {isPaused && (
               <Button
                 mode="text"
@@ -99,7 +106,9 @@ const ViewTask: React.FC<ITaskViewProps> = ({ route }) => {
         )}
       </View>
       {!isCompleted && isPaused && (
-        <Button onPress={onMarkAsCompletedPress}>Mark as Completed</Button>
+        <Button style={styles.buttonMark} onPress={onMarkAsCompletedPress}>
+          Mark as Completed
+        </Button>
       )}
     </View>
   );
@@ -122,6 +131,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: Colors.error,
   },
+  buttonMark: { marginTop: 15 },
   tags: {
     marginLeft: -8,
   },

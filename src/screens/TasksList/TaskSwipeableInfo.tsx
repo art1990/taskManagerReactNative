@@ -8,7 +8,9 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 // compoents
 import TaskInfo from "../../components/TaskInfo";
 // assets
+// @ts-ignore
 import TrashIcon from "../../assets/img/icons/trash.svg";
+// @ts-ignore
 import PencilIcon from "../../assets/img/icons/pencil.svg";
 // types
 import { ITaskInfoProps } from "../../components/TaskInfo/types";
