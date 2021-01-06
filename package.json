@@ -23,7 +23,7 @@
     "@types/react-native-snap-carousel": "^3.8.1",
     "@types/reselect": "^2.2.0",
     "@types/yup": "^0.26.33",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.11.0",
     "equals": "^1.0.5",
     "expo": "~36.0.0",
